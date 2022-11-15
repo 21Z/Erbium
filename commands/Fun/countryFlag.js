@@ -1,6 +1,6 @@
-const Command = require("../../Base/Command.js");
-const { MessageEmbed } = require("discord.js");
-const flag = require("fetch-country-flag");
+import Command from "../../Base/Command.js";
+import { MessageEmbed } from "discord.js";
+import flag from "fetch-country-flag";
 
 class CountryFlag extends Command {
 
@@ -38,4 +38,4 @@ class CountryFlag extends Command {
 
 }
 
-module.exports = CountryFlag;
+export default CountryFlag;

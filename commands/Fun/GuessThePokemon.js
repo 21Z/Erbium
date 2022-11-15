@@ -1,6 +1,6 @@
-const Command = require("../../Base/Command.js");
-const { MessageEmbed } = require("discord.js");
-const { Spawn } = require("pokecord");
+import Command from "../../Base/Command.js";
+import { MessageEmbed } from "discord.js";
+import { Spawn } from "pokecord";
 
 class GuessThePokemon extends Command {
 
@@ -47,4 +47,4 @@ class GuessThePokemon extends Command {
 
 }
 
-module.exports = GuessThePokemon;
+export default GuessThePokemon;

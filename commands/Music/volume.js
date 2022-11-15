@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class Volume extends Command {
 
@@ -31,4 +31,4 @@ class Volume extends Command {
 
 }
 
-module.exports = Volume;
+export default Volume;

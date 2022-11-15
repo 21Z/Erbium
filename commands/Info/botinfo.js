@@ -1,6 +1,6 @@
-const Command = require("../../Base/Command.js");
-const { MessageEmbed, version } = require("discord.js");
-const os = require("os");
+import Command from "../../Base/Command.js";
+import { MessageEmbed, version } from "discord.js";
+import { cpus, totalmem, platform } from "os";
 
 class BotInfo extends Command {
 
@@ -25,9 +25,9 @@ class BotInfo extends Command {
 • Channels       :: ${this.client.channels.cache.size.toLocaleString()}
 • Discord.js     :: v${version}
 • Node           :: ${process.version}
-• CPU            :: ${os.cpus()[0].model} (x${os.cpus().length})
-• Memory         :: ${Math.round(os.totalmem() / 1024 / 1024 / 1024)} GB
-• OS             :: ${this.client.utils.properCase(os.platform() === "win32" ? "windows" : os.platform())}`;
+• CPU            :: ${cpus()[0].model} (x${cpus().length})
+• Memory         :: ${Math.round(totalmem() / 1024 / 1024 / 1024)} GB
+• OS             :: ${this.client.utils.properCase(platform() === "win32" ? "windows" : platform())}`;
 
         const embed = new MessageEmbed()
             .setAuthor("Bot Information", message.guild.iconURL())
@@ -50,4 +50,4 @@ class BotInfo extends Command {
     }
 }
 
-module.exports = BotInfo;
+export default BotInfo;

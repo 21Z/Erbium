@@ -1,6 +1,6 @@
-const Command = require("../../Base/Command.js");
-const { MessageEmbed } = require("discord.js");
-const YouTube = require("youtube-sr").default;
+import Command from "../../Base/Command.js";
+import { MessageEmbed } from "discord.js";
+import { YouTube } from "youtube-sr";
 
 class YouTubeSearch extends Command {
 
@@ -37,4 +37,4 @@ class YouTubeSearch extends Command {
 
 }
 
-module.exports = YouTubeSearch;
+export default YouTubeSearch;

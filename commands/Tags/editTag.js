@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class EditTag extends Command {
 
@@ -35,4 +35,4 @@ class EditTag extends Command {
 
 }
 
-module.exports = EditTag;
+export default EditTag;

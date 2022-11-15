@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class Skip extends Command {
 
@@ -27,4 +27,4 @@ class Skip extends Command {
 
 }
 
-module.exports = Skip;
+export default Skip;

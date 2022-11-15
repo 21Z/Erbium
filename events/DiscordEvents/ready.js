@@ -1,5 +1,5 @@
-const Event = require("../../Base/Event.js");
-const logger = require("../../utils/Logger.js");
+import Event from "../../Base/Event.js";
+import { success } from "../../utils/Logger.js";
 
 class Ready extends Event {
 
@@ -8,11 +8,11 @@ class Ready extends Event {
     }
 
     run() {
-        logger.success("Bot is online!");
+        success("Bot is online!");
         
         this.client.user.setActivity("Discord Bot List", { type: "COMPETING" });
     }
 
 }
 
-module.exports = Ready;
+export default Ready;

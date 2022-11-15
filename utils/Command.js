@@ -1,4 +1,4 @@
-const { Collection } = require("discord.js");
+import { Collection } from "discord.js";
 
 class Command {
 
@@ -40,4 +40,4 @@ class Command {
 
 }
 
-module.exports = Command;
+export default Command;

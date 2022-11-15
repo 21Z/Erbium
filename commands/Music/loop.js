@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class Loop extends Command {
 
@@ -37,4 +37,4 @@ class Loop extends Command {
 
 }
 
-module.exports = Loop;
+export default Loop;

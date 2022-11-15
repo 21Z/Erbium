@@ -1,3 +1,7 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const config = {
     COMMANDS_DIR: `${__dirname}/commands`, // commands dir
     EVENTS_DIR: `${__dirname}/events/DiscordEvents`, // events dir
@@ -27,4 +31,4 @@ const config = {
     CLIENT_SECRET: process.env.CLIENT_SECRET
 };
 
-module.exports = config;
+export default config;

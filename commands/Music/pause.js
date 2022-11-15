@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class Pause extends Command {
 
@@ -27,4 +27,4 @@ class Pause extends Command {
 
 }
 
-module.exports = Pause;
+export default Pause;

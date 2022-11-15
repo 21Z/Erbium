@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class EightD extends Command {
 
@@ -29,4 +29,4 @@ class EightD extends Command {
 
 }
 
-module.exports = EightD;
+export default EightD;

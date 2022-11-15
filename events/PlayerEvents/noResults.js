@@ -1,4 +1,4 @@
-const Event = require("../../Base/Event.js");
+import Event from "../../Base/Event.js";
 
 class NoResults extends Event {
 
@@ -12,4 +12,4 @@ class NoResults extends Event {
 
 }
 
-module.exports = NoResults;
+export default NoResults;

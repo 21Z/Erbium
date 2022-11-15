@@ -1,4 +1,4 @@
-const Event = require("../../Base/Event.js");
+import Event from "../../Base/Event.js";
 
 class QueueEnd extends Event {
 
@@ -12,4 +12,4 @@ class QueueEnd extends Event {
 
 }
 
-module.exports = QueueEnd;
+export default QueueEnd;

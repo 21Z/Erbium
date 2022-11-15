@@ -1,5 +1,5 @@
-const Event = require("../../Base/Event.js");
-const logger = require("../../utils/Logger.js");
+import Event from "../../Base/Event.js";
+import { error } from "../../utils/Logger.js";
 const cooldowns = new (require("discord.js").Collection)();
 
 class Message extends Event {
@@ -54,10 +54,10 @@ class Message extends Event {
             await command.run(message, args);
         } catch(e) {
             await message.reply(`❌ | **Error Ahoy!**\`\`\`js\n${e.toString()}\`\`\``).catch(() => {});
-            logger.error(`Command: ${command.help.name} - ${e.toString()}`);
+            error(`Command: ${command.help.name} - ${e.toString()}`);
         }
     }
 
 }
 
-module.exports = Message;
+export default Message;

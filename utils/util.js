@@ -1,6 +1,6 @@
-const { GuildMember } = require("discord.js");
-const moment = require("moment");
-require("moment-duration-format")(moment);
+import moment from "moment";
+import "moment-duration-format";
+(moment);
 
 class Util {
 
@@ -48,4 +48,4 @@ class Util {
     }
 }
 
-module.exports = Util;
+export default Util;

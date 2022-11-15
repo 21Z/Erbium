@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class Shuffle extends Command {
 
@@ -29,4 +29,4 @@ class Shuffle extends Command {
 
 }
 
-module.exports = Shuffle;
+export default Shuffle;

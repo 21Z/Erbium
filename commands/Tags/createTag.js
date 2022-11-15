@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class CreateTag extends Command {
 
@@ -38,4 +38,4 @@ class CreateTag extends Command {
 
 }
 
-module.exports = CreateTag;
+export default CreateTag;

@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class Resume extends Command {
 
@@ -30,4 +30,4 @@ class Resume extends Command {
 
 }
 
-module.exports = Resume;
+export default Resume;

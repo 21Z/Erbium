@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class DeleteTag extends Command {
 
@@ -27,4 +27,4 @@ class DeleteTag extends Command {
 
 }
 
-module.exports = DeleteTag;
+export default DeleteTag;

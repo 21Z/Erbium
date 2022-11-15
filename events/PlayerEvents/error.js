@@ -1,5 +1,5 @@
-const Event = require("../../Base/Event.js");
-const { Constants } = require("discord-player");
+import Event from "../../Base/Event.js";
+import { Constants } from "discord-player";
 
 class PlayerErrorEvent extends Event {
 
@@ -31,4 +31,4 @@ class PlayerErrorEvent extends Event {
 
 }
 
-module.exports = PlayerErrorEvent;
+export default PlayerErrorEvent;

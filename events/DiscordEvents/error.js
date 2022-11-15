@@ -1,5 +1,5 @@
-const Event = require("../../Base/Event.js");
-const logger = require("../../utils/Logger.js");
+import Event from "../../Base/Event.js";
+import { error } from "../../utils/Logger.js";
 
 class ErrorEvent extends Event {
 
@@ -8,9 +8,9 @@ class ErrorEvent extends Event {
     }
 
     run(e) {
-        logger.error(`ERROR :- ${e}`);
+        error(`ERROR :- ${e}`);
     }
 
 }
 
-module.exports = ErrorEvent;
+export default ErrorEvent;

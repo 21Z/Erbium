@@ -1,4 +1,4 @@
-const { Structures } = require("discord.js");
+import { Structures } from "discord.js";
 
 Structures.extend("User", BaseUser => {
     return class User extends BaseUser {

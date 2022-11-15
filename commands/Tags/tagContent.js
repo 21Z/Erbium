@@ -1,5 +1,5 @@
-const Command = require("../../Base/Command");
-const { Util } = require("discord.js");
+import Command from "../../Base/Command";
+import { Util } from "discord.js";
 
 class TagContent extends Command {
 
@@ -38,4 +38,4 @@ class TagContent extends Command {
 
 }
 
-module.exports = TagContent;
+export default TagContent;

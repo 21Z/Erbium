@@ -1,7 +1,7 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command.js";
 
 // for Eval
-const Discord = require("discord.js");
+import Discord from "discord.js";
 
 class Eval extends Command {
 
@@ -34,4 +34,4 @@ class Eval extends Command {
 
 }
 
-module.exports = Eval;
+export default Eval;

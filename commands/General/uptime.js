@@ -1,5 +1,5 @@
-const Command = require("../../Base/Command.js");
-const { MessageEmbed } = require("discord.js");
+import Command from "../../Base/Command.js";
+import { MessageEmbed } from "discord.js";
 
 class Uptime extends Command {
 
@@ -26,4 +26,4 @@ class Uptime extends Command {
 
 }
 
-module.exports = Uptime;
+export default Uptime;

@@ -1,6 +1,6 @@
-const Command = require("../../Base/Command.js");
-const { MessageAttachment } = require("discord.js");
-const { Canvas: Canvacord } = require("canvacord");
+import Command from "../../Base/Command.js";
+import { MessageAttachment } from "discord.js";
+import { Canvas as Canvacord } from "canvacord";
 
 class Spank extends Command {
 
@@ -26,4 +26,4 @@ class Spank extends Command {
 
 }
 
-module.exports = Spank;
+export default Spank;

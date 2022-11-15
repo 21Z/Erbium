@@ -1,5 +1,5 @@
-const Event = require("../../Base/Event.js");
-const logger = require("../../utils/Logger.js");
+import Event from "../../Base/Event.js";
+import { warn } from "../../utils/Logger.js";
 
 class Warn extends Event {
 
@@ -8,9 +8,9 @@ class Warn extends Event {
     }
 
     run(message) {
-        logger.warn(`WARN :- ${message}`);
+        warn(`WARN :- ${message}`);
     }
 
 }
 
-module.exports = Warn;
+export default Warn;

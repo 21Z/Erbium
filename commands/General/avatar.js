@@ -1,5 +1,5 @@
-const Command = require("../../Base/Command.js");
-const { MessageEmbed } = require("discord.js");
+import Command from "../../Base/Command.js";
+import { MessageEmbed } from "discord.js";
 
 class Avatar extends Command {
 
@@ -28,4 +28,4 @@ class Avatar extends Command {
 
 }
 
-module.exports = Avatar;
+export default Avatar;

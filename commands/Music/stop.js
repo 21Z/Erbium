@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class Stop extends Command {
 
@@ -27,4 +27,4 @@ class Stop extends Command {
 
 }
 
-module.exports = Stop;
+export default Stop;

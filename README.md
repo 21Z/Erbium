@@ -5,23 +5,29 @@ Erbium is a multipurpose discord bot.
 
 ![logo](https://raw.githubusercontent.com/21Z/Erbium/main/assets/ersm.png)
 
+# Status
+Under Development 🚧
+
 # Installing
-👉 Clone this repo: `git clone https://github.com/21Z/Erbium`
+👉 Clone this repo: `git clone https://github.com/Snowflake107/Erbium`
 
-👉 Install dependencies with `npm install`
+👉 Install dependencies with `yarn` or `npm install`
 
-👉 Rename `.env.example` to `.env` and put your fill up
+👉 Rename `.env.example` to `.env` and fill up
 
 👉 Rename `config.example.js` to `config.js` and fill up
 
-👉 Start your bot using `npm start`
+👉 Start your bot using `yarn start` or `npm start`
 
 # Requirements
 ## Discord.js
 **v13**
 
 ## Node.js
-**v16** or higher
+**v16**
+
+# Hosting
+This project uses local db **[better-sqlite3](https://npmjs.com/package/better-sqlite3)**, which is not persistent in **[Heroku](https://heroku.com)** or **[repl.it](https://repl.it)**. Therefore, find a good hosting service. If you need a free hosting for your bot with great uptime, check out **[BlueFoxHost](https://bluefoxhost.com)**.
 
 # License
 **GPL-3.0**

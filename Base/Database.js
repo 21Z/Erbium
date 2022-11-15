@@ -1,4 +1,4 @@
-const { Database } = require("@devsnowflake/quick.db");
+import { Database } from "@devsnowflake/quick.db";
 
 class ErbiumDb {
 
@@ -21,4 +21,4 @@ class ErbiumDb {
 
 }
 
-module.exports = ErbiumDb;
+export default ErbiumDb;

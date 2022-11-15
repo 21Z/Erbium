@@ -1,5 +1,5 @@
-const Command = require("../../Base/Command.js");
-const { MessageEmbed } = require("discord.js");
+import Command from "../../Base/Command.js";
+import { MessageEmbed } from "discord.js";
 
 class Discrim extends Command {
 
@@ -29,4 +29,4 @@ class Discrim extends Command {
 
 }
 
-module.exports = Discrim;
+export default Discrim;

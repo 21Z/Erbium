@@ -1,4 +1,4 @@
-const Event = require("../../Base/Event.js");
+import Event from "../../Base/Event.js";
 
 class ConnectionCreate extends Event {
 
@@ -12,4 +12,4 @@ class ConnectionCreate extends Event {
 
 }
 
-module.exports = ConnectionCreate;
+export default ConnectionCreate;

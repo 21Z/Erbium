@@ -1,4 +1,4 @@
-const Event = require("../../Base/Event.js");
+import Event from "../../Base/Event.js";
 
 class TrackStart extends Event {
 
@@ -12,4 +12,4 @@ class TrackStart extends Event {
 
 }
 
-module.exports = TrackStart;
+export default TrackStart;

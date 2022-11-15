@@ -1,5 +1,5 @@
-const Command = require("../../Base/Command");
-const docs = require("snowflake-studio-docs");
+import Command from "../../Base/Command.js";
+import docs from "snowflake-studio-docs";
 
 class Docs extends Command {
 
@@ -63,4 +63,4 @@ class Docs extends Command {
 
 }
 
-module.exports = Docs;
+export default Docs;

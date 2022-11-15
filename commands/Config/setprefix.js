@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command.js";
 
 class SetPrefix extends Command {
 
@@ -25,4 +25,4 @@ class SetPrefix extends Command {
 
 }
 
-module.exports = SetPrefix;
+export default SetPrefix;

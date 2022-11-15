@@ -1,5 +1,5 @@
-const { MessageEmbed } = require("discord.js");
-const Command = require("../../Base/Command");
+import { MessageEmbed } from "discord.js";
+import Command from "../../Base/Command";
 
 class NowPlaying extends Command {
 
@@ -40,4 +40,4 @@ class NowPlaying extends Command {
 
 }
 
-module.exports = NowPlaying;
+export default NowPlaying;

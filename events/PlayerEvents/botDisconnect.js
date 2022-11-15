@@ -1,4 +1,4 @@
-const Event = require("../../Base/Event.js");
+import Event from "../../Base/Event.js";
 
 class BotDisconnect extends Event {
 
@@ -12,4 +12,4 @@ class BotDisconnect extends Event {
 
 }
 
-module.exports = BotDisconnect;
+export default BotDisconnect;

@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class Play extends Command {
 
@@ -25,4 +25,4 @@ class Play extends Command {
 
 }
 
-module.exports = Play;
+export default Play;

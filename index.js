@@ -1,13 +1,10 @@
-const { config } = require("dotenv");
-const NodeFetch = require("node-fetch");
+import NodeFetch from "node-fetch";
 
-// load .env
-config();
 
 // need some stuff globally
 Object.defineProperties(globalThis, {
     fetch: {
-        value: NodeFetch.default ?? NodeFetch,
+        value: NodeFetch ?? NodeFetch,
         writable: true,
         configurable: true,
         enumerable: false
@@ -15,7 +12,8 @@ Object.defineProperties(globalThis, {
 });
 
 // load structures
-require("./Structures/loader.js").load();
+import { load } from "./Structures/loader.js";
+load()
 
 // instantiate client
-require("./client.js");
+import "./client.js";

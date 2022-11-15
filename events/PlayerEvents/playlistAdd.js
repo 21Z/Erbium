@@ -1,4 +1,4 @@
-const Event = require("../../Base/Event.js");
+import Event from "../../Base/Event.js";
 
 class PlaylistAdd extends Event {
 
@@ -12,4 +12,4 @@ class PlaylistAdd extends Event {
 
 }
 
-module.exports = PlaylistAdd;
+export default PlaylistAdd;

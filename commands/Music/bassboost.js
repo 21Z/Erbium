@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class BassBoost extends Command {
 
@@ -30,4 +30,4 @@ class BassBoost extends Command {
 
 }
 
-module.exports = BassBoost;
+export default BassBoost;

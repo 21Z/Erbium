@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class AutoPlay extends Command {
 
@@ -27,4 +27,4 @@ class AutoPlay extends Command {
 
 }
 
-module.exports = AutoPlay;
+export default AutoPlay;

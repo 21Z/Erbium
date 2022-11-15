@@ -1,4 +1,4 @@
-const Command = require("../../Base/Command");
+import Command from "../../Base/Command";
 
 class Nightcore extends Command {
 
@@ -29,4 +29,4 @@ class Nightcore extends Command {
 
 }
 
-module.exports = Nightcore;
+export default Nightcore;

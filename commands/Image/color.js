@@ -1,6 +1,6 @@
-const Command = require("../../Base/Command");
-const { Canvas: Canvacord } = require("canvacord");
-const { MessageAttachment } = require("discord.js");
+import Command from "../../Base/Command";
+import { Canvas as Canvacord } from "canvacord";
+import { MessageAttachment } from "discord.js";
 
 class Color extends Command {
 
@@ -25,4 +25,4 @@ class Color extends Command {
 
 }
 
-module.exports = Color;
+export default Color;

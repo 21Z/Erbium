@@ -1,5 +1,5 @@
-const { Util, MessageEmbed } = require("discord.js");
-const Command = require("../../Base/Command");
+import { Util, MessageEmbed } from "discord.js";
+import Command from "../../Base/Command";
 
 class Queue extends Command {
 
@@ -37,4 +37,4 @@ class Queue extends Command {
 
 }
 
-module.exports = Queue;
+export default Queue;

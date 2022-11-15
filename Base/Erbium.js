@@ -1,10 +1,10 @@
-const { Client } = require("discord.js");
-const fs = require("fs");
-const config = require("../config.js");
-const Command = require("../utils/Command.js");
-const logger = require("../utils/Logger.js");
-const Database = require("./Database");
-const { Player } = require("discord-player");
+import { Client } from "discord.js";
+import { readdirSync } from "fs";
+import config from "../config.js";
+import Util from "../utils/util.js"
+import Command from "../utils/Command.js";
+import logger from "../utils/Logger.js";
+import Database from "./Database";
 
 class Erbium extends Client {
 
@@ -13,13 +13,13 @@ class Erbium extends Client {
             ws: { properties: { $browser: "Discord Android" } },
             intents: [
                 "GUILDS",
-                "GUILD_BANS",
-                "GUILD_INVITES",
+                "GUILD_EMOJIS_AND_STICKERS",
                 "GUILD_MEMBERS",
                 "GUILD_MESSAGES",
                 "GUILD_MESSAGE_REACTIONS",
+                "GUILD_MESSAGE_TYPING",
                 "GUILD_PRESENCES",
-                "GUILD_VOICE_STATES"
+                "GUILD_VOICE_STATES",
             ],
             allowedMentions: {
                 repliedUser: false
@@ -28,20 +28,8 @@ class Erbium extends Client {
 
         this.commands = new Command(this);
         this.config = config;
-        this.utils = require("../utils/util");
+        this.utils = Util
         this.db = new Database(this);
-        this.player = new Player(this, {
-            enableLive: true,
-            leaveOnEmpty: true,
-            leaveOnEnd: true,
-            leaveOnStop: true,
-            autoSelfDeaf: true,
-            ytdlDownloadOptions: {
-                requestOptions: {
-                    cookie: "YOUTUBE_COOKIE" in process.env ? Buffer.from(process.env.YOUTUBE_COOKIE, "base64").toString() : undefined
-                }
-            }
-        });
 
         Object.defineProperties(this, {
             config: { enumerable: false },
@@ -52,22 +40,21 @@ class Erbium extends Client {
         return this.db;
     }
 
-    registerCommands() {
+    async registerCommands() {
         const commandsDir = this.config.COMMANDS_DIR;
 
         // load commands
-        const CATS = fs.readdirSync(commandsDir);
+        const CATS = readdirSync(commandsDir);
 
         for (const CAT of CATS) {
             logger.info(`[${CATS.indexOf(CAT) + 1}/${CATS.length}] Loading category ${CAT}`);
-            const COMMANDS = fs.readdirSync(`${commandsDir}/${CAT}`).filter(x => x.endsWith(".js"));
+            const COMMANDS = readdirSync(`${commandsDir}/${CAT}`).filter(x => x.endsWith(".js"));
 
             let i = 0;
             for (const c of COMMANDS) {
                 logger.info(`[${i + 1}/${COMMANDS.length}] Loading command ${c} (${CAT})`);
-
-                const cmd = require(`${commandsDir}/${CAT}/${c}`);
-                const command = new cmd(this);
+                const cmd = await import(`${commandsDir}/${CAT}/${c}`); 
+                const command = new cmd.default(this);
 
                 command.setCategory(CAT);
                 command.setPath(`${commandsDir}/${CAT}/${c}`);
@@ -83,46 +70,17 @@ class Erbium extends Client {
         }
     }
 
-    registerPlayerEvents() {
-        const eventsDir = this.config.PLAYER_EVENTS_DIR;
-
-        // load events
-        const EVENTS = fs.readdirSync(eventsDir).filter(x => x.endsWith(".js"));
-
-        let i = 0;
-
-        for (const event of EVENTS) {
-            logger.info(`[${i + 1}/${EVENTS.length}] Loading player event ${event}`);
-            const ev = require(`${eventsDir}/${event}`);
-            const evn = new ev(this);
-
-            void this.player.on(event.replace(".js", ""), async (...args) => {
-                try {
-                    await evn.run(...args);
-                } catch (e) {
-                    logger.error(`Event: ${event.replace(".js", "")} :- ${e.toString()}`);
-                }
-            });
-
-            delete require.cache[require.resolve(`${eventsDir}/${event}`)];
-
-            logger.success(`[${i + 1}/${event.length}] Loaded player event ${event}`);
-
-            i++;
-        }
-    }
-
-    registerEvents() {
+    async registerEvents() {
         const eventsDir = this.config.EVENTS_DIR;
 
         // load events
-        const EVENTS = fs.readdirSync(eventsDir).filter(x => x.endsWith(".js"));
+        const EVENTS = readdirSync(eventsDir).filter(x => x.endsWith(".js"));
 
         let i = 0;
 
         for (const event of EVENTS) {
             logger.info(`[${i + 1}/${EVENTS.length}] Loading event ${event}`);
-            const ev = require(`${eventsDir}/${event}`);
+            const ev = await import(`${eventsDir}/${event}`);
             const evn = new ev(this);
 
             void this.on(event.replace(".js", ""), async (...args) => {
@@ -160,11 +118,10 @@ class Erbium extends Client {
 
         this.registerCommands();
         this.registerEvents();
-        this.registerPlayerEvents();
 
         return await super.login();
     }
 
 }
 
-module.exports = Erbium;
+export default Erbium;
