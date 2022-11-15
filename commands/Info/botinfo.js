@@ -28,6 +28,7 @@ class BotInfo extends Command {
 • CPU            :: ${os.cpus()[0].model} (x${os.cpus().length})
 • Memory         :: ${Math.round(os.totalmem() / 1024 / 1024 / 1024)} GB
 • OS             :: ${this.client.utils.properCase(os.platform() === "win32" ? "windows" : os.platform())}`;
+        
         const embed = new MessageEmbed()
             .setAuthor("Bot Information", message.guild.iconURL())
             .setThumbnail(this.client.user.displayAvatarURL({ size: 4096 }))
