@@ -20,7 +20,7 @@
   "homepage": "https://github.com/21Z/Erbium#readme",
   "dependencies": {
     "@devsnowflake/quick.db": "^2.0.3",
-    "@discord-player/extractor": "^2.0.2",
+    "@discord-player/extractor": "^3.0.0",
     "@discordjs/opus": "^0.8.0",
     "canvacord": "^5.2.0",
     "chalk": "^4.1.2",
