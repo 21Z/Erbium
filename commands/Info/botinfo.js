@@ -28,7 +28,6 @@ class BotInfo extends Command {
 • CPU            :: ${os.cpus()[0].model} (x${os.cpus().length})
 • Memory         :: ${Math.round(os.totalmem() / 1024 / 1024 / 1024)} GB
 • OS             :: ${this.client.utils.properCase(os.platform() === "win32" ? "windows" : os.platform())}`;
-
         const embed = new MessageEmbed()
             .setAuthor("Bot Information", message.guild.iconURL())
             .setThumbnail(this.client.user.displayAvatarURL({ size: 4096 }))
@@ -42,7 +41,7 @@ class BotInfo extends Command {
             .addField("Owners", `${admins.map(m => `<@!${m}>`).join(", ")}`, true)
             .addField("Created At", this.client.user.createdAt.toString())
             .addField("\u200b", `\`\`\`asciidoc\n${SystemString}\`\`\``)
-            .addField("GitHub (Source Code)", "**[Click Here](https://github.com/erbiumbot/Erbium)**")
+            .addField("GitHub (Source Code)", "**[Click Here](https://github.com/21Z/Erbium)**")
             .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL())
             .setTimestamp();
 
