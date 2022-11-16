@@ -2,30 +2,31 @@ const Event = require("../../Base/Event.js");
 const logger = require("../../utils/Logger.js");
 const cooldowns = new (require("discord.js").Collection)();
 
-class Message extends Event {
+class MessageCreate extends Event {
 
     constructor(client) {
         super(client);
     }
 
     async run(message) {
+        message.author.dev = this.client.config.OWNER
         // ignore bots
         if (message.author.bot) return;
         
         // ignore dm messages
         if (message.channel.type === "dm") return;
         
-        const prefix = message.guild.prefix;
+        const prefix = this.client.config.PREFIX;
         
         if (new RegExp(`^<@!?${this.client.user.id}>( |)$`).test(message.content)) return message.reply(`My prefix for this server is **"\`${prefix}\`"**!`);
 
         // ignore non-prefix
-        if (message.content.toLowerCase().indexOf(prefix.toLowerCase()) !== 0) return;
+        // if (message.content.toLowerCase().indexOf(prefix.toLowerCase()) !== 0) return;
 
         // dev mode
         if (this.client.config.DEV_MODE && !message.author.dev) return message.reply("❌ | Bot is set to `DEV_ONLY` mode.");
-
-        const [cmd, args] = message.args.default;
+        const args = message.content.slice(prefix.length).trim().split(' ');
+        const cmd = args.shift().toLowerCase();
         const command = this.client.commands.resolve(cmd);
 
         // ignore invalid commands
@@ -60,4 +61,4 @@ class Message extends Event {
 
 }
 
-module.exports = Message;
+module.exports = MessageCreate;
