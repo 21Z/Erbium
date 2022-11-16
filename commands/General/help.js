@@ -41,7 +41,7 @@ class Help extends Command {
             const embed = new MessageEmbed()
                 .setTitle("Commands")
                 .setColor(embedColor)
-                .addFields({ name: 'Category', value: ctg, inline: true })
+                .addFields({ name: 'Category', value: ctg})
                 .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL()})
                 .setTimestamp();
 
