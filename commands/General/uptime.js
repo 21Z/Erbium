@@ -18,7 +18,7 @@ class Uptime extends Command {
             .setTitle("Bot Uptime")
             .setDescription(this.client.utils.formatDuration(this.client.uptime))
             .setColor(0x4d5e94)
-            .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL())
+            .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
         message.reply(embed);

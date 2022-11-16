@@ -24,11 +24,13 @@ class YouTubeSearch extends Command {
         const embed = new MessageEmbed()
             .setTitle("YouTube Search")
             .setImage(res.thumbnail.displayThumbnailURL("ultrares"))
-            .addField("Title", `[${res.title}](${res.url})`)
-            .addField("Author", `[${res.channel.name}](${res.channel.url})`)
-            .addField("Views", res.views.toLocaleString())
-            .addField("Duration", res.durationFormatted)
-            .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL())
+            .addFields(
+                { name: "Title", value: `[${res.title}](${res.url})`},
+                { name: "Author", value: `[${res.channel.name}](${res.channel.url})`},
+                { name: "Views", value: res.views.toLocaleString()},
+                { name: "Duration", value: res.durationFormatted},
+            )
+            .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp()
             .setColor("RED");
 

@@ -19,7 +19,7 @@ class Avatar extends Command {
         const embed = new MessageEmbed()
             .setTitle(user.tag)
             .setImage(user.displayAvatarURL({ size: 2048, dynamic: true }))
-            .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL())
+            .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp()
             .setColor(0x4d5e94);
 

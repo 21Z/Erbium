@@ -21,7 +21,7 @@ class MessageCreate extends Event {
         if (new RegExp(`^<@!?${this.client.user.id}>( |)$`).test(message.content)) return message.reply(`My prefix for this server is **"\`${prefix}\`"**!`);
 
         // ignore non-prefix
-        // if (message.content.toLowerCase().indexOf(prefix.toLowerCase()) !== 0) return;
+        if (message.content.toLowerCase().indexOf(prefix.toLowerCase()) !== 0) return;
 
         // dev mode
         if (this.client.config.DEV_MODE && !message.author.dev) return message.reply("❌ | Bot is set to `DEV_ONLY` mode.");
@@ -54,7 +54,7 @@ class MessageCreate extends Event {
         try {
             await command.run(message, args);
         } catch(e) {
-            await message.reply(`❌ | **Error Ahoy!**\`\`\`js\n${e.toString()}\`\`\``).catch(() => {});
+            await message.reply(`❌ | **Error!**\`\`\`js\n${e.toString()}\`\`\``).catch(() => {});
             logger.error(`Command: ${command.help.name} - ${e.toString()}`);
         }
     }

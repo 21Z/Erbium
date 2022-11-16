@@ -25,15 +25,16 @@ class Pokemon extends Command {
             .setTitle("Pokémon Info")
             .setThumbnail(pokemon.imageURL)
             .setColor("YELLOW")
-            .addField("Name", pokemon.name, true)
-            .addField("ID", pokemon.id, true)
-            .addField("Base Experience", pokemon.baseExperience, true)
-            .addField("Height", pokemon.height, true)
-            .addField("Weight", pokemon.weight, true)
-            .addField("Abilities", pokemon.abilities.map(m => `\`${m.ability.name}\``).join(", ") || "None")
-            .addField("Stats", pokemon.stats.map(m => `**${m.stat.name}**: \`${m.base_stat}\``).join("\n") || "None")
-            .addField("Types", pokemon.types.map(m => `\`${m.type.name}\``).join(", ") || "None")
-            .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL())
+            .addFields(
+                { name: 'Name', value: pokemon.name, inline: true },
+                { name: 'ID', value: pokemon.id, inline: true },
+                { name: 'Base Experience', value: pokemon.baseExperience, inline: true },
+                { name: 'Height', value: pokemon.height, inline: true },
+                { name: 'Weight', value: pokemon.weight, inline: true },
+                { name: 'Abilities', value: pokemon.abilities.map(m => `\`${m.ability.name}\``).join(", ") || "None" },
+                { name: 'Stats', value: pokemon.stats.map(m => `**${m.stat.name}**: \`${m.base_stat}\``).join("\n") || "None" },
+            )
+            .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
         message.reply(embed);

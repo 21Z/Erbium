@@ -30,7 +30,7 @@ class CountryFlag extends Command {
             .setTitle(cf.name)
             .setImage(cf.flag)
             .setColor("RED")
-            .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL())
+            .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
         message.reply(embed);

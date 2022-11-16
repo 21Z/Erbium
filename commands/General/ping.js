@@ -14,16 +14,36 @@ class Ping extends Command {
     }
 
     async run(message) {
-        const m = await message.reply("🔃 Pinging...");
+        const before = Date.now();
+        const msg = await message.reply({ content: "🏓" });
+        const latency = Date.now() - before;
+        const wsLatency = this.client.ws.ping.toFixed(0);
 
         const embed = new MessageEmbed()
-            .addField("WebSocket Latency", `${Math.round(this.client.ws.ping)}ms`)
-            .addField("HTTP Latency", `${m.createdTimestamp - message.createdTimestamp}ms`)
-            .setColor(0x4d5e94)
+        .addFields(
+            {
+                name: "📶 **|** API",
+                value: `**\`${latency}\`** ms`,
+                inline: true
+            },
+            {
+                name: "🌐 **|** WebSocket",
+                value: `**\`${wsLatency}\`** ms`,
+                inline: true
+            }
+        )
+            .setAuthor({
+                name: "🏓 PONG",
+                iconURL: message.author.displayAvatarURL()
+            })
+            .setFooter({
+                text: `Requested by: ${message.author.tag}`,
+                iconURL: message.author.displayAvatarURL()
+            })
             .setTimestamp()
-            .setTitle("Pong!");
+            .setColor(0x4d5e94)
         
-        m.edit({ embed, content: "" });
+        msg.edit({ embeds: [embed], content: "\u200b" });
     }
 
 }

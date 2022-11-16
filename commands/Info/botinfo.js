@@ -28,22 +28,24 @@ class BotInfo extends Command {
 • CPU            :: ${os.cpus()[0].model} (x${os.cpus().length})
 • Memory         :: ${Math.round(os.totalmem() / 1024 / 1024 / 1024)} GB
 • OS             :: ${this.client.utils.properCase(os.platform() === "win32" ? "windows" : os.platform())}`;
-        
+
         const embed = new MessageEmbed()
-            .setAuthor("Bot Information", message.guild.iconURL())
+            .setAuthor({ name: "Bot Information", iconURL: message.guild.iconURL() })
             .setThumbnail(this.client.user.displayAvatarURL({ size: 4096 }))
-            .setDescription(`${this.client.user.username} is an open-source multipurpose discord bot developed by **[Snowflake](https://github.com/Snowflake107)**.`)
+            .setDescription(`${this.client.user.username} is an open-source multipurpose discord bot developed by **[21Z](https://github.com/21Z)**.`)
             .setColor("RANDOM")
-            .addField("Name", this.client.user.username, true)
-            .addField("Discriminator", this.client.user.discriminator, true)
-            .addField("Type", this.client.user.bot ? "Bot" : "User", true)
-            .addField("Prefix", message.guild.prefix, true)
-            .addField("ID", this.client.user.id, true)
-            .addField("Owners", `${admins.map(m => `<@!${m}>`).join(", ")}`, true)
-            .addField("Created At", this.client.user.createdAt.toString())
-            .addField("\u200b", `\`\`\`asciidoc\n${SystemString}\`\`\``)
-            .addField("GitHub (Source Code)", "**[Click Here](https://github.com/21Z/Erbium)**")
-            .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL())
+            .addFields(
+                { name: "Name", value: this.client.user.username, inline: true },
+                { name: "Discriminator", value: this.client.user.discriminator, inline: true },
+                { name: "Type", value: this.client.user.bot ? "Bot" : "User", inline: true },
+                { name: "Prefix", value: message.guild.prefix, inline: true },
+                { name: "ID", value: this.client.user.id, inline: true },
+                { name: "Owners", value: `${admins.map(m => `<@!${m}>`).join(", ")}`, inline: true },
+                { name: "Created At", value: this.client.user.createdAt.toString() },
+                { name: "\u200b", value: `\`\`\`asciidoc\n${SystemString}\`\`\`` },
+                { name: "GitHub (Source Code)", value: "**[Click Here](https://github.com/erbiumbot/Erbium)**" },
+            )
+            .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
         return message.reply(embed);

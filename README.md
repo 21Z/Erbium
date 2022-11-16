@@ -5,6 +5,9 @@ Erbium is a multipurpose discord bot.
 
 ![logo](https://raw.githubusercontent.com/21Z/Erbium/main/assets/ersm.png)
 
+# Status
+Under Development 🚧
+
 # Installing
 👉 Clone this repo: `git clone https://github.com/21Z/Erbium`
 

@@ -15,6 +15,7 @@ class Queue extends Command {
     }
 
     async run(message, args) {
+        const embedColor = (this.client.config.EMBED_COLOR.toUpperCase() ?? "") || "22C9FF"
         if (!message.member.voice.channel) return message.reply("❌ | You are not in a voice channel!");
         if (message.guild.me.voice.channel && message.guild.me.voice.channelID !== message.member.voice.channelID) return message.reply("❌ | You are not in my voice channel!");
 
@@ -27,8 +28,8 @@ class Queue extends Command {
         const embed = new MessageEmbed()
             .setTitle("Queue")
             .setDescription(tracks.join("\n").substring(0, 2048))
-            .setColor("RANDOM")
-            .setFooter(`Total: ${queue.tracks.length}`);
+            .setColor(embedColor)
+            .setFooter({ text: `Total: ${queue.tracks.length}` });
         
         if (queue.playing.thumbnail) embed.setThumbnail(queue.playing.thumbnail);
 

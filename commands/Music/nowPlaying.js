@@ -25,12 +25,14 @@ class NowPlaying extends Command {
 
         const embed = new MessageEmbed()
             .setTitle("Now Playing!")
-            .addField("Title", current.title)
-            .addField("Author", current.author ?? "Unknown Author", true)
-            .addField("Queued by", current.requestedBy.tag, true)
-            .addField("Progress", this.client.player.createProgressBar(message, { timecodes: true, length: 15 }))
+            .addFields(
+            { name: "Title", value: current.title },
+            { name: "Author", value: current.author ?? "Unknown Author", inline: true },
+            { name: "Queued by", value: current.requestedBy.tag, inline: true },
+            { name: "Progress", value: this.client.player.createProgressBar(message, { timecodes: true, length: 15 }) },
+            )
             .setTimestamp()
-            .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL())
+            .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setColor("RED");
 
         if (current.thumbnail) embed.setThumbnail(current.thumbnail);

@@ -5,6 +5,7 @@ const config = {
     DEV_MODE: false, // dev mode
     OWNER: ["1234567890123456"], // Bot owner id
     PREFIX: "er!", // command prefix
+    EMBED_COLOR: "22C9FF", // bot's embed color (hex)
     PORT: process.env.PORT || 3000, // web server port
 
     // discord invite
