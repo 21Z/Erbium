@@ -1,7 +1,6 @@
 const config = {
     COMMANDS_DIR: `${__dirname}/commands`, // commands dir
     EVENTS_DIR: `${__dirname}/events/DiscordEvents`, // events dir
-    PLAYER_EVENTS_DIR: `${__dirname}/events/PlayerEvents`, // player events dir
     DEV_MODE: false, // dev mode
     OWNER: ["1234567890123456"], // Bot owner id
     PREFIX: "er!", // command prefix
