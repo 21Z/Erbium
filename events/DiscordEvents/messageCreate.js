@@ -9,7 +9,7 @@ class MessageCreate extends Event {
     }
 
     async run(message) {
-        message.author.dev = this.client.config.OWNER
+        message.author.dev = this.client.config.OWNER.some(x => x === message.author.id);
         // ignore bots
         if (message.author.bot) return;
         
@@ -47,7 +47,7 @@ class MessageCreate extends Event {
 
         const cooldown = cooldowns.get(`${command.help.name}_${message.author.id}`);
         if (cooldown && (command.cooldown) - (Date.now() - cooldown) > 0) {
-            return message.reply(`❌ | Please wait for **${Math.round(((command.cooldown) - (Date.now() - cooldown)) / 1000)}** seconds before using **\`${command.help.name}\`** command again!`);
+            return message.reply(`❌ | Please wait for **${Math.round(((command.cooldown) - (Date.now() - cooldown)) / 1000)}** second(s) before using **\`${command.help.name}\`** command again!`);
         }
         cooldowns.set(`${command.help.name}_${message.author.id}`, Date.now());
 

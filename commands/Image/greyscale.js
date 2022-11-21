@@ -21,7 +21,7 @@ class Greyscale extends Command {
         const img = await Canvacord.greyscale(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "greyscale.png"));
+        return message.reply({ files: [img] });
     }
 
 }

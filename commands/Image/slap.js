@@ -21,7 +21,7 @@ class Slap extends Command {
         const img = await Canvacord.slap(message.author.displayAvatarURL({ format: "png", size: 2048 }), user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "slap.png"));
+        return message.reply({ files: [img] });
     }
 
 }

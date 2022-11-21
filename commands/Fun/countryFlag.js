@@ -25,7 +25,7 @@ class CountryFlag extends Command {
         }).catch(e => { });
 
         if (!cf || !cf.name) return message.reply("❌ | Something went wrong :(");
-
+        console.log(cf)
         const embed = new MessageEmbed()
             .setTitle(cf.name)
             .setImage(cf.flag)
@@ -33,7 +33,7 @@ class CountryFlag extends Command {
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
-        message.reply(embed);
+        message.reply({ embeds: [embed] });
     }
 
 }

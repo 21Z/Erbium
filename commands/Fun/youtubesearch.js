@@ -34,7 +34,7 @@ class YouTubeSearch extends Command {
             .setTimestamp()
             .setColor("RED");
 
-        return message.reply(embed);
+        return message.reply({ embeds: [embed] });
     }
 
 }

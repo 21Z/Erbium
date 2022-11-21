@@ -32,8 +32,7 @@ class TagInfo extends Command {
             .addFields(
                 { name: 'Name', value: tag.name, inline: true },
                 { name: 'Author', value: tagAuthor ? `${tagAuthor.tag} [\`${tagAuthor.id}\`]` : `\`Unknown User#0000 [\`${tag.author}\`]`, inline: true },
-                { name: '\u200b', value: '\u200b', inline: false },
-                { name: 'Total Uses', value: tag.uses.toLocaleString(), inline: true },
+                { name: 'Total Uses', value: tag.uses.toLocaleString(), inline: false },
                 { name: 'Created At', value: new Date(tag.createdAt).toUTCString(), inline: true },
 
             )
@@ -42,7 +41,7 @@ class TagInfo extends Command {
             .setTimestamp();
             
 
-        return message.reply(embed);
+        return message.reply({ embeds: [embed] });
     }
 
 }

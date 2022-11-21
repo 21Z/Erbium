@@ -21,7 +21,7 @@ class Sepia extends Command {
         const img = await Canvacord.sepia(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "sepia.png"));
+        return message.reply({ files: [img] });
     }
 
 }

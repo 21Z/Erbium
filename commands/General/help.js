@@ -14,7 +14,7 @@ class Help extends Command {
     }
 
     async run(message, args) {
-        const embedColor = (this.client.config.EMBED_COLOR.toUpperCase() ?? "") || "22C9FF"
+        const embedColor = this.client.config.EMBED_COLOR
         const category = [...new Set(this.client.commands.commands.map(m => m.help.category))];
         const [query] = args;
 
@@ -41,7 +41,7 @@ class Help extends Command {
             const embed = new MessageEmbed()
                 .setTitle("Commands")
                 .setColor(embedColor)
-                .addFields({ name: 'Category', value: ctg})
+                .addFields({ name: 'Category', value: ctg, inline: true })
                 .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL()})
                 .setTimestamp();
 

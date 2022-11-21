@@ -20,7 +20,7 @@ class Color extends Command {
         const image = Canvacord.color(color, false, 2048, 2048);
         const attachment = new MessageAttachment(image, "color.png");
 
-        return message.channel.send(attachment);
+        return message.reply({ files: [img] });
     }
 
 }

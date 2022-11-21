@@ -14,8 +14,5 @@ Object.defineProperties(globalThis, {
     },
 });
 
-// load structures
-require("./Structures/loader.js").load();
-
 // instantiate client
 require("./client.js");

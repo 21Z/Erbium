@@ -21,7 +21,7 @@ class Invert extends Command {
         const img = await Canvacord.invert(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "invert.png"));
+        return message.reply({ files: [img] });
     }
 
 }

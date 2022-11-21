@@ -21,7 +21,7 @@ class Blurpify extends Command {
         const img = await Canvacord.colorfy(user.displayAvatarURL({ format: "png", size: 2048 }), "#4d5e94");
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "blurple.png"));
+        return message.reply({ files: [img] });
     }
 
 }

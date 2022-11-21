@@ -31,7 +31,7 @@ class UserInfo extends Command {
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
-        return message.reply(embed);
+        return message.reply({ embeds: [embed] });
     }
 }
 

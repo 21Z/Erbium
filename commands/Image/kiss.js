@@ -21,7 +21,7 @@ class Kiss extends Command {
         const img = await Canvacord.kiss(message.author.displayAvatarURL({ format: "png", size: 2048 }), user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "kiss.png"));
+        return message.reply({ files: [img] });
     }
 
 }

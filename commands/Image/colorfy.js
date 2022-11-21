@@ -22,7 +22,7 @@ class Colorfy extends Command {
         const img = await Canvacord.colorfy(user.displayAvatarURL({ format: "png", size: 2048 }), `${color}`);
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "color.png"));
+        return message.reply({ files: [img] });
     }
 
 }

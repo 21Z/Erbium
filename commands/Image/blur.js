@@ -21,7 +21,7 @@ class Blur extends Command {
         const img = await Canvacord.blur(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "blur.png"));
+        return message.reply({ files: [img] });
     }
 
 }

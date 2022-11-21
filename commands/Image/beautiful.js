@@ -21,7 +21,7 @@ class Beautiful extends Command {
         const img = await Canvacord.beautiful(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "beautiful.png"));
+        return message.reply({ files: [img] });
     }
 
 }

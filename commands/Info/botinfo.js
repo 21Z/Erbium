@@ -38,7 +38,6 @@ class BotInfo extends Command {
                 { name: "Name", value: this.client.user.username, inline: true },
                 { name: "Discriminator", value: this.client.user.discriminator, inline: true },
                 { name: "Type", value: this.client.user.bot ? "Bot" : "User", inline: true },
-                { name: "Prefix", value: message.guild.prefix, inline: true },
                 { name: "ID", value: this.client.user.id, inline: true },
                 { name: "Owners", value: `${admins.map(m => `<@!${m}>`).join(", ")}`, inline: true },
                 { name: "Created At", value: this.client.user.createdAt.toString() },
@@ -48,7 +47,7 @@ class BotInfo extends Command {
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
-        return message.reply(embed);
+        return message.reply({ embeds: [embed] });
     }
 }
 

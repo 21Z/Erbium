@@ -4,7 +4,6 @@ const config = require("../config.js");
 const Command = require("../utils/Command.js");
 const logger = require("../utils/Logger.js");
 const Database = require("./Database");
-const { Player } = require("discord-player");
 
 class Erbium extends Client {
 
@@ -30,18 +29,6 @@ class Erbium extends Client {
         this.config = config;
         this.utils = require("../utils/util");
         this.db = new Database(this);
-        this.player = new Player(this, {
-            enableLive: true,
-            leaveOnEmpty: true,
-            leaveOnEnd: true,
-            leaveOnStop: true,
-            autoSelfDeaf: true,
-            ytdlDownloadOptions: {
-                requestOptions: {
-                    cookie: "YOUTUBE_COOKIE" in process.env ? Buffer.from(process.env.YOUTUBE_COOKIE, "base64").toString() : undefined
-                }
-            }
-        });
 
         Object.defineProperties(this, {
             config: { enumerable: false },
@@ -80,35 +67,6 @@ class Erbium extends Client {
                 logger.success(`[${i + 1}/${COMMANDS.length}] Loaded command ${c} (${CAT})`);
                 i++;
             }
-        }
-    }
-
-    registerPlayerEvents() {
-        const eventsDir = this.config.PLAYER_EVENTS_DIR;
-
-        // load events
-        const EVENTS = fs.readdirSync(eventsDir).filter(x => x.endsWith(".js"));
-
-        let i = 0;
-
-        for (const event of EVENTS) {
-            logger.info(`[${i + 1}/${EVENTS.length}] Loading player event ${event}`);
-            const ev = require(`${eventsDir}/${event}`);
-            const evn = new ev(this);
-
-            void this.player.on(event.replace(".js", ""), async (...args) => {
-                try {
-                    await evn.run(...args);
-                } catch (e) {
-                    logger.error(`Event: ${event.replace(".js", "")} :- ${e.toString()}`);
-                }
-            });
-
-            delete require.cache[require.resolve(`${eventsDir}/${event}`)];
-
-            logger.success(`[${i + 1}/${event.length}] Loaded player event ${event}`);
-
-            i++;
         }
     }
 
@@ -160,7 +118,6 @@ class Erbium extends Client {
 
         this.registerCommands();
         this.registerEvents();
-        this.registerPlayerEvents();
 
         return await super.login();
     }

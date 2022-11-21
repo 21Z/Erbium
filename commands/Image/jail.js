@@ -21,7 +21,7 @@ class Jail extends Command {
         const img = await Canvacord.jail(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "jail.png"));
+        return message.reply({ files: [img] });
     }
 
 }

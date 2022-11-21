@@ -21,7 +21,7 @@ class Uptime extends Command {
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
-        message.reply(embed);
+        message.reply({ embeds: [embed] });
     }
 
 }

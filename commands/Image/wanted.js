@@ -21,7 +21,7 @@ class Wanted extends Command {
         const img = await Canvacord.wanted(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "wanted.png"));
+        return message.reply({ files: [img] });
     }
 
 }

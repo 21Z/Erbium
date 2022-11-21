@@ -21,7 +21,7 @@ class Rip extends Command {
         const img = await Canvacord.rip(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "rip.png"));
+        return message.reply({ files: [img] });
     }
 
 }

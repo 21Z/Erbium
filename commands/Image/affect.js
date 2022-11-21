@@ -21,7 +21,7 @@ class Affect extends Command {
         const img = await Canvacord.affect(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "affect.png"));
+        return message.reply({ files: [img] });
     }
 
 }

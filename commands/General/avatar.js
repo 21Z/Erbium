@@ -15,15 +15,15 @@ class Avatar extends Command {
 
     async run(message, args) {
         const user = message.mentions.users.first() || this.client.resolveUser(args.join(" ")) || message.author;
-
         const embed = new MessageEmbed()
-            .setTitle(user.tag)
+            .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL() })
+            .setTitle("Avatar")
             .setImage(user.displayAvatarURL({ size: 2048, dynamic: true }))
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp()
             .setColor(0x4d5e94);
 
-        return message.reply(embed);
+        return message.reply({ embeds: [embed] });
     }
 
 }

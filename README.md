@@ -17,7 +17,7 @@ Under Development 🚧
 
 👉 Rename `config.example.js` to `config.js` and fill up
 
-👉 Start your bot using `npm start`
+👉 Start your bot using `yarn start` or `npm start`
 
 # Requirements
 ## Discord.js

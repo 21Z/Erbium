@@ -21,7 +21,7 @@ class Shit extends Command {
         const img = await Canvacord.shit(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
-        return message.reply(new MessageAttachment(img, "shit.png"));
+        return message.reply({ files: [img] });
     }
 
 }

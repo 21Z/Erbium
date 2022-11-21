@@ -18,7 +18,7 @@ class GuessThePokemon extends Command {
         const pokemon = await Spawn().catch(e => { });
         if (!pokemon) return message.reply("Opps! Something went wrong :(");
 
-        const filter = m => m.author.id === message.author.id;
+        const msg_filter = m => m.author.id === message.author.id;
 
         const embed = new MessageEmbed()
             .setTitle("Who's That Pokémon")
@@ -28,9 +28,10 @@ class GuessThePokemon extends Command {
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
-        await message.reply(embed);
+        await message.reply({ embeds: [embed] });
 
-        message.channel.awaitMessages(filter, {
+        message.channel.awaitMessages({
+            filter: msg_filter,
             max: 1,
             error: ["time"],
             time: 30000
