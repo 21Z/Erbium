@@ -20,7 +20,7 @@
   "dependencies": {
     "@devsnowflake/quick.db": "^2.0.3",
     "canvacord": "^5.4.8",
-    "chalk": "^4.1.2",
+    "chalk": "^5.0.0",
     "discord.js": "^13.12.0",
     "dotenv": "^8.2.0",
     "fetch-country-flag": "^1.0.0",
