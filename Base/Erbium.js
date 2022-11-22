@@ -1,4 +1,7 @@
-const { Client } = require("discord.js");
+const { Client, Collection } = require("discord.js");
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+
 const fs = require("fs");
 const config = require("../config.js");
 const Command = require("../utils/Command.js");
@@ -26,6 +29,7 @@ class Erbium extends Client {
         });
 
         this.commands = new Command(this);
+        this.SlashCommands = new Collection()
         this.config = config;
         this.utils = require("../utils/util");
         this.db = new Database(this);
@@ -38,7 +42,30 @@ class Erbium extends Client {
     get database() {
         return this.db;
     }
-
+    async registerSlashCommands() {
+        const commands = [];
+        const commandFiles = fs.readdirSync(this.config.SLASH_COMMANDS_DIR).filter(file => file.endsWith('.js'));
+        for (const file of commandFiles) {
+            const command = require(`${this.config.SLASH_COMMANDS_DIR}/${file}`);
+            this.SlashCommands.set(command.data.name, command);
+            commands.push(command.data.toJSON());
+            const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
+            (async () => {
+                try {
+                    logger.info(`Started refreshing ${commands.length} application (/) commands.`);
+            
+                    const data = await rest.put(
+                        Routes.applicationCommands(this.config.CLIENT_ID),
+                        { body: commands },
+                    );
+            
+                    logger.info(`Successfully reloaded ${data.length} application (/) commands.`);
+                } catch (error) {
+                    console.error(error);
+                }
+            })();
+        }
+    }
     registerCommands() {
         const commandsDir = this.config.COMMANDS_DIR;
 
@@ -116,6 +143,7 @@ class Erbium extends Client {
     async login() {
         logger.info("Starting the bot...");
 
+        this.registerSlashCommands();
         this.registerCommands();
         this.registerEvents();
 

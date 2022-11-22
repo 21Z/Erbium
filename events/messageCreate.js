@@ -1,5 +1,5 @@
-const Event = require("../../Base/Event.js");
-const logger = require("../../utils/Logger.js");
+const Event = require("../Base/Event.js");
+const logger = require("../utils/Logger.js");
 const cooldowns = new (require("discord.js").Collection)();
 
 class MessageCreate extends Event {

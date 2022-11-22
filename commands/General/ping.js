@@ -20,6 +20,10 @@ class Ping extends Command {
         const wsLatency = this.client.ws.ping.toFixed(0);
 
         const embed = new MessageEmbed()
+        .setAuthor({
+            name: "🏓 PONG",
+            iconURL: message.author.displayAvatarURL()
+        })
         .addFields(
             {
                 name: "📶 **|** API",
@@ -32,10 +36,6 @@ class Ping extends Command {
                 inline: true
             }
         )
-            .setAuthor({
-                name: "🏓 PONG",
-                iconURL: message.author.displayAvatarURL()
-            })
             .setFooter({
                 text: `Requested by: ${message.author.tag}`,
                 iconURL: message.author.displayAvatarURL()
