@@ -7,6 +7,9 @@
 .env
 config.js
 
+# ESLint
+.eslintrc.json 
+
 # Modules
 node_modules/
 

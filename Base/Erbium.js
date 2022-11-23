@@ -1,154 +1,157 @@
-const { Client, Collection } = require("discord.js");
+const { Client, Collection } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
-const fs = require("fs");
-const config = require("../config.js");
-const Command = require("../utils/Command.js");
-const logger = require("../utils/Logger.js");
-const Database = require("./Database");
+const fs = require('fs');
+const config = require('../config.js');
+const Command = require('../utils/Command.js');
+const logger = require('../utils/Logger.js');
+const Database = require('./Database');
 
 class Erbium extends Client {
 
-    constructor() {
-        super({
-            ws: { properties: { $browser: "Discord Android" } },
-            intents: [
-                "GUILDS",
-                "GUILD_BANS",
-                "GUILD_INVITES",
-                "GUILD_MEMBERS",
-                "GUILD_MESSAGES",
-                "GUILD_MESSAGE_REACTIONS",
-                "GUILD_PRESENCES",
-                "GUILD_VOICE_STATES"
-            ],
-            allowedMentions: {
-                repliedUser: false
-            }
-        });
+	constructor() {
+		super({
+			ws: { properties: { $browser: 'Discord Android' } },
+			intents: [
+				'GUILDS',
+				'GUILD_BANS',
+				'GUILD_INVITES',
+				'GUILD_MEMBERS',
+				'GUILD_MESSAGES',
+				'GUILD_MESSAGE_REACTIONS',
+				'GUILD_PRESENCES',
+				'GUILD_VOICE_STATES',
+			],
+			allowedMentions: {
+				repliedUser: false,
+			},
+		});
 
-        this.commands = new Command(this);
-        this.SlashCommands = new Collection()
-        this.config = config;
-        this.utils = require("../utils/util");
-        this.db = new Database(this);
+		this.commands = new Command(this);
+		this.SlashCommands = new Collection();
+		this.config = config;
+		this.utils = require('../utils/util');
+		this.db = new Database(this);
 
-        Object.defineProperties(this, {
-            config: { enumerable: false },
-        });
-    }
+		Object.defineProperties(this, {
+			config: { enumerable: false },
+		});
+	}
 
-    get database() {
-        return this.db;
-    }
-    async registerSlashCommands() {
-        const commands = [];
-        const commandFiles = fs.readdirSync(this.config.SLASH_COMMANDS_DIR).filter(file => file.endsWith('.js'));
-        for (const file of commandFiles) {
-            const command = require(`${this.config.SLASH_COMMANDS_DIR}/${file}`);
-            this.SlashCommands.set(command.data.name, command);
-            commands.push(command.data.toJSON());
-            const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
-            (async () => {
-                try {
-                    logger.info(`Started refreshing ${commands.length} application (/) commands.`);
-            
-                    const data = await rest.put(
-                        Routes.applicationCommands(this.config.CLIENT_ID),
-                        { body: commands },
-                    );
-            
-                    logger.info(`Successfully reloaded ${data.length} application (/) commands.`);
-                } catch (error) {
-                    console.error(error);
-                }
-            })();
-        }
-    }
-    registerCommands() {
-        const commandsDir = this.config.COMMANDS_DIR;
+	get database() {
+		return this.db;
+	}
+	async registerSlashCommands() {
+		const commands = [];
+		const commandFiles = fs.readdirSync(this.config.SLASH_COMMANDS_DIR).filter(file => file.endsWith('.js'));
+		for (const file of commandFiles) {
+			const command = require(`${this.config.SLASH_COMMANDS_DIR}/${file}`);
+			this.SlashCommands.set(command.data.name, command);
+			commands.push(command.data.toJSON());
+			const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
+			(async () => {
+				try {
+					logger.info(`Started refreshing ${commands.length} application (/) commands.`);
 
-        // load commands
-        const CATS = fs.readdirSync(commandsDir);
+					const data = await rest.put(
+						Routes.applicationCommands(this.config.CLIENT_ID),
+						{ body: commands },
+					);
 
-        for (const CAT of CATS) {
-            logger.info(`[${CATS.indexOf(CAT) + 1}/${CATS.length}] Loading category ${CAT}`);
-            const COMMANDS = fs.readdirSync(`${commandsDir}/${CAT}`).filter(x => x.endsWith(".js"));
+					logger.info(`Successfully reloaded ${data.length} application (/) commands.`);
+				}
+				catch (error) {
+					console.error(error);
+				}
+			})();
+		}
+	}
+	registerCommands() {
+		const commandsDir = this.config.COMMANDS_DIR;
 
-            let i = 0;
-            for (const c of COMMANDS) {
-                logger.info(`[${i + 1}/${COMMANDS.length}] Loading command ${c} (${CAT})`);
+		// load commands
+		const CATS = fs.readdirSync(commandsDir);
 
-                const cmd = require(`${commandsDir}/${CAT}/${c}`);
-                const command = new cmd(this);
+		for (const CAT of CATS) {
+			logger.info(`[${CATS.indexOf(CAT) + 1}/${CATS.length}] Loading category ${CAT}`);
+			const COMMANDS = fs.readdirSync(`${commandsDir}/${CAT}`).filter(x => x.endsWith('.js'));
 
-                command.setCategory(CAT);
-                command.setPath(`${commandsDir}/${CAT}/${c}`);
+			let i = 0;
+			for (const c of COMMANDS) {
+				logger.info(`[${i + 1}/${COMMANDS.length}] Loading command ${c} (${CAT})`);
 
-                this.commands.setCommand(command.help.name, command);
-                command.help.aliases.forEach(alias => this.commands.setAlias(alias, command.help.name));
+				const cmd = require(`${commandsDir}/${CAT}/${c}`);
+				const command = new cmd(this);
 
-                delete require.cache[require.resolve(`${commandsDir}/${CAT}/${c}`)];
+				command.setCategory(CAT);
+				command.setPath(`${commandsDir}/${CAT}/${c}`);
 
-                logger.success(`[${i + 1}/${COMMANDS.length}] Loaded command ${c} (${CAT})`);
-                i++;
-            }
-        }
-    }
+				this.commands.setCommand(command.help.name, command);
+				command.help.aliases.forEach(alias => this.commands.setAlias(alias, command.help.name));
 
-    registerEvents() {
-        const eventsDir = this.config.EVENTS_DIR;
+				delete require.cache[require.resolve(`${commandsDir}/${CAT}/${c}`)];
 
-        // load events
-        const EVENTS = fs.readdirSync(eventsDir).filter(x => x.endsWith(".js"));
+				logger.success(`[${i + 1}/${COMMANDS.length}] Loaded command ${c} (${CAT})`);
+				i++;
+			}
+		}
+	}
 
-        let i = 0;
+	registerEvents() {
+		const eventsDir = this.config.EVENTS_DIR;
 
-        for (const event of EVENTS) {
-            logger.info(`[${i + 1}/${EVENTS.length}] Loading event ${event}`);
-            const ev = require(`${eventsDir}/${event}`);
-            const evn = new ev(this);
+		// load events
+		const EVENTS = fs.readdirSync(eventsDir).filter(x => x.endsWith('.js'));
 
-            void this.on(event.replace(".js", ""), async (...args) => {
-                try {
-                    await evn.run(...args);
-                } catch(e) {
-                    logger.error(`Event: ${event.replace(".js", "")} :- ${e.toString()}`);
-                }
-            });
+		let i = 0;
 
-            delete require.cache[require.resolve(`${eventsDir}/${event}`)];
+		for (const event of EVENTS) {
+			logger.info(`[${i + 1}/${EVENTS.length}] Loading event ${event}`);
+			const ev = require(`${eventsDir}/${event}`);
+			const evn = new ev(this);
 
-            logger.success(`[${i + 1}/${event.length}] Loaded event ${event}`);
+			void this.on(event.replace('.js', ''), async (...args) => {
+				try {
+					await evn.run(...args);
+				}
+				catch (e) {
+					logger.error(`Event: ${event.replace('.js', '')} :- ${e.toString()}`);
+				}
+			});
 
-            i++;
-        }
-    }
+			delete require.cache[require.resolve(`${eventsDir}/${event}`)];
 
-    resolveUser(usernameOrUserResolvable, multiple = false) {
-        if (usernameOrUserResolvable && typeof usernameOrUserResolvable === "string" && !parseInt(usernameOrUserResolvable)) {
-            const name = usernameOrUserResolvable.toUpperCase();
-            const arr = [];
-            this.users.cache.forEach(user => {
-                if (user.username.toUpperCase().indexOf(name) < 0) return;
-                return arr.push(user);
-            });
-            return multiple ? arr : arr[0];
-        } else {
-            return usernameOrUserResolvable ? (multiple ? [this.users.resolve(usernameOrUserResolvable)] : this.users.resolve(usernameOrUserResolvable)) : null;
-        }
-    }
+			logger.success(`[${i + 1}/${event.length}] Loaded event ${event}`);
 
-    async login() {
-        logger.info("Starting the bot...");
+			i++;
+		}
+	}
 
-        this.registerSlashCommands();
-        this.registerCommands();
-        this.registerEvents();
+	resolveUser(usernameOrUserResolvable, multiple = false) {
+		if (usernameOrUserResolvable && typeof usernameOrUserResolvable === 'string' && !parseInt(usernameOrUserResolvable)) {
+			const name = usernameOrUserResolvable.toUpperCase();
+			const arr = [];
+			this.users.cache.forEach(user => {
+				if (user.username.toUpperCase().indexOf(name) < 0) return;
+				return arr.push(user);
+			});
+			return multiple ? arr : arr[0];
+		}
+		else {
+			return usernameOrUserResolvable ? (multiple ? [this.users.resolve(usernameOrUserResolvable)] : this.users.resolve(usernameOrUserResolvable)) : null;
+		}
+	}
 
-        return await super.login();
-    }
+	async login() {
+		logger.info('Starting the bot...');
+
+		this.registerSlashCommands();
+		this.registerCommands();
+		this.registerEvents();
+
+		return await super.login();
+	}
 
 }
 
