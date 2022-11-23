@@ -3,25 +3,25 @@ const { Canvas: Canvacord } = require('canvacord');
 
 class Affect extends Command {
 
-  constructor(client) {
-    super(client);
+    constructor(client) {
+        super(client);
 
-    this.config({
-      name: 'affect',
-      aliases: [],
-      description: 'No, it doesn\'t affect my baby.',
-    });
-  }
+        this.config({
+            name: 'affect',
+            aliases: [],
+            description: 'No, it doesn\'t affect my baby.',
+        });
+    }
 
-  async run(message, args) {
-    const user = message.mentions.users.first() || this.client.resolveUser(args.join(' ')) || message.author;
+    async run(message, args) {
+        const user = message.mentions.users.first() || this.client.resolveUser(args.join(' ')) || message.author;
 
-    const m = await message.reply('⏱ | Please wait...');
-    const img = await Canvacord.affect(user.displayAvatarURL({ format: 'png', size: 2048 }));
-    await m.delete().catch(() => { });
+        const m = await message.reply('⏱ | Please wait...');
+        const img = await Canvacord.affect(user.displayAvatarURL({ format: 'png', size: 2048 }));
+        await m.delete().catch(() => { });
 
-    return message.reply({ files: [img] });
-  }
+        return message.reply({ files: [img] });
+    }
 
 }
 

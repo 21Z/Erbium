@@ -3,28 +3,28 @@ const { MessageEmbed } = require('discord.js');
 
 class Avatar extends Command {
 
-  constructor(client) {
-    super(client);
+    constructor(client) {
+        super(client);
 
-    this.config({
-      name: 'avatar',
-      aliases: ['av', 'pfp'],
-      description: 'Shows avatar of the specified user.',
-    });
-  }
+        this.config({
+            name: 'avatar',
+            aliases: ['av', 'pfp'],
+            description: 'Shows avatar of the specified user.',
+        });
+    }
 
-  async run(message, args) {
-    const user = message.mentions.users.first() || this.client.resolveUser(args.join(' ')) || message.author;
-    const embed = new MessageEmbed()
-      .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL() })
-      .setTitle('Avatar')
-      .setImage(user.displayAvatarURL({ size: 2048, dynamic: true }))
-      .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
-      .setTimestamp()
-      .setColor(0x4d5e94);
+    async run(message, args) {
+        const user = message.mentions.users.first() || this.client.resolveUser(args.join(' ')) || message.author;
+        const embed = new MessageEmbed()
+            .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL() })
+            .setTitle('Avatar')
+            .setImage(user.displayAvatarURL({ size: 2048, dynamic: true }))
+            .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
+            .setTimestamp()
+            .setColor(0x4d5e94);
 
-    return message.reply({ embeds: [embed] });
-  }
+        return message.reply({ embeds: [embed] });
+    }
 
 }
 

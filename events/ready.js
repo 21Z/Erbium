@@ -3,15 +3,15 @@ const logger = require('../utils/Logger.js');
 
 class Ready extends Event {
 
-  constructor(client) {
-    super(client);
-  }
+    constructor(client) {
+        super(client);
+    }
 
-  run() {
-    logger.success('Bot is online!');
+    run() {
+        logger.success('Bot is online!');
 
-    this.client.user.setActivity('Discord Bot List', { type: 'COMPETING' });
-  }
+        this.client.user.setActivity('Discord Bot List', { type: 'COMPETING' });
+    }
 
 }
 

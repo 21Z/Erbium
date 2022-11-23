@@ -1,54 +1,54 @@
 class Command {
 
-  constructor(client) {
+    constructor(client) {
     /**
          * @type {import("./Erbium")}
          */
-    this.client = client;
+        this.client = client;
 
-    Object.defineProperties(this, {
-      client: { enumerable: false },
-    });
-  }
+        Object.defineProperties(this, {
+            client: { enumerable: false },
+        });
+    }
 
-  config(conf) {
-    this.help = {
-      name: conf.name,
-      aliases: conf.aliases ?? [],
-      description: conf.description ?? 'None',
-      ownerOnly: !!conf.ownerOnly,
-      permissions: conf.permissions ?? [],
-      category: null,
-      cooldown: 3000,
-    };
-    this.path = null;
-  }
+    config(conf) {
+        this.help = {
+            name: conf.name,
+            aliases: conf.aliases ?? [],
+            description: conf.description ?? 'None',
+            ownerOnly: !!conf.ownerOnly,
+            permissions: conf.permissions ?? [],
+            category: null,
+            cooldown: 3000,
+        };
+        this.path = null;
+    }
 
-  setCategory(cat, force = false) {
-    this.help.category = !force && this.help.category ? this.help.category : cat;
-  }
+    setCategory(cat, force = false) {
+        this.help.category = !force && this.help.category ? this.help.category : cat;
+    }
 
-  setPath(path) {
-    this.path = path;
-  }
+    setPath(path) {
+        this.path = path;
+    }
 
-  get category() {
-    return this.help.category;
-  }
+    get category() {
+        return this.help.category;
+    }
 
-  get cooldown() {
-    return this.help.cooldown;
-  }
+    get cooldown() {
+        return this.help.cooldown;
+    }
 
-  run() {}
+    run() {}
 
-  toString() {
-    return this.help.name;
-  }
+    toString() {
+        return this.help.name;
+    }
 
-  toJSON() {
-    return { ...this.help };
-  }
+    toJSON() {
+        return { ...this.help };
+    }
 
 }
 
