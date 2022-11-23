@@ -2,28 +2,28 @@ const Command = require('../../Base/Command');
 
 class Tags extends Command {
 
-	constructor(client) {
-		super(client);
+  constructor(client) {
+    super(client);
 
-		this.config({
-			name: 'tags',
-			aliases: ['listtag', 'alltag'],
-			description: 'Shows all tags',
-			permissions: [],
-		});
-	}
+    this.config({
+      name: 'tags',
+      aliases: ['listtag', 'alltag'],
+      description: 'Shows all tags',
+      permissions: [],
+    });
+  }
 
-	async run(message, args) {
-		const user = message.mentions.users.first() || this.client.resolveUser(args.join(' '));
-		const data = this.client.database.tags.filter(x => x.ID.endsWith(`_${message.guild.id}`));
-		const filtered = user ? data.filter(d => d.data.author === user.id) : data;
+  async run(message, args) {
+    const user = message.mentions.users.first() || this.client.resolveUser(args.join(' '));
+    const data = this.client.database.tags.filter(x => x.ID.endsWith(`_${message.guild.id}`));
+    const filtered = user ? data.filter(d => d.data.author === user.id) : data;
 
-		if (!filtered.length) return message.reply('❌ | No tags found!');
+    if (!filtered.length) return message.reply('❌ | No tags found!');
 
-		const tagList = filtered.sort((a, b) => b.data.uses - a.data.uses).map((m, i) => `${i + 1}. ${m.data.name} :: [${m.data.uses.toLocaleString()} uses]`).join('\n');
+    const tagList = filtered.sort((a, b) => b.data.uses - a.data.uses).map((m, i) => `${i + 1}. ${m.data.name} :: [${m.data.uses.toLocaleString()} uses]`).join('\n');
 
-		return message.reply(`= Tags =\n${tagList}`, { code: 'asciidoc', split: true });
-	}
+    return message.reply(`= Tags =\n${tagList}`, { code: 'asciidoc', split: true });
+  }
 
 }
 
