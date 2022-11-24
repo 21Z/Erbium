@@ -27,7 +27,7 @@
     "fetch-country-flag": "1.0.0",
     "moment": "2.29.1",
     "moment-duration-format": "2.3.2",
-    "node-fetch": "2.6.2",
+    "node-fetch": "2.6.7",
     "pokecord": "1.0.0",
     "youtube-sr": "4.3.4"
   },
