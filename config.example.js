@@ -1,5 +1,6 @@
 /* eslint-disable no-inline-comments */
 const config = {
+    SLASH_COMMANDS_DIR: `${__dirname}/SlashCommands`, // Slash commands dir
     COMMANDS_DIR: `${__dirname}/commands`, // commands dir
     EVENTS_DIR: `${__dirname}/events`, // events dir
     DEV_MODE: false, // dev mode
