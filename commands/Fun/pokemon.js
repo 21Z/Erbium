@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { Spawn } = require('pokecord');
 
 class Pokemon extends Command {
@@ -24,7 +24,7 @@ class Pokemon extends Command {
         const height = pokemon.height * 10;
         const kg = pokemon.weight / 10;
         const lbs = Math.floor(kg * 2.20462262);
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle('Pokémon Info')
             .setThumbnail(pokemon.imageURL)
             .setColor('YELLOW')
