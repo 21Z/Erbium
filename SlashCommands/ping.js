@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -8,11 +7,11 @@ module.exports = {
     async execute(interaction) {
 
         const before = Date.now();
-        await interaction.reply({ content: '🏓' });
+		await interaction.deferReply();
         const latency = Date.now() - before;
         const wsLatency = interaction.client.ws.ping.toFixed(0);
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setAuthor({
                 name: '🏓 PONG',
                 iconURL: interaction.client.user.displayAvatarURL(),
@@ -30,12 +29,12 @@ module.exports = {
                 },
             )
             .setFooter({
-                text: `Requested by: ${interaction.member.tag}`,
+                text: `Requested by: ${interaction.user.tag}`,
                 iconURL: interaction.member.displayAvatarURL(),
             })
             .setTimestamp()
             .setColor(0x4d5e94);
 
-        interaction.editReply({ content: '\u200b', embeds: [embed] });
+            interaction.editReply({ embeds: [embed] });
     },
 };
