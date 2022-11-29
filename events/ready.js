@@ -10,9 +10,11 @@ class Ready extends Event {
     run() {
         logger.success('Bot is online!');
 
-        this.client.user.setActivity('Discord Bot List', { type: 'COMPETING' });
+        this.client.user.setActivity('on Youtube', { 
+            type: ActivityType.Streaming, 
+            url: "https://www.youtube.com/watch?v=xvFZjo5PgG0"
+         });
     }
-
 }
 
 module.exports = Ready;
