@@ -52,14 +52,14 @@ class Erbium extends Client {
             (async () => {
                 try {
                     if (commands.length === 0) return logger.error("Couldn't find any application commands"); 
-                    logger.info(`Started refreshing ${commands.length} application (/) commands.`);
+                    logger.info(`Started refreshing ${commands.length} application (/) command.`);
 
                     const data = await rest.put(
                         Routes.applicationCommands(this.config.CLIENT_ID),
                         { body: commands },
                     );
 
-                    logger.success(`Successfully reloaded ${data.length} application (/) commands.`);
+                    logger.success(`Successfully reloaded ${data.length} application (/) command.`);
                 }
                 catch (error) {
                     console.error(error);
