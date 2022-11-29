@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 class Avatar extends Command {
 
@@ -15,7 +15,7 @@ class Avatar extends Command {
 
     async run(message, args) {
         const user = message.mentions.users.first() || this.client.resolveUser(args.join(' ')) || message.author;
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL() })
             .setTitle('Avatar')
             .setImage(user.displayAvatarURL({ size: 2048, dynamic: true }))
