@@ -1,6 +1,4 @@
-const { Client, Collection } = require('discord.js');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+const { Client, GatewayIntentBits, Collection, REST, Routes } = require('discord.js');
 
 const fs = require('fs');
 const config = require('../config.js');
@@ -14,14 +12,9 @@ class Erbium extends Client {
         super({
             ws: { properties: { $browser: 'Discord Android' } },
             intents: [
-                'GUILDS',
-                'GUILD_BANS',
-                'GUILD_INVITES',
-                'GUILD_MEMBERS',
-                'GUILD_MESSAGES',
-                'GUILD_MESSAGE_REACTIONS',
-                'GUILD_PRESENCES',
-                'GUILD_VOICE_STATES',
+                GatewayIntentBits.Guilds,
+                GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.MessageContent,
             ],
             allowedMentions: {
                 repliedUser: false,
@@ -44,14 +37,21 @@ class Erbium extends Client {
     }
     async registerSlashCommands() {
         const commands = [];
+
         const commandFiles = fs.readdirSync(this.config.SLASH_COMMANDS_DIR).filter(file => file.endsWith('.js'));
         for (const file of commandFiles) {
-            const command = require(`${this.config.SLASH_COMMANDS_DIR}/${file}`);
-            this.SlashCommands.set(command.data.name, command);
-            commands.push(command.data.toJSON());
-            const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
+            const filePath = `${this.config.SLASH_COMMANDS_DIR}/${file}`
+            const command = require(filePath);
+            if ('data' in command && 'execute' in command) {
+                this.SlashCommands.set(command.data.name, command);
+                commands.push(command.data.toJSON());
+            } else {
+                logger.warn(`The command at ${filePath} is missing a required "data" or "execute" property.`);
+            }
+            const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
             (async () => {
                 try {
+                    if (commands.length === 0) return logger.error("Couldn't find any application commands"); 
                     logger.info(`Started refreshing ${commands.length} application (/) commands.`);
 
                     const data = await rest.put(
@@ -59,7 +59,7 @@ class Erbium extends Client {
                         { body: commands },
                     );
 
-                    logger.info(`Successfully reloaded ${data.length} application (/) commands.`);
+                    logger.success(`Successfully reloaded ${data.length} application (/) commands.`);
                 }
                 catch (error) {
                     console.error(error);
