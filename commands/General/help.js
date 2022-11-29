@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 class Help extends Command {
 
@@ -19,7 +19,7 @@ class Help extends Command {
         const [query] = args;
 
         if (!query) {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle(`Commands - Total: ${this.client.commands.size}`)
                 .setColor(embedColor)
                 .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
@@ -39,7 +39,7 @@ class Help extends Command {
         if (category.some(q => q === query)) {
             const ctg = category.find(q => q.toLowerCase() === query.toLowerCase());
             console.log(ctg);
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle('Commands')
                 .setColor(embedColor)
                 .addFields({ name: 'Category', value: ctg, inline: true })
@@ -56,7 +56,7 @@ class Help extends Command {
         const command = this.client.commands.resolve(query.toLowerCase());
         if (!command) return message.reply('❌ | Command not found!');
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle('Command Info')
             .setColor(embedColor)
             .addFields(
