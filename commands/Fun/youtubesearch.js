@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const YouTube = require('youtube-sr').default;
 
 class YouTubeSearch extends Command {
@@ -22,7 +22,7 @@ class YouTubeSearch extends Command {
         const res = await YouTube.searchOne(query, 'video', true).catch(e => {});
         if (!res) return message.reply('❌ | No result found!');
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle('YouTube Search')
             .setImage(res.thumbnail.displayThumbnailURL('ultrares'))
             .addFields(
