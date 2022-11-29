@@ -18,7 +18,7 @@ Erbium is a multipurpose discord bot created by 21Z#9316
 
 # Requirements
 ## Discord.js
-**v13**
+**v14**
 
 ## Node.js
 **v16** or higher
