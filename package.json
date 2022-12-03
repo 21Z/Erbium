@@ -21,7 +21,7 @@
     "@devsnowflake/quick.db": "2.0.3",
     "canvacord": "5.4.8",
     "chalk": "4.1.2",
-    "discord.js": "14.7.0",
+    "discord.js": "14.7.1",
     "dotenv": "16.0.3",
     "fetch-country-flag": "1.0.0",
     "moment": "2.29.4",
