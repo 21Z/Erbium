@@ -1,5 +1,6 @@
 const Event = require('../Base/Event.js');
 const logger = require('../utils/Logger.js');
+const { ActivityType } = require('discord.js');
 
 class Ready extends Event {
 
