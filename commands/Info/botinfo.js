@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { MessageEmbed, version } = require('discord.js');
+const { EmbedBuilder, version } = require('discord.js');
 const os = require('os');
 
 class BotInfo extends Command {
@@ -29,7 +29,7 @@ class BotInfo extends Command {
 • Memory         :: ${Math.round(os.totalmem() / 1024 / 1024 / 1024)} GB
 • OS             :: ${this.client.utils.properCase(os.platform() === 'win32' ? 'windows' : os.platform())}`;
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setAuthor({ name: 'Bot Information', iconURL: message.guild.iconURL() })
             .setThumbnail(this.client.user.displayAvatarURL({ size: 4096 }))
             .setDescription(`${this.client.user.username} is an open-source multipurpose discord bot developed by **[21Z](https://github.com/21Z)**.`)

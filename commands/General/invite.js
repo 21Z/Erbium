@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 class Invite extends Command {
 
@@ -14,7 +14,7 @@ class Invite extends Command {
     }
 
     async run(message) {
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle('Bot Invite')
             .setDescription(`**[Click Here](https://discord.com/api/oauth2/authorize?client_id=${this.client.user.id}&permissions=2285169728&scope=bot%20applications.commands)** to invite me`)
             .setColor(0x4d5e94)

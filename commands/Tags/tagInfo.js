@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 class TagInfo extends Command {
 
@@ -26,7 +26,7 @@ class TagInfo extends Command {
         const tagAuthor = this.client.resolveUser(tag.author) || await this.client.users.fetch(tag.author).catch(e => { });
 
         const embedColor = (this.client.config.EMBED_COLOR.toUpperCase() ?? '') || '22C9FF';
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setAuthor({ name: 'Tag Info', iconURL: message.guild.iconURL() })
             .setTitle('Content')
             .setDescription(tag.content)

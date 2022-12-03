@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 class UserInfo extends Command {
 
@@ -17,7 +17,7 @@ class UserInfo extends Command {
         const embedColor = (this.client.config.EMBED_COLOR.toUpperCase() ?? '') || '22C9FF';
         const user = message.mentions.users.first() || this.client.resolveUser(args.join(' ')) || message.author;
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setAuthor({ name: 'User Information', iconURL: message.guild.iconURL() })
             .setThumbnail(user.displayAvatarURL({ size: 4096 }))
             .setColor(embedColor)

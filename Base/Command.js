@@ -1,7 +1,7 @@
 class Command {
 
     constructor(client) {
-    /**
+        /**
          * @type {import("./Erbium")}
          */
         this.client = client;

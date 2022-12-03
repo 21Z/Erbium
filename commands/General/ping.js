@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 class Ping extends Command {
 
@@ -19,7 +19,7 @@ class Ping extends Command {
         const latency = Date.now() - before;
         const wsLatency = this.client.ws.ping.toFixed(0);
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setAuthor({
                 name: '🏓 PONG',
                 iconURL: message.author.displayAvatarURL(),

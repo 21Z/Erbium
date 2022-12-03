@@ -7,7 +7,7 @@ class InteractionCreate extends Event {
     }
 
     async run(interaction) {
-        if (!interaction.isCommand()) return;
+        if (!interaction.isChatInputCommand()) return;
         const command = this.client.SlashCommands.get(interaction.commandName);
 
         if (!command) return;

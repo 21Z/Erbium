@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { Spawn } = require('pokecord');
 
 class GuessThePokemon extends Command {
@@ -21,7 +21,7 @@ class GuessThePokemon extends Command {
 
         const msg_filter = m => m.author.id === message.author.id;
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle('Who\'s That Pokémon')
             .setDescription('You have 30 seconds to answer!')
             .setImage(pokemon.imageURL)

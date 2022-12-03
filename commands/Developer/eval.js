@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const Command = require('../../Base/Command');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { inspect } = require('util');
 
 class Eval extends Command {
@@ -25,12 +25,12 @@ class Eval extends Command {
         const code = args
             .join(' ')
             .replace(/^\s*\n?(```(?:[^\s]+\n)?(.*?)```|.*)$/s, (_, a, b) => a.startsWith('```') ? b : a);
-        const embed = new MessageEmbed().setColor(embedColor).addFields([{ name: 'Input', value: `\`\`\`js\n${code}\`\`\`` }]);
+        const embed = new EmbedBuilder().setColor(embedColor).addFields([{ name: 'Input', value: `\`\`\`js\n${code}\`\`\`` }]);
 
         try {
             if (!code) {
                 return await message.channel.send({
-                    embeds: [new MessageEmbed().setColor(embedColor).setDescription('❌ **|** No code was provided.')],
+                    embeds: [new EmbedBuilder().setColor(embedColor).setDescription('❌ **|** No code was provided.')],
                 });
             }
             const isAsync = /.* --async( +)?(--silent)?$/.test(code);
