@@ -15,6 +15,7 @@ class YouTubeSearch extends Command {
     }
 
     async run(message, args) {
+        const embedColor = this.client.config.EMBED_COLOR;
         const query = args.join(' ');
         if (!query) return message.reply('❌ | Please include a search query!');
 
@@ -33,7 +34,7 @@ class YouTubeSearch extends Command {
             )
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp()
-            .setColor('Red');
+            .setColor(embedColor);
 
         return message.reply({ embeds: [embed] });
     }

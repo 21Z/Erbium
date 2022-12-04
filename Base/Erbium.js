@@ -40,18 +40,19 @@ class Erbium extends Client {
 
         const commandFiles = fs.readdirSync(this.config.SLASH_COMMANDS_DIR).filter(file => file.endsWith('.js'));
         for (const file of commandFiles) {
-            const filePath = `${this.config.SLASH_COMMANDS_DIR}/${file}`
+            const filePath = `${this.config.SLASH_COMMANDS_DIR}/${file}`;
             const command = require(filePath);
             if ('data' in command && 'execute' in command) {
                 this.SlashCommands.set(command.data.name, command);
                 commands.push(command.data.toJSON());
-            } else {
+            }
+            else {
                 logger.warn(`The command at ${filePath} is missing a required "data" or "execute" property.`);
             }
             const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
             (async () => {
                 try {
-                    if (commands.length === 0) return logger.error("Couldn't find any application commands"); 
+                    if (commands.length === 0) return logger.error('Couldn\'t find any application commands');
                     logger.info(`Started refreshing ${commands.length} application (/) command.`);
 
                     const data = await rest.put(

@@ -16,6 +16,7 @@ class BotInfo extends Command {
 
     async run(message) {
         const admins = this.client.config.OWNER;
+        const embedColor = this.client.config.EMBED_COLOR;
         const SystemString = `= System Info =
 • Total Commands :: ${this.client.commands.size.toLocaleString()}
 • Memory Usage   :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
@@ -33,7 +34,7 @@ class BotInfo extends Command {
             .setAuthor({ name: 'Bot Information', iconURL: message.guild.iconURL() })
             .setThumbnail(this.client.user.displayAvatarURL({ size: 4096 }))
             .setDescription(`${this.client.user.username} is a private discord bot developed by **[21Z](https://github.com/21Z)**.`)
-            .setColor('Random')
+            .setColor(embedColor)
             .addFields(
                 { name: 'Name', value: this.client.user.username, inline: true },
                 { name: 'Discriminator', value: this.client.user.discriminator, inline: true },

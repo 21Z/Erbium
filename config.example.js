@@ -6,8 +6,8 @@ const config = {
     DEV_MODE: false, // dev mode
     OWNER: ['1234567890123456'], // Bot owner id
     CLIENT_ID: ['1234567890123456'], // Bot id
-    PREFIX: 'er!', // command prefix
-    EMBED_COLOR: '0x4d5e94', // embed color
+    PREFIX: '-', // command prefix
+    EMBED_COLOR: 'Random', // embed color
 };
 
 module.exports = config;
