@@ -25,7 +25,7 @@ class GuessThePokemon extends Command {
             .setTitle('Who\'s That Pokémon')
             .setDescription('You have 30 seconds to answer!')
             .setImage(pokemon.imageURL)
-            .setColor('YELLOW')
+            .setColor('Yellow')
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 

@@ -32,8 +32,8 @@ class BotInfo extends Command {
         const embed = new EmbedBuilder()
             .setAuthor({ name: 'Bot Information', iconURL: message.guild.iconURL() })
             .setThumbnail(this.client.user.displayAvatarURL({ size: 4096 }))
-            .setDescription(`${this.client.user.username} is an open-source multipurpose discord bot developed by **[21Z](https://github.com/21Z)**.`)
-            .setColor('RANDOM')
+            .setDescription(`${this.client.user.username} is a private discord bot developed by **[21Z](https://github.com/21Z)**.`)
+            .setColor('Random')
             .addFields(
                 { name: 'Name', value: this.client.user.username, inline: true },
                 { name: 'Discriminator', value: this.client.user.discriminator, inline: true },
@@ -42,7 +42,6 @@ class BotInfo extends Command {
                 { name: 'Owners', value: `${admins.map(m => `<@!${m}>`).join(', ')}`, inline: true },
                 { name: 'Created At', value: this.client.user.createdAt.toString() },
                 { name: '\u200b', value: `\`\`\`asciidoc\n${SystemString}\`\`\`` },
-                { name: 'GitHub (Source Code)', value: '**[Click Here](https://github.com/erbiumbot/Erbium)**' },
             )
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();

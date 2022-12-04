@@ -57,7 +57,7 @@ class Eval extends Command {
             const cleaned = this.client.utils.cleanText(String(e));
             const error = `\`\`\`js\n${cleaned}\`\`\``;
 
-            embed.setColor('RED').addFields([{ name: ('Error'), value: error }]);
+            embed.setColor('Red').addFields([{ name: ('Error'), value: error }]);
             message.channel.send({
                 askDeletion: {
                     reference: message.author.id,

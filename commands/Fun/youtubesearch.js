@@ -33,7 +33,7 @@ class YouTubeSearch extends Command {
             )
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp()
-            .setColor('RED');
+            .setColor('Red');
 
         return message.reply({ embeds: [embed] });
     }
