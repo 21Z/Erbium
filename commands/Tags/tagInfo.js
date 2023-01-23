@@ -25,7 +25,7 @@ class TagInfo extends Command {
         // eslint-disable-next-line no-unused-vars
         const tagAuthor = this.client.resolveUser(tag.author) || await this.client.users.fetch(tag.author).catch(e => { });
 
-        const embedColor = (this.client.config.EMBED_COLOR.toUpperCase() ?? '') || '22C9FF';
+        const embedColor = this.client.config.EMBED_COLOR;
         const embed = new EmbedBuilder()
             .setAuthor({ name: 'Tag Info', iconURL: message.guild.iconURL() })
             .setTitle('Content')

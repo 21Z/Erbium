@@ -14,7 +14,7 @@ class UserInfo extends Command {
     }
 
     async run(message, args) {
-        const embedColor = (this.client.config.EMBED_COLOR.toUpperCase() ?? '') || '22C9FF';
+        const embedColor = this.client.config.EMBED_COLOR;
         const user = message.mentions.users.first() || this.client.resolveUser(args.join(' ')) || message.author;
 
         const embed = new EmbedBuilder()
