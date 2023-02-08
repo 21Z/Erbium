@@ -32,6 +32,6 @@
     "node": ">=v16.x"
   },
   "devDependencies": {
-    "eslint": "8.29.0"
+    "eslint": "8.33.0"
   }
 }

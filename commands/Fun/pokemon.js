@@ -18,8 +18,7 @@ class Pokemon extends Command {
         const name = args[0];
         if (!name) return message.reply('❌ | Please include a pokémon name!');
 
-        // eslint-disable-next-line no-unused-vars
-        const pokemon = await Spawn(name.toLowerCase()).catch(e => { });
+        const pokemon = await Spawn(name.toLowerCase()).catch();
         if (!pokemon) return message.reply('Oops! Something went wrong...');
         const height = pokemon.height * 10;
         const kg = pokemon.weight / 10;
