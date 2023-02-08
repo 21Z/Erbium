@@ -15,8 +15,7 @@ class GuessThePokemon extends Command {
     }
 
     async run(message) {
-    // eslint-disable-next-line no-unused-vars
-        const pokemon = await Spawn().catch(e => { });
+        const pokemon = await Spawn().catch();
         if (!pokemon) return message.reply('Opps! Something went wrong :(');
 
         const msg_filter = m => m.author.id === message.author.id;
