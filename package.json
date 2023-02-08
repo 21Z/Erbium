@@ -24,7 +24,7 @@
     "dotenv": "16.0.3",
     "moment": "2.29.4",
     "moment-duration-format": "2.3.2",
-    "node-fetch": "2.6.7",
+    "node-fetch": "2.6.9",
     "pokecord": "1.0.1",
     "youtube-sr": "4.3.4"
   },
