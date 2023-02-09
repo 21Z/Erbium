@@ -18,7 +18,7 @@ class Pokemon extends Command {
         const name = args[0];
         if (!name) return message.reply('❌ | Please include a pokémon name!');
 
-        const pokemon = await Spawn(name.toLowerCase()).catch();
+        const pokemon = await Spawn(name.toLowerCase()).catch(() => {});
         if (!pokemon) return message.reply('Oops! Something went wrong...');
         const height = pokemon.height * 10;
         const kg = pokemon.weight / 10;

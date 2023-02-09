@@ -23,7 +23,7 @@ class TagInfo extends Command {
 
         const tag = this.client.database.tags.get(`${tagname.toLowerCase()}_${message.guild.id}`);
         // eslint-disable-next-line no-unused-vars
-        const tagAuthor = this.client.resolveUser(tag.author) || await this.client.users.fetch(tag.author).catch(e => { });
+        const tagAuthor = this.client.resolveUser(tag.author) || await this.client.users.fetch(tag.author).catch();
 
         const embedColor = this.client.config.EMBED_COLOR;
         const embed = new EmbedBuilder()

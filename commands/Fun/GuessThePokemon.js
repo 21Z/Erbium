@@ -15,7 +15,7 @@ class GuessThePokemon extends Command {
     }
 
     async run(message) {
-        const pokemon = await Spawn().catch();
+        const pokemon = await Spawn().catch(() => {});
         if (!pokemon) return message.reply('Opps! Something went wrong :(');
 
         const msg_filter = m => m.author.id === message.author.id;

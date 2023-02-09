@@ -7,7 +7,7 @@ module.exports = {
     async execute(interaction) {
 
         const before = Date.now();
-		await interaction.deferReply();
+        await interaction.deferReply();
         const latency = Date.now() - before;
         const wsLatency = interaction.client.ws.ping.toFixed(0);
 
@@ -35,6 +35,6 @@ module.exports = {
             .setTimestamp()
             .setColor(0x4d5e94);
 
-            interaction.editReply({ embeds: [embed] });
+        interaction.editReply({ embeds: [embed] });
     },
 };

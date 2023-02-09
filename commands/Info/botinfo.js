@@ -43,7 +43,7 @@ class BotInfo extends Command {
                 { name: 'Owners', value: `${admins.map(m => `<@!${m}>`).join(', ')}`, inline: true },
                 { name: 'Created At', value: this.client.user.createdAt.toString() },
                 { name: '\u200b', value: `\`\`\`asciidoc\n${SystemString}\`\`\`` },
-                { name: 'GitHub (Source Code)', value: '**[Click Here](https://github.com/erbiumbot/Erbium)**' },
+                { name: 'GitHub (Source Code)', value: '**[Click Here](https://github.com/21Z/Erbium)**' },
             )
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();

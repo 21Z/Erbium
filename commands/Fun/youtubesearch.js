@@ -19,7 +19,7 @@ class YouTubeSearch extends Command {
         const query = args.join(' ');
         if (!query) return message.reply('❌ | Please include a search query!');
 
-        const res = await YouTube.searchOne(query, 'video', true).catch();
+        const res = await YouTube.searchOne(query, 'video', true).catch(() => {});
         if (!res) return message.reply('❌ | No result found!');
 
         const embed = new EmbedBuilder()
