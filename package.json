@@ -20,7 +20,7 @@
   "dependencies": {
     "@devsnowflake/quick.db": "2.0.3",
     "chalk": "4.1.2",
-    "discord.js": "14.7.1",
+    "discord.js": "14.8.0",
     "dotenv": "16.0.3",
     "moment": "2.29.4",
     "moment-duration-format": "2.3.2",
