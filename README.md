@@ -10,11 +10,11 @@ Erbium is a multipurpose discord bot created by 21Z#9316
 
 👉 Install dependencies with `npm install`
 
-👉 Rename `.env.example` to `.env` and put your bot token there
+👉 Rename `.env.example` to `.env` and put your bot token there (Fill in WEBHOOK_URL for message logs)
 
 👉 Rename `config.example.js` to `config.js` and fill up
 
-👉 Start your bot using `yarn start` or `npm start`
+👉 Start your bot using `npm start`
 
 # Requirements
 ## Discord.js

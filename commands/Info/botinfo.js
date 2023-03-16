@@ -9,7 +9,7 @@ class BotInfo extends Command {
 
         this.config({
             name: 'botinfo',
-            aliases: ['bi'],
+            aliases: ['bi', 'info', 'about'],
             description: 'Bot information',
         });
     }

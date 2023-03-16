@@ -21,4 +21,4 @@ yarn.lock
 yarn-error.log
 
 # database
-data/
+database.sqlite

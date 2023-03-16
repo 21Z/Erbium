@@ -9,7 +9,7 @@ class CreateTag extends Command {
             name: 'createtag',
             aliases: ['addtag', 'newtag'],
             description: 'Creates new tag',
-            permissions: ['MANAGE_MESSAGES'],
+            permissions: ['ManageMessages'],
         });
     }
 
@@ -19,7 +19,7 @@ class CreateTag extends Command {
 
         if (!tagname) return message.reply('❌ | Please include a tag name!');
 
-        if (this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply(`❌ | Tag ${tagname.toLowerCase()} already exists!`);
+        if (await this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply(`❌ | Tag ${tagname.toLowerCase()} already exists!`);
         if (this.client.commands.has(tagname.toLowerCase())) return message.reply(`❌ | Tag name ${tagname.toLowerCase()} is not available!`);
         if (!content) return message.reply('❌ | Please include tag content!');
 

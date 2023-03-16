@@ -9,7 +9,7 @@ class DeleteTag extends Command {
             name: 'deletetag',
             aliases: ['removetag', 'rmtag'],
             description: 'Delete a tag',
-            permissions: ['MANAGE_MESSAGES'],
+            permissions: ['ManageMessages'],
         });
     }
 
@@ -18,9 +18,9 @@ class DeleteTag extends Command {
 
         if (!tagname.toLowerCase()) return message.reply('❌ | Please include a tag name!');
 
-        if (!this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply(`❌ | Tag ${tagname.toLowerCase()} is not available!`);
+        if (!await this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply(`❌ | Tag ${tagname.toLowerCase()} is not available!`);
 
-        this.client.database.tags.delete(`${tagname.toLowerCase()}_${message.guild.id}`);
+        await this.client.database.tags.delete(`${tagname.toLowerCase()}_${message.guild.id}`);
 
         return message.reply(`✅ | Removed tag ${tagname.toLowerCase()}!`);
     }

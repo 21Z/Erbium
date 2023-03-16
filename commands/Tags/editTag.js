@@ -9,7 +9,7 @@ class EditTag extends Command {
             name: 'edittag',
             aliases: ['tagedit', 'updatetag'],
             description: 'Edit a tag',
-            permissions: ['MANAGE_MESSAGES'],
+            permissions: ['MessageMessages'],
         });
     }
 
@@ -24,11 +24,11 @@ class EditTag extends Command {
         if (!content) return message.reply('❌ | Please include new tag content!');
 
         const struct = {
-            ...this.client.database.tags.get(`${tagname.toLowerCase()}_${message.guild.id}`),
+            ...await this.client.database.tags.get(`${tagname.toLowerCase()}_${message.guild.id}`),
             content: content,
         };
 
-        this.client.database.tags.set(`${tagname.toLowerCase()}_${message.guild.id}`, struct);
+        await this.client.database.tags.set(`${tagname.toLowerCase()}_${message.guild.id}`, struct);
 
         return message.reply(`✅ | Modified tag ${struct.name}!`);
     }

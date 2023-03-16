@@ -1,18 +1,15 @@
-const { Database } = require('@devsnowflake/quick.db');
+const { QuickDB } = require('quick.db');
 
 class ErbiumDb {
 
     constructor(client) {
         this.client = client;
 
-        this.root = new Database('data/erbium.db', {
-            path: 'data',
-            table: 'ROOT',
-            useWalMode: true,
+        this.root = new QuickDB({
+            filePath: 'database.sqlite',
         });
 
-        this.tags = this.root.createTable('TAGS');
-        this.guilds = this.root.createTable('GUILDS');
+        this.tags = this.root.table('TAGS');
 
         Object.defineProperties(this, {
             client: { enumerable: false },

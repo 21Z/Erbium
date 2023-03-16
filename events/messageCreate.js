@@ -18,7 +18,7 @@ class MessageCreate extends Event {
 
         const prefix = this.client.config.PREFIX;
 
-        if (new RegExp(`^<@!?${this.client.user.id}>( |)$`).test(message.content)) return message.reply(`My prefix for this server is **"\`${prefix}\`"**!`);
+        if (new RegExp(`^<@!?${this.client.user.id}>( |)$`).test(message.content)) return message.reply(`My prefix is **"\`${prefix}\`"**!`);
 
         // ignore non-prefix
         if (message.content.toLowerCase().indexOf(prefix.toLowerCase()) !== 0) return;
@@ -31,7 +31,7 @@ class MessageCreate extends Event {
 
         // ignore invalid commands
         if (!command) {
-            const tag = this.client.database.tags.get(`${cmd}_${message.guild.id}`);
+            const tag = await this.client.database.tags.get(`${cmd}_${message.guild.id}`);
             if (!tag) return;
             return message.channel.send(tag.content, { split: true, disableMentions: 'everyone' }).then(() => {
                 const struct = {
@@ -40,10 +40,10 @@ class MessageCreate extends Event {
                 };
 
                 this.client.database.tags.set(`${cmd}_${message.guild.id}`, struct);
-            }).catch(() => {});
+            }).catch((e) => { console.log(e); });
         }
-        if ((command.category === 'Developer' || command.ownerOnly) && !message.author.dev) return message.reply('❌ | You don\'t have `DEVELOPER` permission to use this command.');
-        if (!message.member.permissions.has(command.help.permissions)) return message.reply(`❌ | You don't have ${command.help.permissions.map(m => `\`${m}\``).join(', ')} permission(s) to use this command!`);
+        if ((command.category === 'Developer' || command.ownerOnly) && !message.author.dev) return message.reply('❌ | You are not a `DEVELOPER` to use this command.');
+        if (!message.member.permissions.has(command.help.permissions)) return message.reply(`❌ | You don't have \`${command.help.permissions.map(m => `\`${m}\``).join(',').replace(/([A-Z])/g, ' $1').trim()}\` permission(s) to use this command!`);
 
         const cooldown = cooldowns.get(`${command.help.name}_${message.author.id}`);
         if (cooldown && (command.cooldown) - (Date.now() - cooldown) > 0) {

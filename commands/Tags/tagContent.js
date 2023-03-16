@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command');
-const { Util } = require('discord.js');
+const { escapeMarkdown } = require('discord.js');
 
 class TagContent extends Command {
 
@@ -10,7 +10,6 @@ class TagContent extends Command {
             name: 'tagcontent',
             aliases: ['tagsource', 'tagsrc'],
             description: 'Tag source',
-            permissions: [],
         });
     }
 
@@ -21,9 +20,9 @@ class TagContent extends Command {
 
         if (!this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply(`❌ | Tag ${tagname.toLowerCase()} is not available!`);
 
-        const data = this.client.database.tags.get(`${tagname.toLowerCase()}_${message.guild.id}`);
+        const data = await this.client.database.tags.get(`${tagname.toLowerCase()}_${message.guild.id}`);
 
-        return message.reply(this.clean(Util.escapeMarkdown(data.content)), { split: true, disableMentions: 'everyone' });
+        return message.reply(this.clean(escapeMarkdown(data.content)), { split: true, disableMentions: 'everyone' });
     }
 
     clean(text) {

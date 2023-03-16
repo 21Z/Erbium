@@ -10,7 +10,6 @@ class TagInfo extends Command {
             name: 'taginfo',
             aliases: ['taginfo', 'abouttag', 'tag'],
             description: 'Shows tag info',
-            permissions: [],
         });
     }
 
@@ -21,8 +20,7 @@ class TagInfo extends Command {
 
         if (!this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply(`❌ | Tag ${tagname.toLowerCase()} is not available!`);
 
-        const tag = this.client.database.tags.get(`${tagname.toLowerCase()}_${message.guild.id}`);
-        // eslint-disable-next-line no-unused-vars
+        const tag = await this.client.database.tags.get(`${tagname.toLowerCase()}_${message.guild.id}`);
         const tagAuthor = this.client.resolveUser(tag.author) || await this.client.users.fetch(tag.author).catch();
 
         const embedColor = this.client.config.EMBED_COLOR;
@@ -34,7 +32,7 @@ class TagInfo extends Command {
                 { name: 'Name', value: tag.name, inline: true },
                 { name: 'Author', value: tagAuthor ? `${tagAuthor.tag} [\`${tagAuthor.id}\`]` : `\`Unknown User#0000 [\`${tag.author}\`]`, inline: true },
                 { name: 'Total Uses', value: tag.uses.toLocaleString(), inline: false },
-                { name: 'Created At', value: new Date(tag.createdAt).toUTCString(), inline: true },
+                { name: 'Created At', value: `<t:${Math.floor(tag.createdAt / 1000)}:F>`, inline: true },
 
             )
             .setColor(embedColor)
