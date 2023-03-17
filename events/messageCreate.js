@@ -43,7 +43,7 @@ class MessageCreate extends Event {
             }).catch((e) => { console.log(e); });
         }
         if ((command.category === 'Developer' || command.ownerOnly) && !message.author.dev) return message.reply('❌ | You are not a `DEVELOPER` to use this command.');
-        if (!message.member.permissions.has(command.help.permissions)) return message.reply(`❌ | You don't have \`${command.help.permissions.map(m => `\`${m}\``).join(',').replace(/([A-Z])/g, ' $1').trim()}\` permission(s) to use this command!`);
+        if (!message.member.permissions.has(command.help.permissions)) return message.reply(`❌ | You don't have \`${command.help.permissions.map(m => `${m}`).join(',').replace(/([A-Z])/g, ' $1').trim()}\` permission(s) to use this command!`);
 
         const cooldown = cooldowns.get(`${command.help.name}_${message.author.id}`);
         if (cooldown && (command.cooldown) - (Date.now() - cooldown) > 0) {
