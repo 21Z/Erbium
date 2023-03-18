@@ -25,7 +25,7 @@ class Eval extends Command {
         const code = args
             .join(' ')
             .replace(/^\s*\n?(```(?:[^\s]+\n)?(.*?)```|.*)$/s, (_, a, b) => a.startsWith('```') ? b : a);
-        const embed = new EmbedBuilder().setColor(embedColor).addFields([{ name: 'Input', value: `\`\`\`js\n${code}\`\`\`` }]);
+        const embed = new EmbedBuilder().setColor(embedColor).addFields([{ name: 'Input', value: `\`\`\`js\n${code}\n\`\`\`` }]);
 
         try {
             if (!code) {
@@ -44,7 +44,7 @@ class Eval extends Command {
             if (isSilent) return;
 
             const cleaned = this.client.utils.cleanText(evaled);
-            const output = `\`\`\`js\n${cleaned}\`\`\``;
+            const output = `\`\`\`js\n${cleaned}\n\`\`\``;
             embed.addFields([{ name: 'Output', value: output }]);
             message.channel.send({
                 askDeletion: {
@@ -55,7 +55,7 @@ class Eval extends Command {
         }
         catch (e) {
             const cleaned = this.client.utils.cleanText(String(e));
-            const error = `\`\`\`js\n${cleaned}\`\`\``;
+            const error = `\`\`\`js\n${cleaned}\n\`\`\``;
 
             embed.setColor('Red').addFields([{ name: ('Error'), value: error }]);
             message.channel.send({

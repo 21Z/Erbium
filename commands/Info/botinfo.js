@@ -41,7 +41,7 @@ class BotInfo extends Command {
                 { name: 'Type', value: this.client.user.bot ? 'Bot' : 'User', inline: true },
                 { name: 'ID', value: this.client.user.id, inline: true },
                 { name: 'Owners', value: `${admins.map(m => `<@!${m}>`).join(', ')}`, inline: true },
-                { name: 'Created At', value: this.client.user.createdAt.toString() },
+                { name: 'Created At', value: `<t:${Math.floor(this.client.user.createdTimestamp / 1000)}:F>` },
                 { name: '\u200b', value: `\`\`\`asciidoc\n${SystemString}\`\`\`` },
                 { name: 'GitHub (Source Code)', value: '**[Click Here](https://github.com/21Z/Erbium)**' },
             )

@@ -14,7 +14,7 @@ class Colorfy extends Command {
     }
 
     async run(message, args) {
-        let color = args[1];
+        let color = args[1] ?? args[0];
         if (!message.mentions.users.first() && !this.client.resolveUser(args[0])) color = args[0];
         const user = message.mentions.users.first() || this.client.resolveUser(args[0]) || message.author;
 

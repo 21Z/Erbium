@@ -55,7 +55,7 @@ class MessageCreate extends Event {
             await command.run(message, args);
         }
         catch (e) {
-            await message.reply(`❌ | **Error!**\`\`\`js\n${e.toString()}\`\`\``).catch(() => {});
+            await message.reply(`❌ | **Error!**\`\`\`js\n${e.toString()}\n\`\`\``).catch(() => {});
             logger.error(`Command: ${command.help.name} - ${e.toString()}`);
         }
     }
