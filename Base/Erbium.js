@@ -1,5 +1,4 @@
 const { Client, GatewayIntentBits, Collection, REST, Routes } = require('discord.js');
-
 const fs = require('fs');
 const config = require('../config.js');
 const Command = require('../utils/Command.js');

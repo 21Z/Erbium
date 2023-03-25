@@ -1,6 +1,8 @@
 const Event = require('../Base/Event.js');
 const logger = require('../utils/Logger.js');
 const cooldowns = new (require('discord.js').Collection)();
+const { Configuration, OpenAIApi } = require('openai');
+const openai = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }));
 
 class MessageCreate extends Event {
 
@@ -11,7 +13,7 @@ class MessageCreate extends Event {
     async run(message) {
         message.author.dev = this.client.config.OWNER.some(x => x === message.author.id);
         // ignore bots
-        if (message.author.bot) return;
+        if (message.author.bot || message.system) return;
 
         // ignore dm messages
         if (message.channel.type === 'dm') return;
@@ -20,11 +22,50 @@ class MessageCreate extends Event {
 
         if (new RegExp(`^<@!?${this.client.user.id}>( |)$`).test(message.content)) return message.reply(`My prefix is **"\`${prefix}\`"**!`);
 
+        // chatbot
+        if (message.channel.id === this.client.config.CHANNEL_ID) {
+            if (message.content.startsWith('!')) return;
+            try {
+                await message.channel.sendTyping();
+                if (message.content.length > 2000 || !message.content || message.content === '') {
+                    message.reply('Sorry, I can\'t get that, please send a valid query and try again.');
+                    return;
+                }
+                let prevMessages = await message.channel.messages.fetch({ limit: 75 });
+                prevMessages = prevMessages.sort((a, b) => a - b);
+
+                const conversationLog = [
+                    {
+                        role: 'system',
+                        content: 'You are a Discord ChatBot that gives funny and useful responses' },
+                ];
+                prevMessages.forEach((msg) => {
+                    if (msg.content.startsWith('/') || msg.content.length > 2000) return;
+                    if (msg.author.id !== this.client.user.id && message.author.bot) return;
+                    if (msg.author.id !== message.author.id) return;
+
+                    conversationLog.push({
+                        role: 'user',
+                        content: `${msg.content}`,
+                    });
+                });
+                const completion = await openai.createChatCompletion({
+                        model: 'gpt-3.5-turbo',
+                        messages: conversationLog,
+                    }),
+                    result = completion.data.choices[0];
+                message.reply(result.message, { split: true });
+            }
+            catch (e) {
+                message.reply('ChatBot is currently under maintenence. Please try again later.' + `\`\`\`js\n${e.toString()}\n\`\`\``);
+            }
+        }
         // ignore non-prefix
         if (message.content.toLowerCase().indexOf(prefix.toLowerCase()) !== 0) return;
 
         // dev mode
         if (this.client.config.DEV_MODE && !message.author.dev) return message.reply('❌ | Bot is set to `DEV_ONLY` mode.');
+
         const args = message.content.slice(prefix.length).trim().split(' ');
         const cmd = args.shift().toLowerCase();
         const command = this.client.commands.resolve(cmd);
@@ -42,7 +83,7 @@ class MessageCreate extends Event {
                 this.client.database.tags.set(`${cmd}_${message.guild.id}`, struct);
             }).catch((e) => { console.log(e); });
         }
-        if ((command.category === 'Developer' || command.ownerOnly) && !message.author.dev) return message.reply('❌ | You are not a `DEVELOPER` to use this command.');
+        if ((command.category === 'Developer' || command.ownerOnly) && !message.author.dev) return message.reply('❌ | Only Bot owners can use this command!');
         if (!message.member.permissions.has(command.help.permissions)) return message.reply(`❌ | You don't have \`${command.help.permissions.map(m => `${m}`).join(',').replace(/([A-Z])/g, ' $1').trim()}\` permission(s) to use this command!`);
 
         const cooldown = cooldowns.get(`${command.help.name}_${message.author.id}`);
