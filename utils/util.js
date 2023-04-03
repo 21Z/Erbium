@@ -8,7 +8,13 @@ class Util {
     }
 
     static formatDuration(dur) {
-        return moment.duration(dur).format(' M [Month(s)], D [Day(s)], H [Hour(s)], m [Minute(s)], s [Second(s)]');
+        let duration = moment.duration(dur).format('M [Months], D [Days], H [Hours], m [Minutes], s [Seconds]');
+        if (duration.includes('1 Months')) duration = duration.replace('Months', 'Month');
+        if (duration.includes('1 Days')) duration = duration.replace('Days', 'Day');
+        if (duration.includes('1 Hours')) duration = duration.replace('Hours', 'Hour');
+        if (duration.includes('1 Minutes')) duration = duration.replace('Minutes', 'Minute');
+        if (duration.includes('1 Seconds')) duration = duration.replace('Seconds', 'Second');
+        return duration;
     }
 
     static cleanText(text, token = process.env.DISCORD_TOKEN) {

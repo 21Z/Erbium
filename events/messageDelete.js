@@ -12,7 +12,7 @@ class MessageDelete extends Event {
         if (!message.guild) return;
         if (message.guild.id !== config.GUILD_ID) return;
         if (!process.env.WEBHOOK_URL) return;
-        if (message.author.bot) return;
+        if (message.author.bot || message.system) return;
         if (message.guild.members.me.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
             const fetchedLogs = await message.guild.fetchAuditLogs({
                 limit: 1,

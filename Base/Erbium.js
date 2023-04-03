@@ -13,6 +13,7 @@ class Erbium extends Client {
             intents: [
                 GatewayIntentBits.Guilds,
                 GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.GuildMembers,
                 GatewayIntentBits.MessageContent,
             ],
             allowedMentions: {

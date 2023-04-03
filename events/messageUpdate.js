@@ -12,7 +12,7 @@ class MessageUpdate extends Event {
         if (oldMessage.guild.id !== config.GUILD_ID) return;
         if (!process.env.WEBHOOK_URL) return;
         if (oldMessage.content === newMessage.content) return;
-        if (oldMessage.author.bot) return;
+        if (oldMessage.author.bot || oldMessage.system) return;
 
         const Count = 1950;
         const Original = oldMessage.content.slice(0, Count) + (oldMessage.content.length > 1950 ? ' ...' : '');
