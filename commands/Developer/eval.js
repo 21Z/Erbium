@@ -10,7 +10,7 @@ class Eval extends Command {
 
         this.config({
             name: 'eval',
-            aliases: ['ev'],
+            aliases: ['evaluate', 'ev', 'exec'],
             description: 'Evaluates Arbitrary JavaScript Code',
             ownerOnly: true,
         });
@@ -25,7 +25,7 @@ class Eval extends Command {
         const code = args
             .join(' ')
             .replace(/^\s*\n?(```(?:[^\s]+\n)?(.*?)```|.*)$/s, (_, a, b) => a.startsWith('```') ? b : a);
-        const embed = new EmbedBuilder().setColor(embedColor).addFields([{ name: 'Input', value: `\`\`\`js\n${code}\n\`\`\`` }]);
+        const embed = new EmbedBuilder().setColor(embedColor).addFields([{ name: 'Input', value: code.length > 1024 ? `${await this.client.utils.hastebin(code)}.js` : `\`\`\`js\n${code}\n\`\`\`` }]);
 
         try {
             if (!code) {
@@ -44,7 +44,7 @@ class Eval extends Command {
             if (isSilent) return;
 
             const cleaned = this.client.utils.cleanText(evaled);
-            const output = `\`\`\`js\n${cleaned}\n\`\`\``;
+            const output = cleaned.length > 1024 ? `${await this.client.utils.hastebin(cleaned)}.js` : `\`\`\`js\n${cleaned}\n\`\`\``;
             embed.addFields([{ name: 'Output', value: output }]);
             message.channel.send({
                 askDeletion: {
@@ -56,14 +56,12 @@ class Eval extends Command {
         catch (e) {
             const cleaned = this.client.utils.cleanText(String(e));
             const error = `\`\`\`js\n${cleaned}\n\`\`\``;
-
-            embed.setColor('Red').addFields([{ name: ('Error'), value: error }]);
-            message.channel.send({
-                askDeletion: {
-                    reference: message.author.id,
-                },
-                embeds: [embed],
-            }).catch(er => console.error('PROMISE_ERR:', er));
+            if (error.length > 1024) {
+                const hastebin = await client.util.hastebin(error);
+                embed.setColor('Red').addFields({ name: 'Error', value: `${hastebin}.js` });
+            }
+            else { embed.setColor('Red').addFields({ name: 'Error', value: error }); }
+            message.channel.send({ embeds: [embed] }).catch(err => console.error('PROMISE_ERR:', err));
         }
     }
 }

@@ -1,3 +1,4 @@
+const { request } = require('https');
 const moment = require('moment');
 require('moment-duration-format')(moment);
 
@@ -26,6 +27,21 @@ class Util {
             .replace(/@/, '@' + String.fromCharCode(8203));
 
         return text;
+    }
+
+    static hastebin(text) {
+        return new Promise((resolve, reject) => {
+            const req = request({ hostname: 'bin.clytage.org', path: '/documents', method: 'POST', minVersion: 'TLSv1.3' }, res => {
+                let raw = '';
+                res.on('data', chunk => raw += chunk);
+                res.on('end', () => {
+                    if (res.statusCode >= 200 && res.statusCode < 300) return resolve(`https://bin.clytage.org/${JSON.parse(raw).key}`);
+                    return reject(new Error(`[hastebin] Error while trying to send data to https://bin.clytage.org/documents, ${res.statusCode} ${res.statusMessage}`));
+                });
+            }).on('error', reject);
+            req.write(typeof text === 'object' ? JSON.stringify(text, null, 2) : text);
+            req.end();
+        });
     }
 
     static reverse(text) {
