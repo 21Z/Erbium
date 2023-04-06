@@ -11,6 +11,7 @@ class Uptime extends Command {
             aliases: ['ut'],
             description: 'Bot uptime',
             botPerms: ['EmbedLinks'],
+            cooldown: 5000,
         });
     }
 

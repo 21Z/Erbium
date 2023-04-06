@@ -11,6 +11,7 @@ class Ping extends Command {
             aliases: ['pong'],
             description: 'Bot ping',
             botPerms: ['EmbedLinks'],
+            cooldown: 2500,
         });
     }
 

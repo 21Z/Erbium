@@ -12,6 +12,7 @@ class BotInfo extends Command {
             aliases: ['bi', 'info', 'about'],
             description: 'Bot information',
             botPerms: ['EmbedLinks'],
+            cooldown: 6000,
         });
     }
 

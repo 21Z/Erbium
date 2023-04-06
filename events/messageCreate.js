@@ -89,7 +89,13 @@ class MessageCreate extends Event {
 
         const cooldown = cooldowns.get(`${command.help.name}_${message.author.id}`);
         if (cooldown && (command.cooldown) - (Date.now() - cooldown) > 0) {
-            return message.reply(`❌ | Please wait for **${Math.round(((command.cooldown) - (Date.now() - cooldown)) / 1000)}** second(s) before using **\`${command.help.name}\`** command again!`);
+            message.react('⏳');
+            return message.reply(`❌ | You can use this command again <t:${Math.round(((cooldown + command.cooldown)) / 1000)}:R>`)
+                .then(m => {
+                    setTimeout(function() {
+                        m.delete();
+                    }, Math.round(((command.cooldown) - (Date.now() - cooldown))));
+                });
         }
         cooldowns.set(`${command.help.name}_${message.author.id}`, Date.now());
 

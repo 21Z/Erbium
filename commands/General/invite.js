@@ -11,6 +11,7 @@ class Invite extends Command {
             aliases: ['inv'],
             description: 'Bot invite link',
             botPerms: ['EmbedLinks'],
+            cooldown: 5000,
         });
     }
 

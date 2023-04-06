@@ -20,7 +20,7 @@ class Command {
             botPerms: conf.botPerms ?? [],
             permissions: conf.permissions ?? [],
             category: null,
-            cooldown: 3000,
+            cooldown: conf.cooldown ?? 3000,
         };
         this.path = null;
     }

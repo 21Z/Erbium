@@ -9,6 +9,7 @@ class Tags extends Command {
             name: 'tags',
             aliases: ['listtag', 'alltag'],
             description: 'Shows all tags',
+            cooldown: 6000,
         });
     }
 
