@@ -11,6 +11,7 @@ class Pokemon extends Command {
             name: 'pokemon',
             aliases: ['pokemoninfo', 'pokeinfo', 'pokedex', 'pokémon'],
             description: 'Shows Pokémon info',
+            botPerms: ['EmbedLinks'],
         });
     }
 

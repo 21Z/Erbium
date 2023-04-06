@@ -13,6 +13,7 @@ class Eval extends Command {
             aliases: ['evaluate', 'ev', 'exec'],
             description: 'Evaluates Arbitrary JavaScript Code',
             ownerOnly: true,
+            botPerms: ['EmbedLinks'],
         });
     }
 

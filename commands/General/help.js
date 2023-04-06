@@ -10,6 +10,7 @@ class Help extends Command {
             name: 'help',
             aliases: ['h', 'command', 'cmd', 'commands', 'menu'],
             description: 'Shows available commands.',
+            botPerms: ['EmbedLinks'],
         });
     }
 
@@ -66,7 +67,8 @@ class Help extends Command {
                 { name: 'Description', value: command.help.description, inline: true },
                 { name: 'Cooldown', value: `${Math.floor(command.help.cooldown ? command.help.cooldown / 1000 : 1)} Second(s)`, inline: true },
                 { name: 'Owner Only', value: command.help.ownerOnly ? 'Yes' : 'No', inline: true },
-                { name: 'Permissions', value: command.help.permissions.length ? command.help.permissions.map(m => `\`${m}\``).join(', ') : 'None' },
+                { name: 'Bot Permissions', value: command.help.botPerms.length ? command.help.botPerms.map(m => `\`${m.replace(/([A-Z])/g, ' $1').trim()}\``).join(', ') : 'None' },
+                { name: 'Permissions', value: command.help.permissions.length ? command.help.permissions.map(m => `\`${m.replace(/([A-Z])/g, ' $1').trim()}\``).join(', ') : 'None', inline: true },
             )
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();

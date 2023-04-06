@@ -10,6 +10,7 @@ class Ping extends Command {
             name: 'ping',
             aliases: ['pong'],
             description: 'Bot ping',
+            botPerms: ['EmbedLinks'],
         });
     }
 

@@ -10,6 +10,7 @@ class SlowMode extends Command {
             name: 'slowmode',
             aliases: ['sm', 'setsm', 'setslowmode'],
             description: 'Set slowmode for the current channel',
+            botPerms: ['ManageChannels'],
             permissions: ['ManageChannels'],
         });
     }

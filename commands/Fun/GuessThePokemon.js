@@ -11,6 +11,7 @@ class GuessThePokemon extends Command {
             name: 'wtp',
             aliases: ['guessthepokemon', 'guessthepokémon', 'gtp'],
             description: 'Who\'s That Pokémon',
+            botPerms: ['EmbedLinks'],
         });
     }
 

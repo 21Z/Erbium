@@ -10,6 +10,7 @@ class Avatar extends Command {
             name: 'avatar',
             aliases: ['av', 'pfp'],
             description: 'Shows avatar of the specified user.',
+            botPerms: ['EmbedLinks'],
         });
     }
 

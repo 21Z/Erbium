@@ -10,6 +10,7 @@ class UserInfo extends Command {
             name: 'userinfo',
             aliases: ['ui'],
             description: 'User information',
+            botPerms: ['EmbedLinks'],
         });
     }
 

@@ -10,6 +10,7 @@ class Invite extends Command {
             name: 'invite',
             aliases: ['inv'],
             description: 'Bot invite link',
+            botPerms: ['EmbedLinks'],
         });
     }
 

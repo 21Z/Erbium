@@ -11,6 +11,7 @@ class BotInfo extends Command {
             name: 'botinfo',
             aliases: ['bi', 'info', 'about'],
             description: 'Bot information',
+            botPerms: ['EmbedLinks'],
         });
     }
 

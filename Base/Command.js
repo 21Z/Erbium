@@ -17,6 +17,7 @@ class Command {
             aliases: conf.aliases ?? [],
             description: conf.description ?? 'None',
             ownerOnly: !!conf.ownerOnly,
+            botPerms: conf.botPerms ?? [],
             permissions: conf.permissions ?? [],
             category: null,
             cooldown: 3000,

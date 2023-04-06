@@ -11,6 +11,7 @@ class YouTubeSearch extends Command {
             name: 'youtubesearch',
             aliases: ['ytsearch', 'yt'],
             description: 'YouTube Search',
+            botPerms: ['EmbedLinks'],
         });
     }
 

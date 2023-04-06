@@ -10,6 +10,7 @@ class Uptime extends Command {
             name: 'uptime',
             aliases: ['ut'],
             description: 'Bot uptime',
+            botPerms: ['EmbedLinks'],
         });
     }
 

@@ -10,6 +10,7 @@ class TagInfo extends Command {
             name: 'taginfo',
             aliases: ['taginfo', 'abouttag', 'tag'],
             description: 'Shows tag info',
+            botPerms: ['EmbedLinks'],
         });
     }
 
