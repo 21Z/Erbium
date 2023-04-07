@@ -16,17 +16,18 @@ class SlowMode extends Command {
     }
 
     async run(message, args) {
-        const lastletter = args[0].slice(-1);
-        let time = ms(args[0]) / 1000;
-        if (lastletter !== 's' && lastletter !== 'm' && lastletter !== 'h') time = args[0];
         const currentSlowmode = message.channel.rateLimitPerUser;
-        if (args[0] === 'off') {
+        if (!args[0] || args[0] === 'off') {
             if (currentSlowmode === 0) {
                 return message.reply('❌ | Slowmode is already off!');
             }
             message.reply('Slowmode has been turned off!');
             return message.channel.setRateLimitPerUser(0);
         }
+        const lastletter = args[0].slice(-1);
+        let time = ms(args[0]) / 1000;
+        if (lastletter !== 's' && lastletter !== 'm' && lastletter !== 'h') time = args[0];
+
         if (!time) {
             return message.reply('❌ | You must enter a valid time! Available units: `s`, `m`, or `h`');
         }
