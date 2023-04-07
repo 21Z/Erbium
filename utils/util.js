@@ -9,12 +9,12 @@ class Util {
     }
 
     static formatDuration(dur) {
-        let duration = moment.duration(dur).format('M [Months], D [Days], H [Hours], m [Minutes], s [Seconds]');
-        if (duration.includes('1 Months')) duration = duration.replace('Months', 'Month');
-        if (duration.includes('1 Days')) duration = duration.replace('Days', 'Day');
-        if (duration.includes('1 Hours')) duration = duration.replace('Hours', 'Hour');
-        if (duration.includes('1 Minutes')) duration = duration.replace('Minutes', 'Minute');
-        if (duration.includes('1 Seconds')) duration = duration.replace('Seconds', 'Second');
+        let duration = moment.duration(dur).format('M [months], D [days], H [hours], m [minutes], s [seconds]');
+        if (duration.includes('1 months')) duration = duration.replace('months', 'month');
+        if (duration.includes('1 days')) duration = duration.replace('days', 'day');
+        if (duration.includes('1 hours')) duration = duration.replace('hours', 'hour');
+        if (duration.includes('1 minutes')) duration = duration.replace('minutes', 'minute');
+        if (duration.includes('1 seconds')) duration = duration.replace('seconds', 'second');
         return duration;
     }
 

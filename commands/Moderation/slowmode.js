@@ -19,14 +19,13 @@ class SlowMode extends Command {
         const lastletter = args[0].slice(-1);
         let time = ms(args[0]) / 1000;
         if (lastletter !== 's' && lastletter !== 'm' && lastletter !== 'h') time = args[0];
-        const reason = args[1] ? args.slice(1).join(' ') : '';
         const currentSlowmode = message.channel.rateLimitPerUser;
         if (args[0] === 'off') {
             if (currentSlowmode === 0) {
                 return message.reply('❌ | Slowmode is already off!');
             }
             message.reply('Slowmode has been turned off!');
-            return message.channel.setRateLimitPerUser(0, reason);
+            return message.channel.setRateLimitPerUser(0);
         }
         if (!time) {
             return message.reply('❌ | You must enter a valid time! Available units: `s`, `m`, or `h`');
@@ -38,7 +37,7 @@ class SlowMode extends Command {
         message.channel.setRateLimitPerUser(time).catch(e => {
             return message.reply(`❌ | Oops, Something went wrong!\n ${e}`);
         });
-        message.reply(`Slowmode set to \`${ms(time * 1000, { long: true })}\``);
+        message.reply(`Slowmode set to \`${this.client.utils.formatDuration(time * 1000).replace(/,/g, '').replace(' 0 seconds', '')}\``);
     }
 }
 
