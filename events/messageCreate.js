@@ -40,7 +40,7 @@ class MessageCreate extends Event {
                         content: 'You are a Discord ChatBot that gives funny and useful responses' },
                 ];
                 prevMessages.forEach((msg) => {
-                    if (msg.content.startsWith('/') || msg.content.length > 2000) return;
+                    if (msg.content.startsWith('!') || msg.content.length > 2000) return;
                     if (msg.author.id !== this.client.user.id && message.author.bot) return;
                     if (msg.author.id !== message.author.id) return;
 
@@ -54,7 +54,11 @@ class MessageCreate extends Event {
                         messages: conversationLog,
                     }),
                     result = completion.data.choices[0];
-                message.reply(result.message, { split: true });
+                if (result.message.content.length > 2000) {
+                    const reply = await this.client.utils.hastebin(result.message.content.replace(/(?![^\n]{1,148}$)([^\n]{1,148})\s/g, '$1\n'));
+                    return await message.reply(`! Output too long, Hastebin:\n${reply}`);
+                }
+                message.reply(result.message.content);
             }
             catch (e) {
                 message.reply('ChatBot is currently under maintenence. Please try again later.' + `\`\`\`js\n${e.toString()}\n\`\`\``);

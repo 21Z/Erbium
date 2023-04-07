@@ -58,7 +58,7 @@ class Eval extends Command {
             const cleaned = this.client.utils.cleanText(String(e));
             const error = `\`\`\`js\n${cleaned}\n\`\`\``;
             if (error.length > 1024) {
-                const hastebin = await client.util.hastebin(error);
+                const hastebin = await client.utils.hastebin(error);
                 embed.setColor('Red').addFields({ name: 'Error', value: `${hastebin}.js` });
             }
             else { embed.setColor('Red').addFields({ name: 'Error', value: error }); }
