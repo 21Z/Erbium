@@ -15,8 +15,8 @@ class Colorfy extends Command {
 
     async run(message, args) {
         let color = args[1] ?? args[0];
-        if (!message.mentions.users.first() && !this.client.resolveUser(args[0])) color = args[0];
-        const user = message.mentions.users.first() || this.client.resolveUser(args[0]) || message.author;
+        if (!message.mentions.users.first() && !await this.client.resolveUser(args[0])) color = args[0];
+        const user = message.mentions.users.first() || await this.client.resolveUser(args[0]) || message.author;
 
         const m = await message.reply('⏱ | Please wait...');
         const img = await Canvacord.colorfy(user.displayAvatarURL({ format: 'png', size: 2048 }), `${color}`);

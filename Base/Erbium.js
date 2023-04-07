@@ -129,7 +129,7 @@ class Erbium extends Client {
         }
     }
 
-    resolveUser(usernameOrUserResolvable, multiple = false) {
+    async resolveUser(usernameOrUserResolvable, multiple = false) {
         if (usernameOrUserResolvable && typeof usernameOrUserResolvable === 'string' && !parseInt(usernameOrUserResolvable)) {
             const name = usernameOrUserResolvable.toUpperCase();
             const arr = [];
@@ -140,6 +140,7 @@ class Erbium extends Client {
             return multiple ? arr : arr[0];
         }
         else {
+            await this.users.fetch(usernameOrUserResolvable);
             return usernameOrUserResolvable ? (multiple ? [this.users.resolve(usernameOrUserResolvable)] : this.users.resolve(usernameOrUserResolvable)) : null;
         }
     }

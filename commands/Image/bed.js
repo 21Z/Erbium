@@ -14,7 +14,7 @@ class Bed extends Command {
     }
 
     async run(message, args) {
-        const user = message.mentions.users.first() || this.client.resolveUser(args.join(' ')) || message.author;
+        const user = message.mentions.users.first() || await this.client.resolveUser(args.join(' ')) || message.author;
 
         const m = await message.reply('⏱ | Please wait...');
         const img = await Canvacord.bed(message.author.displayAvatarURL({ format: 'png', size: 2048 }), user.displayAvatarURL({ format: 'png', size: 2048 }));

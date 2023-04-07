@@ -22,7 +22,7 @@ class TagInfo extends Command {
         if (!await this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply(`❌ | Tag ${tagname.toLowerCase()} is not available!`);
 
         const tag = await this.client.database.tags.get(`${tagname.toLowerCase()}_${message.guild.id}`);
-        const tagAuthor = this.client.resolveUser(tag.author) || await this.client.users.fetch(tag.author).catch();
+        const tagAuthor = await this.client.resolveUser(tag.author);
 
         const embedColor = this.client.config.EMBED_COLOR;
         const embed = new EmbedBuilder()

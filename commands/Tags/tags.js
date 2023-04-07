@@ -14,7 +14,7 @@ class Tags extends Command {
     }
 
     async run(message, args) {
-        const user = message.mentions.users.first() || this.client.resolveUser(args.join(' '));
+        const user = message.mentions.users.first() || await this.client.resolveUser(args.join(' '));
         const data = (await this.client.database.tags.all()).filter(x => x.id.endsWith(`_${message.guild.id}`));
         const filtered = user ? data.filter(d => d.value.author === user.id) : data;
 

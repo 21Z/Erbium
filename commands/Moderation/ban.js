@@ -16,8 +16,8 @@ class Ban extends Command {
     }
 
     async run(message, args) {
-        await message.guild.members.fetch(args[0]).catch(() => {}) || await this.client.users.fetch(args[0]).catch(() => {});
-        const target = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || this.client.resolveUser(args[0]);
+        await message.guild.members.fetch(args[0]).catch(() => {});
+        const target = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || await this.client.resolveUser(args[0]);
         const moderator = `by ${message.author.tag}, ID: ${message.author.id}`;
         const embedreason = args.slice(1).join(' ') || 'None';
         let reason = args.slice(1).join(' ') || 'Banned ' + moderator;

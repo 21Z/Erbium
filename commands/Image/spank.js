@@ -14,7 +14,7 @@ class Spank extends Command {
     }
 
     async run(message, args) {
-        const user = message.mentions.users.first() || this.client.resolveUser(args.join(' ')) || message.author;
+        const user = message.mentions.users.first() || await this.client.resolveUser(args.join(' ')) || message.author;
         if (user === message.author) return message.reply('❌ | Tag someone!');
 
         const m = await message.reply('⏱ | Please wait...');
