@@ -15,6 +15,7 @@ class Util {
         if (duration.includes('1 hours')) duration = duration.replace('hours', 'hour');
         if (duration.includes('1 minutes')) duration = duration.replace('minutes', 'minute');
         if (duration.includes('1 seconds')) duration = duration.replace('seconds', 'second');
+        duration = duration.replace(', 0 seconds', '').replace(', 0 minutes', '').replace(', 0 hours', '').replace(', 0 days', '').replace('. 0 months', '');
         return duration;
     }
 

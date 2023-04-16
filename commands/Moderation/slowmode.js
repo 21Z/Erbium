@@ -38,7 +38,7 @@ class SlowMode extends Command {
         message.channel.setRateLimitPerUser(time).catch(e => {
             return message.reply(`❌ | Oops, Something went wrong!\n ${e}`);
         });
-        message.reply(`Slowmode set to \`${this.client.utils.formatDuration(time * 1000).replace(/,/g, '').replace(' 0 seconds', '')}\``);
+        message.reply(`Slowmode set to \`${this.client.utils.formatDuration(time * 1000).replace(/,/g, '')}\``);
     }
 }
 
