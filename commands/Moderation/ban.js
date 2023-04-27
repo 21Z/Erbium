@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const createEmbed = require('../../utils/createEmbed.js');
 const Command = require('../../Base/Command');
 
 class Ban extends Command {
@@ -11,7 +11,7 @@ class Ban extends Command {
             aliases: ['b'],
             description: 'Ban a user from the server!',
             botPerms: ['BanMembers', 'EmbedLinks'],
-            permissions: ['BanMembers', 'EmbedLinks'],
+            permissions: ['BanMembers'],
         });
     }
 
@@ -22,23 +22,22 @@ class Ban extends Command {
         const embedreason = args.slice(1).join(' ') || 'None';
         let reason = args.slice(1).join(' ') || 'Banned ' + moderator;
         if (reason === args.slice(1).join(' ')) reason = reason + ', ' + moderator;
-        if (!target) return message.reply('❌ | Please specify a valid user who you want to ban!');
+        if (!target) return message.reply({ embeds: [createEmbed('warn', 'Please specify a valid user who you want to ban!')] });
 
-        if (target.id === message.author.id) return message.reply('❌ | You can not ban yourself!');
-        if (target.id === message.guild.ownerId) return message.reply('❌ | You can not ban the server owner!');
+        if (target.id === message.author.id) return message.reply({ embeds: [createEmbed('error', 'You can not ban yourself!', true)] });
+        if (target.id === message.guild.ownerId) return message.reply({ embeds: [createEmbed('error', 'You can not ban the server owner!', true)] });
         if (message.guild.members.cache.has(target.id) && target.roles.highest.position > message.member.roles.highest.position) {
-            return message.reply('❌ | You cannot ban someone with a higher role than yours!');
+            return message.reply({ embeds: [createEmbed('error', 'You cannot ban someone with a higher role than yours!', true)] });
         }
-        if (message.guild.members.cache.has(target.id) && !target.bannable) return message.reply('❌ | I cannot ban this user!');
+        if (message.guild.members.cache.has(target.id) && !target.bannable) return message.reply({ embeds: [createEmbed('error', 'I cannot ban this user!', true)] });
 
         // If the user is already banned
         const bans = await message.guild.bans.fetch();
-        if (bans.some((m) => m.user.id === target.id)) return message.reply(`❌ | ${target} is already banned!`);
+        if (bans.some((m) => m.user.id === target.id)) return message.reply({ embeds: [createEmbed('error', `${target} is already banned!`, true)] });
 
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('success')
             .setTitle('Action: Ban')
             .setDescription(`Banned ${target} (\`${target.user?.tag ?? target.tag ?? target}\`)\nReason: ${embedreason}`)
-            .setColor('Red')
             .setThumbnail(target.displayAvatarURL())
             .setFooter({
                 text: `Banned by ${message.author.tag}`,

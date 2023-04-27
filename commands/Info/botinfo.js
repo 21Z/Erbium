@@ -1,5 +1,6 @@
 const Command = require('../../Base/Command.js');
-const { EmbedBuilder, version } = require('discord.js');
+const createEmbed = require('../../utils/createEmbed.js');
+const { version } = require('discord.js');
 const os = require('os');
 
 class BotInfo extends Command {
@@ -18,7 +19,6 @@ class BotInfo extends Command {
 
     async run(message) {
         const admins = this.client.config.OWNER;
-        const embedColor = this.client.config.EMBED_COLOR;
         const SystemString = `= System Info =
 • Total Commands :: ${this.client.commands.size.toLocaleString()}
 • Memory Usage   :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
@@ -32,11 +32,10 @@ class BotInfo extends Command {
 • Memory         :: ${Math.round(os.totalmem() / 1024 / 1024 / 1024)} GB
 • OS             :: ${this.client.utils.properCase(os.platform() === 'win32' ? 'windows' : os.platform())}`;
 
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('info')
             .setAuthor({ name: 'Bot Information', iconURL: message.guild.iconURL() })
             .setThumbnail(this.client.user.displayAvatarURL({ size: 4096 }))
             .setDescription(`${this.client.user.username} is a discord bot developed by **[21Z](https://github.com/21Z)**.`)
-            .setColor(embedColor)
             .addFields(
                 { name: 'Name', value: this.client.user.username, inline: true },
                 { name: 'Discriminator', value: this.client.user.discriminator, inline: true },

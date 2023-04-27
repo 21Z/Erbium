@@ -1,4 +1,5 @@
 const Command = require('../../Base/Command');
+const createEmbed = require('../../utils/createEmbed');
 
 class DeleteTag extends Command {
 
@@ -16,9 +17,9 @@ class DeleteTag extends Command {
     async run(message, args) {
         const [tagname] = args;
 
-        if (!tagname.toLowerCase()) return message.reply('❌ | Please include a tag name!');
+        if (!tagname.toLowerCase()) return message.reply({ embeds: [createEmbed('warn', 'Please include a tag name!')] });
 
-        if (!await this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply(`❌ | Tag ${tagname.toLowerCase()} is not available!`);
+        if (!await this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply({ embeds: [createEmbed('error', `Tag ${tagname.toLowerCase()} is not available!`, true)] });
 
         await this.client.database.tags.delete(`${tagname.toLowerCase()}_${message.guild.id}`);
 

@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { EmbedBuilder } = require('discord.js');
+const createEmbed = require('../../utils/createEmbed.js');
 
 class Uptime extends Command {
 
@@ -16,10 +16,9 @@ class Uptime extends Command {
     }
 
     async run(message) {
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('info')
             .setTitle('Bot Uptime')
             .setDescription(this.client.utils.formatDuration(this.client.uptime))
-            .setColor(0x4d5e94)
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 

@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { EmbedBuilder } = require('discord.js');
+const createEmbed = require('../../utils/createEmbed.js');
 
 class Help extends Command {
 
@@ -15,14 +15,12 @@ class Help extends Command {
     }
 
     async run(message, args) {
-        const embedColor = this.client.config.EMBED_COLOR;
         const category = [...new Set(this.client.commands.commands.map(m => m.help.category))];
         const [query] = args;
 
         if (!query) {
-            const embed = new EmbedBuilder()
+            const embed = createEmbed('info')
                 .setTitle(`Commands - Total: ${this.client.commands.size}`)
-                .setColor(embedColor)
                 .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
                 .setTimestamp();
             let x = 1;
@@ -40,9 +38,8 @@ class Help extends Command {
         if (category.some(q => q === query)) {
             const ctg = category.find(q => q.toLowerCase() === query.toLowerCase());
             console.log(ctg);
-            const embed = new EmbedBuilder()
+            const embed = createEmbed('info')
                 .setTitle('Commands')
-                .setColor(embedColor)
                 .addFields({ name: 'Category', value: ctg, inline: true })
                 .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
                 .setTimestamp();
@@ -55,11 +52,10 @@ class Help extends Command {
         }
 
         const command = this.client.commands.resolve(query.toLowerCase());
-        if (!command) return message.reply('❌ | Command not found!');
+        if (!command) return message.reply({ embeds: [createEmbed('error', 'Command not found!', true)] });
 
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('info')
             .setTitle('Command Info')
-            .setColor(embedColor)
             .addFields(
                 { name: 'Name', value: command.help.name, inline: true },
                 { name: 'Aliases', value: !command.help.aliases.length ? 'None' : command.help.aliases.map(m => `\`${m}\``).join(', '), inline: true },

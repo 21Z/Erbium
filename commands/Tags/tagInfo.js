@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command');
-const { EmbedBuilder } = require('discord.js');
+const createEmbed = require('../../utils/createEmbed');
 
 class TagInfo extends Command {
 
@@ -17,15 +17,14 @@ class TagInfo extends Command {
     async run(message, args) {
         const [tagname] = args;
 
-        if (!tagname) return message.reply('❌ | Please include a tag name!');
+        if (!tagname) return message.reply({ embeds: [createEmbed('warn', 'Please include a tag name!')] });
 
-        if (!await this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply(`❌ | Tag ${tagname.toLowerCase()} is not available!`);
+        if (!await this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply({ embeds: [createEmbed('error', `Tag ${tagname.toLowerCase()} is not available!`, true)] });
 
         const tag = await this.client.database.tags.get(`${tagname.toLowerCase()}_${message.guild.id}`);
         const tagAuthor = await this.client.resolveUser(tag.author);
 
-        const embedColor = this.client.config.EMBED_COLOR;
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('info')
             .setAuthor({ name: 'Tag Info', iconURL: message.guild.iconURL() })
             .setTitle('Content')
             .setDescription(tag.content)
@@ -36,7 +35,6 @@ class TagInfo extends Command {
                 { name: 'Created At', value: `<t:${Math.floor(tag.createdAt / 1000)}:F>`, inline: true },
 
             )
-            .setColor(embedColor)
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 

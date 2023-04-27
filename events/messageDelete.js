@@ -1,5 +1,6 @@
 /* eslint-disable no-var */
-const { AuditLogEvent, EmbedBuilder, PermissionsBitField, WebhookClient } = require('discord.js');
+const { AuditLogEvent, PermissionsBitField, WebhookClient } = require('discord.js');
+const createEmbed = require('../utils/createEmbed.js');
 const config = require('../config.js');
 
 class MessageDelete extends Event {
@@ -15,8 +16,8 @@ class MessageDelete extends Event {
         if (message.author.bot || message.system) return;
         if (message.guild.members.me.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
             const fetchedLogs = await message.guild.fetchAuditLogs({
-                limit: 1,
                 type: AuditLogEvent.MessageDelete,
+                limit: 1,
             });
             var deletionLog = fetchedLogs.entries.first();
             const { executor, target } = deletionLog;
@@ -32,11 +33,10 @@ class MessageDelete extends Event {
         }
         if (!deletionLog) deletemsg = `📕 [Message](${message.url}) sent by ${message.author} [\`${message.author.tag}\`] was **Deleted** in ${message.channel}.`;
 
-        const Log = new EmbedBuilder()
+        const Log = createEmbed('info')
             .setAuthor({ name: `${message.author.tag}`, iconURL: `${message.author.displayAvatarURL()}` })
             .setDescription(deletemsg.slice(0, 4096))
             .addFields({ name: 'Deleted Message: ', value: `${message.content ? message.content : 'None'}` })
-            .setColor('Red')
             .setTimestamp()
             .setFooter({ text: `User ID: ${message.author.id}` });
         if (message.attachments.size >= 1) {

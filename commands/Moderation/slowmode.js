@@ -1,4 +1,5 @@
 const Command = require('../../Base/Command');
+const createEmbed = require('../../utils/createEmbed');
 const ms = require('ms');
 
 class SlowMode extends Command {
@@ -10,7 +11,7 @@ class SlowMode extends Command {
             name: 'slowmode',
             aliases: ['sm', 'setsm', 'setslowmode'],
             description: 'Set slowmode for the current channel',
-            botPerms: ['ManageChannels'],
+            botPerms: ['ManageChannels', 'EmbedLinks'],
             permissions: ['ManageChannels'],
         });
     }
@@ -19,9 +20,9 @@ class SlowMode extends Command {
         const currentSlowmode = message.channel.rateLimitPerUser;
         if (!args[0] || args[0] === 'off') {
             if (currentSlowmode === 0) {
-                return message.reply('❌ | Slowmode is already off!');
+                return message.reply({ embeds: [createEmbed('error', 'Slowmode is already off!', true)] });
             }
-            message.reply('Slowmode has been turned off!');
+            message.reply({ embeds: [createEmbed('success', 'Slowmode has been turned off!', true)] });
             return message.channel.setRateLimitPerUser(0);
         }
         const lastletter = args[0].slice(-1);
@@ -29,14 +30,14 @@ class SlowMode extends Command {
         if (lastletter !== 's' && lastletter !== 'm' && lastletter !== 'h') time = args[0];
 
         if (!time) {
-            return message.reply('❌ | You must enter a valid time! Available units: `s`, `m`, or `h`');
+            return message.reply({ embeds: [createEmbed('error', 'You must enter a valid time! Available units: `s`, `m`, or `h`', true)] });
         }
         if (isNaN(time)) {
-            return message.reply(`❌ | **${time}** is not a valid number! \nUsage: \`.slowmode <time>\``);
+            return message.reply({ embeds: [createEmbed('error', `**${time}** is not a valid number! \nUsage: \`.slowmode <time>\``, true)] });
         }
-        if (time > 21600) return message.reply('❌ | Time is too high, please set a slowmode less than 6 hours!');
+        if (time > 21600) return message.reply({ embeds: [createEmbed('error', 'Time is too high, please set a slowmode less than 6 hours!', true)] });
         message.channel.setRateLimitPerUser(time).catch(e => {
-            return message.reply(`❌ | Oops, Something went wrong!\n ${e}`);
+            return message.reply({ embeds: [createEmbed('error', `Something went wrong!\n\`\`\`js\n${e}\`\`\``, true)] });
         });
         message.reply(`Slowmode set to \`${this.client.utils.formatDuration(time * 1000).replace(/,/g, '')}\``);
     }

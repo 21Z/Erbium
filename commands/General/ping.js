@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { EmbedBuilder } = require('discord.js');
+const createEmbed = require('../../utils/createEmbed.js');
 
 class Ping extends Command {
 
@@ -21,7 +21,7 @@ class Ping extends Command {
         const latency = Date.now() - before;
         const wsLatency = this.client.ws.ping.toFixed(0);
 
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('info')
             .setAuthor({
                 name: '🏓 PONG',
                 iconURL: message.author.displayAvatarURL(),
@@ -42,8 +42,7 @@ class Ping extends Command {
                 text: `Requested by: ${message.author.tag}`,
                 iconURL: message.author.displayAvatarURL(),
             })
-            .setTimestamp()
-            .setColor(0x4d5e94);
+            .setTimestamp();
 
         msg.edit({ embeds: [embed], content: '\u200b' });
     }

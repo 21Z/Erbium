@@ -1,6 +1,6 @@
 const Command = require('../../Base/Command.js');
-const { EmbedBuilder } = require('discord.js');
 const { Spawn } = require('pokecord');
+const createEmbed = require('../../utils/createEmbed.js');
 
 class GuessThePokemon extends Command {
 
@@ -17,15 +17,14 @@ class GuessThePokemon extends Command {
 
     async run(message) {
         const pokemon = await Spawn().catch(() => {});
-        if (!pokemon) return message.reply('Opps! Something went wrong :(');
+        if (!pokemon) return message.reply({ embeds: [createEmbed('error', 'Something went wrong!', true)] });
 
         const msg_filter = m => m.author.id === message.author.id;
 
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('warn')
             .setTitle('Who\'s That Pokémon')
             .setDescription('You have 30 seconds to answer!')
             .setImage(pokemon.imageURL)
-            .setColor('Yellow')
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
@@ -43,7 +42,7 @@ class GuessThePokemon extends Command {
                 return m.reply('✅ | Correct guess!');
             })
             .catch(() => {
-                message.reply(`❌ | You did not answer in time. The correct answer was **${pokemon.name}**!`);
+                message.reply({ embeds: [createEmbed('error', `You did not answer in time. The correct answer was **${pokemon.name}**!`, true)] });
             });
     }
 

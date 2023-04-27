@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const createEmbed = require('../../utils/createEmbed.js');
 const Command = require('../../Base/Command');
 
 class UnBan extends Command {
@@ -11,7 +11,7 @@ class UnBan extends Command {
             aliases: ['unb'],
             description: 'Unban a user from the server!',
             botPerms: ['BanMembers', 'EmbedLinks'],
-            permissions: ['BanMembers', 'EmbedLinks'],
+            permissions: ['BanMembers'],
         });
     }
 
@@ -21,16 +21,15 @@ class UnBan extends Command {
         const embedreason = args.slice(1).join(' ') || 'None';
         let reason = args.slice(1).join(' ') || 'Unbanned ' + moderator;
         if (reason === args.slice(1).join(' ')) reason = reason + ', ' + moderator;
-        if (!target) return message.reply('❌ | Please specify a valid user who you want to unban!');
+        if (!target) return message.reply({ embeds: [createEmbed('warn', 'Please specify a valid user who you want to unban!')] });
 
         // If the user is not banned
         const bans = await message.guild.bans.fetch();
-        if (!bans.some((m) => m.user.id === target.id)) return message.reply('❌ | The user you specified is not banned!');
+        if (!bans.some((m) => m.user.id === target.id)) return message.reply({ embeds: [createEmbed('error', 'The user you specified is not banned!', true)] });
 
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('success')
             .setTitle('Action: Unban')
             .setDescription(`Unbanned ${target} (\`${target.tag}\`)\nReason: ${embedreason}`)
-            .setColor('Green')
             .setThumbnail(target.displayAvatarURL())
             .setFooter({
                 text: `Unbanned by ${message.author.tag}`,

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-const Command = require('../../Base/Command');
-const { EmbedBuilder } = require('discord.js');
+const Command = require('../../Base/Command.js');
+const createEmbed = require('../../utils/createEmbed.js');
 const { inspect } = require('util');
 
 class Eval extends Command {
@@ -18,20 +18,19 @@ class Eval extends Command {
     }
 
     async run(message, args) {
-        const embedColor = this.client.config.EMBED_COLOR;
         const Discord = require('discord.js');
         const client = this.client;
         const msg = message;
 
         const code = args
             .join(' ')
-            .replace(/^\s*\n?(```(?:[^\s]+\n)?(.*?)```|.*)$/s, (_, a, b) => a.startsWith('```') ? b : a);
-        const embed = new EmbedBuilder().setColor(embedColor).addFields([{ name: 'Input', value: code.length > 1024 ? `${await this.client.utils.hastebin(code)}.js` : `\`\`\`js\n${code}\n\`\`\`` }]);
+            .replace(/```(?:[^\s]+\n)?(.*?)\n?```/gs, (_1, a1) => a1);
+        const embed = createEmbed('info').addFields([{ name: 'Input', value: code.length > 1024 ? `${await this.client.utils.hastebin(code)}.js` : `\`\`\`js\n${code}\n\`\`\`` }]);
 
         try {
             if (!code) {
-                return await message.channel.send({
-                    embeds: [new EmbedBuilder().setColor(embedColor).setDescription('❌ **|** No code was provided.')],
+                return message.channel.send({
+                    embeds: [createEmbed('error', 'No code was provided.', true)],
                 });
             }
             const isAsync = /.* --async( +)?(--silent)?$/.test(code);
@@ -47,12 +46,7 @@ class Eval extends Command {
             const cleaned = this.client.utils.cleanText(evaled);
             const output = cleaned.length > 1024 ? `${await this.client.utils.hastebin(cleaned)}.js` : `\`\`\`js\n${cleaned}\n\`\`\``;
             embed.addFields([{ name: 'Output', value: output }]);
-            message.channel.send({
-                askDeletion: {
-                    reference: message.author.id,
-                },
-                embeds: [embed],
-            }).catch(e => console.error('PROMISE_ERR:', e));
+            message.channel.send({ embeds: [embed] }).catch(e => console.error('PROMISE_ERR:', e));
         }
         catch (e) {
             const cleaned = this.client.utils.cleanText(String(e));

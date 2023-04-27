@@ -9,7 +9,9 @@ const config = {
     GUILD_ID: '1234567890123456', // your server ID for message edit/delete logs
     CHANNEL_ID: '1234567890123456', // channel id for chatgpt chatbot
     PREFIX: 'er!', // command prefix
-    EMBED_COLOR: 'Random', // embed color
+    EMBED_COLOR: 0x4d5e94, // embed color
+    SuccessEmoji: '✅', // emoji to use when sending success messages
+    ErrorEmoji: '❌', // emoji to use when sending error messages
 };
 
 module.exports = config;

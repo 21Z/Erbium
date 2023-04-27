@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const createEmbed = require('../utils/createEmbed');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,7 +12,7 @@ module.exports = {
         const latency = Date.now() - before;
         const wsLatency = interaction.client.ws.ping.toFixed(0);
 
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('info')
             .setAuthor({
                 name: '🏓 PONG',
                 iconURL: interaction.client.user.displayAvatarURL(),
@@ -32,8 +33,7 @@ module.exports = {
                 text: `Requested by: ${interaction.user.tag}`,
                 iconURL: interaction.member.displayAvatarURL(),
             })
-            .setTimestamp()
-            .setColor(0x4d5e94);
+            .setTimestamp();
 
         interaction.editReply({ embeds: [embed] });
     },

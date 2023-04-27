@@ -1,4 +1,5 @@
 const Command = require('../../Base/Command');
+const createEmbed = require('../../utils/createEmbed');
 
 class Tags extends Command {
 
@@ -18,7 +19,7 @@ class Tags extends Command {
         const data = (await this.client.database.tags.all()).filter(x => x.id.endsWith(`_${message.guild.id}`));
         const filtered = user ? data.filter(d => d.value.author === user.id) : data;
 
-        if (!filtered.length) return message.reply('❌ | No tags found!');
+        if (!filtered.length) return message.reply({ embeds: [createEmbed('error', 'No tags found!', true)] });
 
         const tagList = filtered.sort((a, b) => b.value.uses - a.value.uses).map((m, i) => `${i + 1}. ${m.value.name} :: [${m.value.uses.toLocaleString()} uses]`).join('\n');
 

@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const createEmbed = require('../../utils/createEmbed.js');
 const Command = require('../../Base/Command');
 
 class Kick extends Command {
@@ -11,7 +11,7 @@ class Kick extends Command {
             aliases: ['k'],
             description: 'Kick a user from the server!',
             botPerms: ['KickMembers', 'EmbedLinks'],
-            permissions: ['KickMembers', 'EmbedLinks'],
+            permissions: ['KickMembers'],
         });
     }
 
@@ -22,19 +22,18 @@ class Kick extends Command {
         const embedreason = args.slice(1).join(' ') || 'None';
         let reason = args.slice(1).join(' ') || 'Kicked' + moderator;
         if (reason === args.slice(1).join(' ')) reason = reason + ', ' + moderator;
-        if (!target) return message.reply('❌ | Please specify a valid user who you want to kick!');
+        if (!target) return message.reply({ embeds: [createEmbed('warn', 'Please specify a valid user who you want to kick!')] });
 
-        if (target.id === message.author.id) return message.reply('❌ | You can not kick yourself!');
-        if (target.id === message.guild.ownerId) return message.reply('❌ | You can not kick the server owner!');
+        if (target.id === message.author.id) return message.reply({ embeds: [createEmbed('error', 'You can not kick yourself!', true)] });
+        if (target.id === message.guild.ownerId) return message.reply({ embeds: [createEmbed('error', 'You can not kick the server owner!', true)] });
         if (message.guild.members.cache.has(target.id) && target.roles.highest.position > message.member.roles.highest.position) {
-            return message.reply('❌ | You cannot kick someone with a higher role than yours!');
+            return message.reply({ embeds: [createEmbed('error', 'You cannot kick someone with a higher role than yours!', true)] });
         }
-        if (!target.kickable) return message.reply('❌ | I cannot kick this user!');
+        if (!target.kickable) return message.reply({ embeds: [createEmbed('error', 'I cannot kick this user!', true)] });
 
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('success')
             .setTitle('Action: Kick')
             .setDescription(`Kicked ${target} (\`${target.user?.tag ?? target.tag ?? target}\`)\nReason: ${embedreason}`)
-            .setColor('Red')
             .setThumbnail(target.displayAvatarURL())
             .setFooter({
                 text: `Kicked by ${message.author.tag}`,

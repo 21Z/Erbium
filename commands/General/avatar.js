@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command.js');
-const { EmbedBuilder } = require('discord.js');
+const createEmbed = require('../../utils/createEmbed.js');
 
 class Avatar extends Command {
 
@@ -16,13 +16,12 @@ class Avatar extends Command {
 
     async run(message, args) {
         const user = message.mentions.users.first() || await this.client.resolveUser(args.join(' ')) || message.author;
-        const embed = new EmbedBuilder()
+        const embed = createEmbed('info')
             .setAuthor({ name: user.tag, iconURL: user.displayAvatarURL() })
             .setTitle('Avatar')
             .setImage(user.displayAvatarURL({ size: 2048, dynamic: true }))
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
-            .setTimestamp()
-            .setColor(0x4d5e94);
+            .setTimestamp();
 
         return message.reply({ embeds: [embed] });
     }

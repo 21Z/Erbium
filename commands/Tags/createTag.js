@@ -1,4 +1,5 @@
 const Command = require('../../Base/Command');
+const createEmbed = require('../../utils/createEmbed');
 
 class CreateTag extends Command {
 
@@ -17,11 +18,11 @@ class CreateTag extends Command {
         const [tagname, ...rawcontent] = args;
         const content = rawcontent.join(' ');
 
-        if (!tagname) return message.reply('❌ | Please include a tag name!');
+        if (!tagname) return message.reply({ embeds: [createEmbed('warn', 'Please include a tag name!')] });
 
-        if (await this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply(`❌ | Tag ${tagname.toLowerCase()} already exists!`);
-        if (this.client.commands.has(tagname.toLowerCase())) return message.reply(`❌ | Tag name ${tagname.toLowerCase()} is not available!`);
-        if (!content) return message.reply('❌ | Please include tag content!');
+        if (await this.client.database.tags.has(`${tagname.toLowerCase()}_${message.guild.id}`)) return message.reply({ embeds: [createEmbed('error', `Tag ${tagname.toLowerCase()} already exists!`, true)] });
+        if (this.client.commands.has(tagname.toLowerCase())) return message.reply({ embeds: [createEmbed('error', `Tag name ${tagname.toLowerCase()} is not available!`, true)] });
+        if (!content) return message.reply({ embeds: [createEmbed('warn', 'Please include tag content!')] });
 
         const struct = {
             name: tagname.toLowerCase(),
