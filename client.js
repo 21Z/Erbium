@@ -1,4 +1,4 @@
-const Erbium = require('./Base/Erbium.js');
+const Erbium = require('./Base/Erbium');
 
 // instantiate client
 const client = new Erbium();

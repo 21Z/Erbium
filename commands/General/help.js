@@ -26,8 +26,7 @@ class Help extends Command {
             let x = 1;
 
             for (const i of category) {
-                // eslint-disable-next-line no-shadow
-                const cmd = this.client.commands.commands.filter(cmd => cmd.help.category === i).map(m => `\`${m.help.name}\``);
+                const cmd = this.client.commands.commands.filter(command => command.help.category === i).map(m => `\`${m.help.name}\``);
                 embed.addFields({ name: `${x}. ${i}`, value: cmd.join(', ') });
                 x++;
             }

@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const createEmbed = require('../utils/createEmbed');
 
 module.exports = {
+
     data: new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Pong!'),

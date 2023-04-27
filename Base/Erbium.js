@@ -140,7 +140,7 @@ class Erbium extends Client {
             return multiple ? arr : arr[0];
         }
         else {
-            await this.users.fetch(usernameOrUserResolvable);
+            await this.users.fetch(usernameOrUserResolvable).catch(() => {});
             return usernameOrUserResolvable ? (multiple ? [this.users.resolve(usernameOrUserResolvable)] : this.users.resolve(usernameOrUserResolvable)) : null;
         }
     }

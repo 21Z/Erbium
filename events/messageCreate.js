@@ -15,6 +15,9 @@ class MessageCreate extends Event {
         // ignore bots
         if (message.author.bot || message.system) return;
 
+        // dev mode
+        if (this.client.config.DEV_MODE && !message.author.dev) return;
+
         // ignore dm messages
         if (message.channel.type === 'dm') return;
 
@@ -67,9 +70,6 @@ class MessageCreate extends Event {
         // ignore non-prefix
         if (message.content.toLowerCase().indexOf(prefix.toLowerCase()) !== 0) return;
 
-        // dev mode
-        if (this.client.config.DEV_MODE && !message.author.dev) return message.reply('❌ | Bot is set to `DEV_ONLY` mode.');
-
         const args = message.content.slice(prefix.length).trim().split(' ');
         const cmd = args.shift().toLowerCase();
         const command = this.client.commands.resolve(cmd);
@@ -87,7 +87,13 @@ class MessageCreate extends Event {
                 this.client.database.tags.set(`${cmd}_${message.guild.id}`, struct);
             }).catch((e) => { console.log(e); });
         }
-        if ((command.category === 'Developer' || command.ownerOnly) && !message.author.dev) return message.reply('❌ | Only Bot owners can use this command!');
+        if ((command.category === 'Developer' || command.ownerOnly) && !message.author.dev) {
+            return message.reply('❌ | Only Bot owners can use this command!').then((m) => {
+                setTimeout(() => {
+                    m.delete();
+                }, 5000);
+            });
+        }
         if (!message.member.permissions.has(command.help.permissions)) return message.reply(`❌ | You don't have enough permissions to use this command!\nPermissions Required: ${command.help.permissions.map(m => `\`${m.replace(/([A-Z])/g, ' $1').trim()}\``).join(', ')}`);
         if (!message.guild.members.me.permissionsIn(message.channel).has(command.help.botPerms)) return message.reply(`❌ | I do not have enough permissions to use this command!\nPermissions Required: ${command.help.botPerms.map(m => `\`${m.replace(/([A-Z])/g, ' $1').trim()}\``).join(', ')}`);
 

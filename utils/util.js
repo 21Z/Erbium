@@ -9,13 +9,9 @@ class Util {
     }
 
     static formatDuration(dur) {
-        let duration = moment.duration(dur).format('M [months], D [days], H [hours], m [minutes], s [seconds]');
-        if (duration.includes('1 months')) duration = duration.replace('months', 'month');
-        if (duration.includes('1 days')) duration = duration.replace('days', 'day');
-        if (duration.includes('1 hours')) duration = duration.replace('hours', 'hour');
-        if (duration.includes('1 minutes')) duration = duration.replace('minutes', 'minute');
-        if (duration.includes('1 seconds')) duration = duration.replace('seconds', 'second');
-        duration = duration.replace(', 0 seconds', '').replace(', 0 minutes', '').replace(', 0 hours', '').replace(', 0 days', '').replace('. 0 months', '');
+        const duration = moment.duration(dur).format('M [months], D [days], H [hours], m [minutes], s [seconds]')
+            .replace('1 months', '1 month').replace('1 days', '1 day').replace('1 hours', '1 hour').replace('1 minutes', '1 minute').replace('1 seconds', '1 second')
+            .replace(', 0 seconds', '').replace(', 0 minutes', '').replace(', 0 hours', '').replace(', 0 days', '').replace(', 0 months', '');
         return duration;
     }
 

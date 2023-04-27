@@ -1,5 +1,5 @@
 const Command = require('../../Base/Command');
-const { Canvacord } = require('canvacord');
+const { Canvas: Canvacord } = require('canvacord');
 
 class Color extends Command {
 
