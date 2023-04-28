@@ -7,6 +7,10 @@
 .env
 config.js
 
+# Replit
+.replit
+replit.nix
+
 # ESLint
 .eslintrc.json 
 
@@ -18,7 +22,10 @@ package-lock.json
 yarn.lock
 
 # Logs
-yarn-error.log
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # database
 database.sqlite
