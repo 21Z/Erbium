@@ -1,7 +1,7 @@
 /* eslint-disable no-var */
-const { AuditLogEvent, PermissionsBitField, WebhookClient } = require('discord.js');
-const createEmbed = require('../utils/createEmbed.js');
-const config = require('../config.js');
+const { AuditLogEvent, PermissionsBitField, WebhookClient } = require("discord.js");
+const createEmbed = require("../utils/createEmbed.js");
+const config = require("../config.js");
 
 class MessageDelete extends Event {
 
@@ -33,14 +33,14 @@ class MessageDelete extends Event {
         }
         if (!deletionLog) deletemsg = `📕 [Message](${message.url}) sent by ${message.author} [\`${message.author.tag}\`] was **Deleted** in ${message.channel}.`;
 
-        const Log = createEmbed('info')
+        const Log = createEmbed("info")
             .setAuthor({ name: `${message.author.tag}`, iconURL: `${message.author.displayAvatarURL()}` })
             .setDescription(deletemsg.slice(0, 4096))
-            .addFields({ name: 'Deleted Message: ', value: `${message.content ? message.content : 'None'}` })
+            .addFields({ name: "Deleted Message: ", value: `${message.content ? message.content : "None"}` })
             .setTimestamp()
             .setFooter({ text: `User ID: ${message.author.id}` });
         if (message.attachments.size >= 1) {
-            Log.addFields({ name: 'Attachments: ', value: `${message.attachments.map(a => a.url)}`, inline: true });
+            Log.addFields({ name: "Attachments: ", value: `${message.attachments.map(a => a.url)}`, inline: true });
         }
 
         new WebhookClient({ url: process.env.WEBHOOK_URL }).send({ embeds: [Log] }).catch((err) => { console.log(err); });

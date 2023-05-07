@@ -1,15 +1,15 @@
-const { Client, GatewayIntentBits, Collection, REST, Routes } = require('discord.js');
-const fs = require('fs');
-const config = require('../config.js');
-const Command = require('../utils/Command.js');
-const logger = require('../utils/Logger.js');
-const Database = require('./Database');
+const { Client, GatewayIntentBits, Collection, REST, Routes } = require("discord.js");
+const fs = require("fs");
+const config = require("../config.js");
+const Command = require("../utils/Command.js");
+const logger = require("../utils/Logger.js");
+const Database = require("./Database");
 
 class Erbium extends Client {
 
     constructor() {
         super({
-            ws: { properties: { $browser: 'Discord Android' } },
+            ws: { properties: { $browser: "Discord Android" } },
             intents: [
                 GatewayIntentBits.Guilds,
                 GatewayIntentBits.GuildMessages,
@@ -24,7 +24,7 @@ class Erbium extends Client {
         this.commands = new Command(this);
         this.SlashCommands = new Collection();
         this.config = config;
-        this.utils = require('../utils/util');
+        this.utils = require("../utils/util");
         this.db = new Database(this);
 
         Object.defineProperties(this, {
@@ -38,21 +38,21 @@ class Erbium extends Client {
     async registerSlashCommands() {
         const commands = [];
 
-        const commandFiles = fs.readdirSync(this.config.SLASH_COMMANDS_DIR).filter(file => file.endsWith('.js'));
+        const commandFiles = fs.readdirSync(this.config.SLASH_COMMANDS_DIR).filter(file => file.endsWith(".js"));
         for (const file of commandFiles) {
             const filePath = `${this.config.SLASH_COMMANDS_DIR}/${file}`;
             const command = require(filePath);
-            if ('data' in command && 'execute' in command) {
+            if ("data" in command && "execute" in command) {
                 this.SlashCommands.set(command.data.name, command);
                 commands.push(command.data.toJSON());
             }
             else {
                 logger.warn(`The command at ${filePath} is missing a required "data" or "execute" property.`);
             }
-            const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+            const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
             (async () => {
                 try {
-                    if (commands.length === 0) return logger.error('Couldn\'t find any application commands');
+                    if (commands.length === 0) return logger.error("Couldn't find any application commands");
                     logger.info(`Started refreshing ${commands.length} application (/) command.`);
 
                     const data = await rest.put(
@@ -76,7 +76,7 @@ class Erbium extends Client {
 
         for (const CAT of CATS) {
             logger.info(`[${CATS.indexOf(CAT) + 1}/${CATS.length}] Loading category ${CAT}`);
-            const COMMANDS = fs.readdirSync(`${commandsDir}/${CAT}`).filter(x => x.endsWith('.js'));
+            const COMMANDS = fs.readdirSync(`${commandsDir}/${CAT}`).filter(x => x.endsWith(".js"));
 
             let i = 0;
             for (const c of COMMANDS) {
@@ -103,7 +103,7 @@ class Erbium extends Client {
         const eventsDir = this.config.EVENTS_DIR;
 
         // load events
-        const EVENTS = fs.readdirSync(eventsDir).filter(x => x.endsWith('.js'));
+        const EVENTS = fs.readdirSync(eventsDir).filter(x => x.endsWith(".js"));
 
         let i = 0;
 
@@ -112,12 +112,12 @@ class Erbium extends Client {
             const ev = require(`${eventsDir}/${event}`);
             const evn = new ev(this);
 
-            void this.on(event.replace('.js', ''), async (...args) => {
+            void this.on(event.replace(".js", ""), async (...args) => {
                 try {
                     await evn.run(...args);
                 }
                 catch (e) {
-                    logger.error(`Event: ${event.replace('.js', '')} :- ${e.toString()}`);
+                    logger.error(`Event: ${event.replace(".js", "")} :- ${e.toString()}`);
                 }
             });
 
@@ -130,7 +130,7 @@ class Erbium extends Client {
     }
 
     async resolveUser(usernameOrUserResolvable, multiple = false) {
-        if (usernameOrUserResolvable && typeof usernameOrUserResolvable === 'string' && !parseInt(usernameOrUserResolvable)) {
+        if (usernameOrUserResolvable && typeof usernameOrUserResolvable === "string" && !parseInt(usernameOrUserResolvable)) {
             const name = usernameOrUserResolvable.toUpperCase();
             const arr = [];
             this.users.cache.forEach(user => {
@@ -146,7 +146,7 @@ class Erbium extends Client {
     }
 
     async login() {
-        logger.info('Starting the bot...');
+        logger.info("Starting the bot...");
 
         this.registerSlashCommands();
         this.registerCommands();

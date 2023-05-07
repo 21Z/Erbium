@@ -1,10 +1,10 @@
-const { SlashCommandBuilder } = require('discord.js');
-const createEmbed = require('../utils/createEmbed');
+const { SlashCommandBuilder } = require("discord.js");
+const createEmbed = require("../utils/createEmbed");
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('ping')
-        .setDescription('Pong!'),
+        .setName("ping")
+        .setDescription("Pong!"),
     async execute(interaction) {
 
         const before = Date.now();
@@ -12,19 +12,19 @@ module.exports = {
         const latency = Date.now() - before;
         const wsLatency = interaction.client.ws.ping.toFixed(0);
 
-        const embed = createEmbed('info')
+        const embed = createEmbed("info")
             .setAuthor({
-                name: '🏓 PONG',
+                name: "🏓 PONG",
                 iconURL: interaction.client.user.displayAvatarURL(),
             })
             .addFields(
                 {
-                    name: '📶 **|** API',
+                    name: "📶 **|** API",
                     value: `**\`${latency}\`** ms`,
                     inline: true,
                 },
                 {
-                    name: '🌐 **|** WebSocket',
+                    name: "🌐 **|** WebSocket",
                     value: `**\`${wsLatency}\`** ms`,
                     inline: true,
                 },

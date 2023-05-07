@@ -1,5 +1,5 @@
-const { config } = require('dotenv');
-const NodeFetch = require('node-fetch');
+const { config } = require("dotenv");
+const NodeFetch = require("node-fetch");
 /* const express = require('express');
 
 const app = express();
@@ -26,4 +26,4 @@ Object.defineProperties(globalThis, {
 });
 
 // instantiate client
-require('./client');
+require("./client");

@@ -1,4 +1,4 @@
-const Event = require('../Base/Event.js');
+const Event = require("../Base/Event.js");
 
 class InteractionCreate extends Event {
 
@@ -17,7 +17,7 @@ class InteractionCreate extends Event {
         }
         catch (error) {
             console.error(error);
-            await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+            await interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
         }
 
     }

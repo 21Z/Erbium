@@ -1,5 +1,5 @@
-const Command = require('../../Base/Command.js');
-const { Canvas: Canvacord } = require('canvacord');
+const Command = require("../../Base/Command.js");
+const { Canvas: Canvacord } = require("canvacord");
 
 class Colorfy extends Command {
 
@@ -7,9 +7,9 @@ class Colorfy extends Command {
         super(client);
 
         this.config({
-            name: 'colorfy',
-            aliases: ['colourfy'],
-            description: 'Colorfy image!',
+            name: "colorfy",
+            aliases: ["colourfy"],
+            description: "Colorfy image!",
         });
     }
 
@@ -18,13 +18,12 @@ class Colorfy extends Command {
         if (!message.mentions.users.first() && !await this.client.resolveUser(args[0])) color = args[0];
         const user = message.mentions.users.first() || await this.client.resolveUser(args[0]) || message.author;
 
-        const m = await message.reply('⏱ | Please wait...');
-        const img = await Canvacord.colorfy(user.displayAvatarURL({ format: 'png', size: 2048 }), `${color}`);
+        const m = await message.reply("⏱ | Please wait...");
+        const img = await Canvacord.colorfy(user.displayAvatarURL({ format: "png", size: 2048 }), `${color}`);
         await m.delete().catch(() => { });
 
         return message.reply({ files: [img] });
     }
-
 }
 
 module.exports = Colorfy;

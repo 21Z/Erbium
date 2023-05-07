@@ -1,5 +1,5 @@
-const Command = require('../../Base/Command.js');
-const { Canvas: Canvacord } = require('canvacord');
+const Command = require("../../Base/Command.js");
+const { Canvas: Canvacord } = require("canvacord");
 
 class Bed extends Command {
 
@@ -7,17 +7,17 @@ class Bed extends Command {
         super(client);
 
         this.config({
-            name: 'bed',
+            name: "bed",
             aliases: [],
-            description: 'There\'s someone under my bed!?',
+            description: "There's someone under my bed!?",
         });
     }
 
     async run(message, args) {
-        const user = message.mentions.users.first() || await this.client.resolveUser(args.join(' ')) || message.author;
+        const user = message.mentions.users.first() || await this.client.resolveUser(args.join(" ")) || message.author;
 
-        const m = await message.reply('⏱ | Please wait...');
-        const img = await Canvacord.bed(message.author.displayAvatarURL({ format: 'png', size: 2048 }), user.displayAvatarURL({ format: 'png', size: 2048 }));
+        const m = await message.reply("⏱ | Please wait...");
+        const img = await Canvacord.bed(message.author.displayAvatarURL({ format: "png", size: 2048 }), user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
         return message.reply({ files: [img] });

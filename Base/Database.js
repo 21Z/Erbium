@@ -1,4 +1,4 @@
-const { QuickDB } = require('quick.db');
+const { QuickDB } = require("quick.db");
 
 class ErbiumDb {
 
@@ -6,10 +6,10 @@ class ErbiumDb {
         this.client = client;
 
         this.root = new QuickDB({
-            filePath: 'database.sqlite',
+            filePath: "database.sqlite",
         });
 
-        this.tags = this.root.table('TAGS');
+        this.tags = this.root.table("TAGS");
 
         Object.defineProperties(this, {
             client: { enumerable: false },

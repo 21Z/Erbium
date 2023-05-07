@@ -1,5 +1,5 @@
-const Command = require('../../Base/Command.js');
-const createEmbed = require('../../utils/createEmbed.js');
+const Command = require("../../Base/Command.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class Help extends Command {
 
@@ -7,10 +7,10 @@ class Help extends Command {
         super(client);
 
         this.config({
-            name: 'help',
-            aliases: ['h', 'command', 'cmd', 'commands', 'menu'],
-            description: 'Shows available commands.',
-            botPerms: ['EmbedLinks'],
+            name: "help",
+            aliases: ["h", "command", "cmd", "commands", "menu"],
+            description: "Shows available commands.",
+            botPerms: ["EmbedLinks"],
         });
     }
 
@@ -19,7 +19,7 @@ class Help extends Command {
         const [query] = args;
 
         if (!query) {
-            const embed = createEmbed('info')
+            const embed = createEmbed("info")
                 .setTitle(`Commands - Total: ${this.client.commands.size}`)
                 .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
                 .setTimestamp();
@@ -27,7 +27,7 @@ class Help extends Command {
 
             for (const i of category) {
                 const cmd = this.client.commands.commands.filter(command => command.help.category === i).map(m => `\`${m.help.name}\``);
-                embed.addFields({ name: `${x}. ${i}`, value: cmd.join(', ') });
+                embed.addFields({ name: `${x}. ${i}`, value: cmd.join(", ") });
                 x++;
             }
 
@@ -37,33 +37,33 @@ class Help extends Command {
         if (category.some(q => q === query)) {
             const ctg = category.find(q => q.toLowerCase() === query.toLowerCase());
             console.log(ctg);
-            const embed = createEmbed('info')
-                .setTitle('Commands')
-                .addFields({ name: 'Category', value: ctg, inline: true })
+            const embed = createEmbed("info")
+                .setTitle("Commands")
+                .addFields({ name: "Category", value: ctg, inline: true })
                 .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
                 .setTimestamp();
 
             // eslint-disable-next-line no-shadow
             const cmd = this.client.commands.commands.filter(cmd => cmd.help.category === ctg).map(m => `\`${m.help.name}\``);
-            embed.setDescription(cmd.join(', '));
+            embed.setDescription(cmd.join(", "));
 
             return message.reply({ embeds: [embed] });
         }
 
         const command = this.client.commands.resolve(query.toLowerCase());
-        if (!command) return message.reply({ embeds: [createEmbed('error', 'Command not found!', true)] });
+        if (!command) return message.reply({ embeds: [createEmbed("error", "Command not found!", true)] });
 
-        const embed = createEmbed('info')
-            .setTitle('Command Info')
+        const embed = createEmbed("info")
+            .setTitle("Command Info")
             .addFields(
-                { name: 'Name', value: command.help.name, inline: true },
-                { name: 'Aliases', value: !command.help.aliases.length ? 'None' : command.help.aliases.map(m => `\`${m}\``).join(', '), inline: true },
-                { name: 'Category', value: command.help.category, inline: true },
-                { name: 'Description', value: command.help.description, inline: true },
-                { name: 'Cooldown', value: `${Math.floor(command.help.cooldown ? command.help.cooldown / 1000 : 1)} Second(s)`, inline: true },
-                { name: 'Owner Only', value: command.help.ownerOnly ? 'Yes' : 'No', inline: true },
-                { name: 'Bot Permissions', value: command.help.botPerms.length ? command.help.botPerms.map(m => `\`${m.replace(/([A-Z])/g, ' $1').trim()}\``).join(', ') : 'None' },
-                { name: 'Permissions', value: command.help.permissions.length ? command.help.permissions.map(m => `\`${m.replace(/([A-Z])/g, ' $1').trim()}\``).join(', ') : 'None', inline: true },
+                { name: "Name", value: command.help.name, inline: true },
+                { name: "Aliases", value: !command.help.aliases.length ? "None" : command.help.aliases.map(m => `\`${m}\``).join(", "), inline: true },
+                { name: "Category", value: command.help.category, inline: true },
+                { name: "Description", value: command.help.description, inline: true },
+                { name: "Cooldown", value: `${Math.floor(command.help.cooldown ? command.help.cooldown / 1000 : 1)} Second(s)`, inline: true },
+                { name: "Owner Only", value: command.help.ownerOnly ? "Yes" : "No", inline: true },
+                { name: "Bot Permissions", value: command.help.botPerms.length ? command.help.botPerms.map(m => `\`${m.replace(/([A-Z])/g, " $1").trim()}\``).join(", ") : "None" },
+                { name: "Permissions", value: command.help.permissions.length ? command.help.permissions.map(m => `\`${m.replace(/([A-Z])/g, " $1").trim()}\``).join(", ") : "None", inline: true },
             )
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();

@@ -1,5 +1,5 @@
-const Command = require('../../Base/Command.js');
-const { Canvas: Canvacord } = require('canvacord');
+const Command = require("../../Base/Command.js");
+const { Canvas: Canvacord } = require("canvacord");
 
 class Triggered extends Command {
 
@@ -7,17 +7,17 @@ class Triggered extends Command {
         super(client);
 
         this.config({
-            name: 'triggered',
-            aliases: ['trigger'],
-            description: 'TRIGGERED',
+            name: "triggered",
+            aliases: ["trigger"],
+            description: "TRIGGERED",
         });
     }
 
     async run(message, args) {
-        const user = message.mentions.users.first() || await this.client.resolveUser(args.join(' ')) || message.author;
+        const user = message.mentions.users.first() || await this.client.resolveUser(args.join(" ")) || message.author;
 
-        const m = await message.reply('⏱ | Please wait...');
-        const img = await Canvacord.trigger(user.displayAvatarURL({ format: 'png', size: 2048 }));
+        const m = await message.reply("⏱ | Please wait...");
+        const img = await Canvacord.trigger(user.displayAvatarURL({ format: "png", size: 2048 }));
         await m.delete().catch(() => {});
 
         return message.reply({ files: [img] });

@@ -15,7 +15,7 @@ class Command {
         this.help = {
             name: conf.name,
             aliases: conf.aliases ?? [],
-            description: conf.description ?? 'None',
+            description: conf.description ?? "None",
             ownerOnly: !!conf.ownerOnly,
             botPerms: conf.botPerms ?? [],
             permissions: conf.permissions ?? [],

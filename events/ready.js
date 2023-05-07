@@ -1,6 +1,6 @@
-const Event = require('../Base/Event.js');
-const logger = require('../utils/Logger.js');
-const { ActivityType } = require('discord.js');
+const Event = require("../Base/Event.js");
+const logger = require("../utils/Logger.js");
+const { ActivityType } = require("discord.js");
 
 class Ready extends Event {
 
@@ -9,11 +9,11 @@ class Ready extends Event {
     }
 
     run() {
-        logger.success('Bot is online!');
+        logger.success("Bot is online!");
 
-        this.client.user.setActivity('on Youtube', {
+        this.client.user.setActivity("on Youtube", {
             type: ActivityType.Streaming,
-            url: 'https://www.youtube.com/watch?v=xvFZjo5PgG0',
+            url: "https://www.youtube.com/watch?v=xvFZjo5PgG0",
         });
         /* setInterval(() => {
             const embed = new require('discord.js').EmbedBuilder()
