@@ -8,7 +8,7 @@ class Tags extends Command {
 
         this.config({
             name: "tags",
-            aliases: ["listtag", "alltag"],
+            aliases: ["listtags", "alltags", "listtag", "alltag"],
             description: "Shows all tags",
             cooldown: 6000,
         });

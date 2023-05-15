@@ -15,7 +15,7 @@ class Help extends Command {
     }
 
     async run(message, args) {
-        const category = [...new Set(this.client.commands.commands.map(m => m.help.category))];
+        const category = [...new Set(this.client.commands.commands.filter(m => !m.help.ownerOnly).map(m => m.help.category))];
         const [query] = args;
 
         if (!query) {
@@ -34,17 +34,15 @@ class Help extends Command {
             return message.reply({ embeds: [embed] });
         }
 
-        if (category.some(q => q === query)) {
+        if (category.some(q => q.toLowerCase() === query.toLowerCase())) {
             const ctg = category.find(q => q.toLowerCase() === query.toLowerCase());
-            console.log(ctg);
             const embed = createEmbed("info")
                 .setTitle("Commands")
                 .addFields({ name: "Category", value: ctg, inline: true })
                 .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
                 .setTimestamp();
 
-            // eslint-disable-next-line no-shadow
-            const cmd = this.client.commands.commands.filter(cmd => cmd.help.category === ctg).map(m => `\`${m.help.name}\``);
+            const cmd = this.client.commands.commands.filter(command => command.help.category === ctg).map(m => `\`${m.help.name}\``);
             embed.setDescription(cmd.join(", "));
 
             return message.reply({ embeds: [embed] });

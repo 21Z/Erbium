@@ -8,7 +8,7 @@ class EditTag extends Command {
 
         this.config({
             name: "edittag",
-            aliases: ["tagedit", "updatetag"],
+            aliases: ["edit-tag", "updatetag", "tag-edit", "tagedit"],
             description: "Edit a tag",
             permissions: ["MessageMessages"],
         });

@@ -8,7 +8,7 @@ class CreateTag extends Command {
 
         this.config({
             name: "createtag",
-            aliases: ["addtag", "newtag"],
+            aliases: ["addtag", "newtag", "tag-create", "tagcreate"],
             description: "Creates new tag",
             permissions: ["ManageMessages"],
         });

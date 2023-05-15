@@ -19,7 +19,7 @@ class Slap extends Command {
         if (user === message.author) return message.reply({ embeds: [createEmbed("error", "Tag someone!", true)] });
 
         const m = await message.reply("⏱ | Please wait...");
-        const img = await Canvacord.slap(message.author.displayAvatarURL({ format: "png", size: 2048 }), user.displayAvatarURL({ format: "png", size: 2048 }));
+        const img = await Canvacord.slap(message.author.displayAvatarURL({ extension: "png", size: 2048 }), user.displayAvatarURL({ extension: "png", size: 2048 }));
         await m.delete().catch(() => { });
 
         return message.reply({ files: [img] });

@@ -15,9 +15,8 @@ class MessageUpdate extends Event {
         if (oldMessage.content === newMessage.content) return;
         if (oldMessage.author.bot || oldMessage.system) return;
 
-        const Count = 1950;
-        const Original = oldMessage.content.slice(0, Count) + (oldMessage.content.length > 1950 ? " ..." : "");
-        const Edited = newMessage.content.slice(0, Count) + (newMessage.content.length > 1950 ? " ..." : "");
+        const Original = oldMessage.content.slice(0, 1950) + (oldMessage.content.length > 1950 ? " ..." : "");
+        const Edited = newMessage.content.slice(0, 1950) + (newMessage.content.length > 1950 ? " ..." : "");
 
         const editmsg = `📘 [Message](${newMessage.url}) sent by ${newMessage.author} [\`${newMessage.author.tag}\`] was **Edited** in ${newMessage.channel}.`;
 
@@ -31,7 +30,7 @@ class MessageUpdate extends Event {
             .setTimestamp()
             .setFooter({ text: `User ID: ${newMessage.author.id}` });
 
-        new WebhookClient({ url: process.env.WEBHOOK_URL }).send({ embeds: [Log] }).catch((err) => { console.log(err); });
+        new WebhookClient({ url: process.env.WEBHOOK_URL }).send({ embeds: [Log] }).catch((err) => { console.error(err); });
     }
 }
 

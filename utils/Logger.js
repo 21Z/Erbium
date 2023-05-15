@@ -7,19 +7,19 @@ class Logger {
     }
 
     static error(m) {
-        console.log(`[${chalk.redBright("ERROR")}] ${m}`);
+        console.error(`[${chalk.redBright("ERROR")}] ${m}`);
     }
 
     static success(m) {
-        console.log(`[${chalk.greenBright("SUCCESS")}] ${m}`);
+        console.success(`[${chalk.greenBright("SUCCESS")}] ${m}`);
     }
 
     static info(m) {
-        console.log(`[${chalk.cyanBright("INFO")}] ${m}`);
+        console.info(`[${chalk.cyanBright("INFO")}] ${m}`);
     }
 
     static warn(m) {
-        console.log(`[${chalk.yellowBright("WARNING")}] ${m}`);
+        console.warn(`[${chalk.yellowBright("WARNING")}] ${m}`);
     }
 
 }

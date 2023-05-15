@@ -8,7 +8,7 @@ class TagInfo extends Command {
 
         this.config({
             name: "taginfo",
-            aliases: ["taginfo", "abouttag", "tag"],
+            aliases: ["tag-info", "abouttag", "tag"],
             description: "Shows tag info",
             botPerms: ["EmbedLinks"],
         });

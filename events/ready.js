@@ -15,24 +15,19 @@ class Ready extends Event {
             type: ActivityType.Streaming,
             url: "https://www.youtube.com/watch?v=xvFZjo5PgG0",
         });
-        /* setInterval(() => {
-            const embed = new require('discord.js').EmbedBuilder()
-                .setTitle('Bot Stats')
+        /* const { EmbedBuilder, escapeMarkdown } = require("discord.js");
+        setInterval(async () => {
+            const embed = new EmbedBuilder()
+                .setTitle("Bot Stats")
                 .setDescription(`*Last updated <t:${Math.round(Date.now() / 1000)}:R>*`)
                 .addFields(
-                    { name: 'Uptime', value: this.client.utils.formatDuration(this.client.uptime) },
-                    { name: 'To Do (Upcoming):', value: `<:yes:1096131206652899348> Better Embed color management
-                    📝 Switch most replies to embeds
-                    📝 Better error handling (stop bot crashes)
-                    <:no:1096131211052732457> Add 'Type' to \`pokemon\` command` },
-                    { name: 'Notes', value: `<:yes:1096131206652899348> = Done, not deployed.
-                    📝 = Working on it.
-                    <:no:1096131211052732457> = Not done, Soon™️` },
+                    { name: "Uptime", value: this.client.utils.formatDuration(this.client.uptime) },
+                    { name: "To Do (Upcoming):", value: escapeMarkdown(await this.client.database.tags.get("todo")) },
                 )
-                .setFooter({ text: 'This embed is updated every 20 seconds' })
+                .setFooter({ text: "This embed is updated every 20 seconds" })
                 .setColor(0x4d5e94);
-            this.client.channels.fetch('901445050926497804').then((c) => {
-                c.messages.fetch('1097222535227129876').then((m) => {
+            this.client.channels.fetch("901445050926497804").then((c) => {
+                c.messages.fetch("1101351950643122257").then((m) => {
                     m.edit({ embeds: [embed] });
                 });
             });

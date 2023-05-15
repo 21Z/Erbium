@@ -14,12 +14,10 @@ class MessageCreate extends Event {
         message.author.dev = this.client.config.OWNER.some(x => x === message.author.id);
         // ignore bots
         if (message.author.bot || message.system) return;
-
         // dev mode
         if (this.client.config.DEV_MODE && !message.author.dev) return;
-
         // ignore dm messages
-        if (message.channel.type === "dm") return;
+        // if (message.channel.type === "dm") return;
 
         const prefix = this.client.config.PREFIX;
 
@@ -85,7 +83,7 @@ class MessageCreate extends Event {
                 };
 
                 this.client.database.tags.set(`${cmd}_${message.guild.id}`, struct);
-            }).catch((e) => { console.log(e); });
+            }).catch((e) => { console.error(e); });
         }
         if ((command.category === "Developer" || command.ownerOnly) && !message.author.dev) {
             return message.reply("❌ | Only Bot owners can use this command!").then((m) => {
@@ -115,7 +113,6 @@ class MessageCreate extends Event {
         catch (e) {
             await message.reply(`❌ | **Error!**\`\`\`js\n${e.toString()}\n\`\`\``).catch(() => {});
             logger.error(`Command: ${command.help.name} - ${e.toString()}`);
-            console.log(e);
         }
     }
 

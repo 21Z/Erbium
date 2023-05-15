@@ -9,7 +9,7 @@ class TagContent extends Command {
 
         this.config({
             name: "tagcontent",
-            aliases: ["tagsource", "tagsrc"],
+            aliases: ["tag-content", "tag-source", "tagsource", "tagsrc"],
             description: "Tag source",
         });
     }

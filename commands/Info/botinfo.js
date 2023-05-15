@@ -10,7 +10,7 @@ class BotInfo extends Command {
 
         this.config({
             name: "botinfo",
-            aliases: ["bi", "info", "about"],
+            aliases: ["bot-info", "bi", "info", "about"],
             description: "Bot information",
             botPerms: ["EmbedLinks"],
             cooldown: 6000,

@@ -8,7 +8,7 @@ class DeleteTag extends Command {
 
         this.config({
             name: "deletetag",
-            aliases: ["removetag", "rmtag"],
+            aliases: ["removetag", "remove-tag", "rmtag", "tag-remove", "tagremove"],
             description: "Delete a tag",
             permissions: ["ManageMessages"],
         });
