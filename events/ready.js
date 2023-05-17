@@ -26,8 +26,8 @@ class Ready extends Event {
                 )
                 .setFooter({ text: "This embed is updated every 20 seconds" })
                 .setColor(0x4d5e94);
-            this.client.channels.fetch("901445050926497804").then((c) => {
-                c.messages.fetch("1101351950643122257").then((m) => {
+            this.client.channels.fetch(await this.client.database.tags.get("todo-channel")).then((c) => {
+                c.messages.fetch(await this.client.database.tags.get("todo-message")).then((m) => {
                     m.edit({ embeds: [embed] });
                 });
             });

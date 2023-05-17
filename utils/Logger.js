@@ -11,7 +11,7 @@ class Logger {
     }
 
     static success(m) {
-        console.success(`[${chalk.greenBright("SUCCESS")}] ${m}`);
+        console.info(`[${chalk.greenBright("SUCCESS")}] ${m}`);
     }
 
     static info(m) {

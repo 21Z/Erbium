@@ -63,7 +63,7 @@ class Erbium extends Client {
                     logger.success(`Successfully reloaded ${data.length} application (/) command.`);
                 }
                 catch (error) {
-                    console.error(error);
+                    logger.error(error);
                 }
             })();
         }

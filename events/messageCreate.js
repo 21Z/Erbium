@@ -12,15 +12,13 @@ class MessageCreate extends Event {
 
     async run(message) {
         message.author.dev = this.client.config.OWNER.some(x => x === message.author.id);
+
         // ignore bots
         if (message.author.bot || message.system) return;
         // dev mode
         if (this.client.config.DEV_MODE && !message.author.dev) return;
-        // ignore dm messages
-        // if (message.channel.type === "dm") return;
 
         const prefix = this.client.config.PREFIX;
-
         if (new RegExp(`^<@!?${this.client.user.id}>( |)$`).test(message.content)) return message.reply(`My prefix is **"\`${prefix}\`"**!`);
 
         // chatbot
@@ -62,7 +60,8 @@ class MessageCreate extends Event {
                 message.reply(result.message.content);
             }
             catch (e) {
-                message.reply("ChatBot is currently under maintenence. Please try again later." + `\`\`\`js\n${e.toString()}\n\`\`\``);
+                if (e.toString().includes("status code 429")) return message.reply("The API is being ratelimited!" + `\`\`\`js\n${e.toString()}\n\`\`\``);
+                message.reply("Something went wrong!" + `\`\`\`js\n${e.toString()}\n\`\`\``);
             }
         }
         // ignore non-prefix
@@ -85,23 +84,18 @@ class MessageCreate extends Event {
                 this.client.database.tags.set(`${cmd}_${message.guild.id}`, struct);
             }).catch((e) => { console.error(e); });
         }
-        if ((command.category === "Developer" || command.ownerOnly) && !message.author.dev) {
-            return message.reply("❌ | Only Bot owners can use this command!").then((m) => {
-                setTimeout(() => {
-                    m.delete();
-                }, 5000);
-            });
-        }
+        if ((command.category === "Developer" || command.ownerOnly) && !message.author.dev) return;
+
         if (!message.member.permissions.has(command.help.permissions)) return message.reply(`❌ | You don't have enough permissions to use this command!\nPermissions Required: ${command.help.permissions.map(m => `\`${m.replace(/([A-Z])/g, " $1").trim()}\``).join(", ")}`);
         if (!message.guild.members.me.permissionsIn(message.channel).has(command.help.botPerms)) return message.reply(`❌ | I do not have enough permissions to use this command!\nPermissions Required: ${command.help.botPerms.map(m => `\`${m.replace(/([A-Z])/g, " $1").trim()}\``).join(", ")}`);
 
         const cooldown = cooldowns.get(`${command.help.name}_${message.author.id}`);
         if (cooldown && (command.cooldown) - (Date.now() - cooldown) > 0) {
-            message.react("⏳");
+            message.react("⏳").catch(() => {});
             return message.reply(`❌ | You can use this command again <t:${Math.round(((cooldown + command.cooldown)) / 1000)}:R>`)
                 .then(m => {
                     setTimeout(function() {
-                        m.delete();
+                        m.delete().catch(() => {});
                     }, Math.round(((command.cooldown) - (Date.now() - cooldown))));
                 });
         }
