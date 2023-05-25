@@ -45,8 +45,7 @@ class Erbium extends Client {
             if ("data" in command && "execute" in command) {
                 this.SlashCommands.set(command.data.name, command);
                 commands.push(command.data.toJSON());
-            }
-            else {
+            } else {
                 logger.warn(`The command at ${filePath} is missing a required "data" or "execute" property.`);
             }
             const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
@@ -61,8 +60,7 @@ class Erbium extends Client {
                     );
 
                     logger.success(`Successfully reloaded ${data.length} application (/) command.`);
-                }
-                catch (error) {
+                } catch (error) {
                     logger.error(error);
                 }
             })();
@@ -115,8 +113,7 @@ class Erbium extends Client {
             void this.on(event.replace(".js", ""), async (...args) => {
                 try {
                     await evn.run(...args);
-                }
-                catch (e) {
+                } catch (e) {
                     logger.error(`Event: ${event.replace(".js", "")} :- ${e.toString()}`);
                 }
             });
@@ -138,8 +135,7 @@ class Erbium extends Client {
                 return arr.push(user);
             });
             return multiple ? arr : arr[0];
-        }
-        else {
+        } else {
             await this.users.fetch(usernameOrUserResolvable).catch(() => {});
             return usernameOrUserResolvable ? (multiple ? [this.users.resolve(usernameOrUserResolvable)] : this.users.resolve(usernameOrUserResolvable)) : null;
         }

@@ -47,15 +47,13 @@ class Eval extends Command {
             const output = cleaned.length > 1024 ? `${await this.client.utils.hastebin(cleaned)}.js` : `\`\`\`js\n${cleaned}\n\`\`\``;
             embed.addFields([{ name: "Output", value: output }]);
             message.channel.send({ embeds: [embed] }).catch(e => console.error("PROMISE_ERR:", e));
-        }
-        catch (e) {
+        } catch (e) {
             const cleaned = this.client.utils.cleanText(String(e));
             const error = `\`\`\`js\n${cleaned}\n\`\`\``;
             if (error.length > 1024) {
                 const hastebin = await client.utils.hastebin(error);
                 embed.setColor("Red").addFields({ name: "Error", value: `${hastebin}.js` });
-            }
-            else { embed.setColor("Red").addFields({ name: "Error", value: error }); }
+            } else { embed.setColor("Red").addFields({ name: "Error", value: error }); }
             message.channel.send({ embeds: [embed] }).catch(err => console.error("PROMISE_ERR:", err));
         }
     }

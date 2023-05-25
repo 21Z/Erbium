@@ -58,8 +58,7 @@ class MessageCreate extends Event {
                     return await message.reply(`! Output too long, Hastebin:\n${reply}`);
                 }
                 message.reply(result.message.content);
-            }
-            catch (e) {
+            } catch (e) {
                 if (e.toString().includes("status code 429")) return message.reply("The API is being ratelimited!" + `\`\`\`js\n${e.toString()}\n\`\`\``);
                 message.reply("Something went wrong!" + `\`\`\`js\n${e.toString()}\n\`\`\``);
             }
@@ -103,8 +102,7 @@ class MessageCreate extends Event {
 
         try {
             await command.run(message, args);
-        }
-        catch (e) {
+        } catch (e) {
             await message.reply(`❌ | **Error!**\`\`\`js\n${e.toString()}\n\`\`\``).catch(() => {});
             logger.error(`Command: ${command.help.name} - ${e.toString()}`);
         }
