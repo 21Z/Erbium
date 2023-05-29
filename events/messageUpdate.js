@@ -10,7 +10,7 @@ class MessageUpdate extends Event {
     async run(oldMessage, newMessage) {
 
         if (!oldMessage.guild) return;
-        if (oldMessage.guild.id !== config.GUILD_ID) return;
+        if (!config.GUILD_ID.includes(oldMessage.guild.id)) return;
         if (!process.env.WEBHOOK_URL) return;
         if (oldMessage.content === newMessage.content) return;
         if (oldMessage.author.bot || oldMessage.system) return;
