@@ -22,7 +22,7 @@ class MessageCreate extends Event {
         if (new RegExp(`^<@!?${this.client.user.id}>( |)$`).test(message.content)) return message.reply(`My prefix is **"\`${prefix}\`"**!`);
 
         // chatbot
-        if (message.channel.id === this.client.config.CHANNEL_ID) {
+        if (this.client.config.CHANNEL_ID.includes(message.channel.id)) {
             if (message.content.startsWith("!")) return;
             try {
                 await message.channel.sendTyping();

@@ -18,7 +18,7 @@ class Invite extends Command {
     async run(message) {
         const embed = createEmbed("info")
             .setTitle("Bot Invite")
-            .setDescription(`**[Click Here](https://discord.com/api/oauth2/authorize?client_id=${this.client.user.id}&permissions=277028916423&scope=bot%20applications.commands)** to invite me`)
+            .setDescription(`**[Click Here](${this.client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: "277028916423" }) })** to invite me`)
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 

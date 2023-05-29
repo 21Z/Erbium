@@ -10,7 +10,7 @@ class MessageDelete extends Event {
     async run(message) {
 
         if (!message.guild) return;
-        if (message.guild.id !== config.GUILD_ID) return;
+        if (!config.GUILD_ID.includes(message.guild.id)) return;
         if (!process.env.WEBHOOK_URL) return;
         if (message.author.bot || message.system) return;
         const deletemsg = `📕 [Message](${message.url}) sent by ${message.author} [\`${message.author.tag}\`] was **Deleted** in ${message.channel}.`;
