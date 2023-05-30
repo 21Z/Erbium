@@ -8,7 +8,6 @@ class Greyscale extends Command {
 
         this.config({
             name: "hitler",
-            aliases: [],
             description: "Worse than hitler",
         });
     }

@@ -8,7 +8,6 @@ class Wasted extends Command {
 
         this.config({
             name: "wasted",
-            aliases: [],
             description: "WASTED",
         });
     }

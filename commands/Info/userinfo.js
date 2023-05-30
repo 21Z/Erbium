@@ -8,7 +8,7 @@ class UserInfo extends Command {
 
         this.config({
             name: "userinfo",
-            aliases: ["user-info", "ui"],
+            aliases: ["user-info", "user", "whois"],
             description: "User information",
             botPerms: ["EmbedLinks"],
         });

@@ -8,7 +8,6 @@ class Bed extends Command {
 
         this.config({
             name: "bed",
-            aliases: [],
             description: "There's someone under my bed!?",
         });
     }

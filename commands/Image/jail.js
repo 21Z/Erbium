@@ -8,7 +8,6 @@ class Jail extends Command {
 
         this.config({
             name: "jail",
-            aliases: [],
             description: "Jail someone",
         });
     }

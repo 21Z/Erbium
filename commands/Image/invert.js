@@ -8,7 +8,6 @@ class Invert extends Command {
 
         this.config({
             name: "invert",
-            aliases: [],
             description: "Invert image",
         });
     }

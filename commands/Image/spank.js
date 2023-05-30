@@ -9,7 +9,6 @@ class Spank extends Command {
 
         this.config({
             name: "spank",
-            aliases: [],
             description: "Spank someone",
         });
     }

@@ -24,6 +24,7 @@ class Erbium extends Client {
         this.commands = new Command(this);
         this.SlashCommands = new Collection();
         this.config = config;
+        this.logger = logger;
         this.utils = require("../utils/util");
         this.db = new Database(this);
 
@@ -38,9 +39,9 @@ class Erbium extends Client {
     async registerSlashCommands() {
         const commands = [];
 
-        const commandFiles = fs.readdirSync(this.config.SLASH_COMMANDS_DIR).filter(file => file.endsWith(".js"));
+        const commandFiles = fs.readdirSync(config.SLASH_COMMANDS_DIR).filter(file => file.endsWith(".js"));
         for (const file of commandFiles) {
-            const filePath = `${this.config.SLASH_COMMANDS_DIR}/${file}`;
+            const filePath = `${config.SLASH_COMMANDS_DIR}/${file}`;
             const command = require(filePath);
             if ("data" in command && "execute" in command) {
                 this.SlashCommands.set(command.data.name, command);
@@ -55,7 +56,7 @@ class Erbium extends Client {
                     logger.info(`Started refreshing ${commands.length} application (/) command.`);
 
                     const data = await rest.put(
-                        Routes.applicationCommands(this.config.CLIENT_ID),
+                        Routes.applicationCommands(config.CLIENT_ID),
                         { body: commands },
                     );
 
@@ -67,7 +68,7 @@ class Erbium extends Client {
         }
     }
     registerCommands() {
-        const commandsDir = this.config.COMMANDS_DIR;
+        const commandsDir = config.COMMANDS_DIR;
 
         // load commands
         const CATS = fs.readdirSync(commandsDir);
@@ -98,11 +99,10 @@ class Erbium extends Client {
     }
 
     registerEvents() {
-        const eventsDir = this.config.EVENTS_DIR;
+        const eventsDir = config.EVENTS_DIR;
 
         // load events
         const EVENTS = fs.readdirSync(eventsDir).filter(x => x.endsWith(".js"));
-
         let i = 0;
 
         for (const event of EVENTS) {

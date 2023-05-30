@@ -1,5 +1,4 @@
 const Event = require("../Base/Event.js");
-const logger = require("../utils/Logger.js");
 const cooldowns = new (require("discord.js").Collection)();
 const { Configuration, OpenAIApi } = require("openai");
 const openai = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }));
@@ -55,12 +54,12 @@ class MessageCreate extends Event {
                     result = completion.data.choices[0];
                 if (result.message.content.length > 2000) {
                     const reply = await this.client.utils.hastebin(result.message.content.replace(/(?![^\n]{1,148}$)([^\n]{1,148})\s/g, "$1\n"));
-                    return await message.reply(`! Output too long, Hastebin:\n${reply}`);
+                    return await message.reply(`! Output too long, Hastebin:\n${reply}`).catch(() => {});
                 }
-                message.reply(result.message.content);
+                message.reply(result.message.content).catch(() => {});
             } catch (e) {
                 if (e.toString().includes("status code 429")) return message.reply("The API is being ratelimited!" + `\`\`\`js\n${e.toString()}\n\`\`\``);
-                message.reply("Something went wrong!" + `\`\`\`js\n${e.toString()}\n\`\`\``);
+                message.reply("Something went wrong!" + `\`\`\`js\n${e.toString()}\n\`\`\``).catch(() => {});
             }
         }
         // ignore non-prefix
@@ -81,7 +80,7 @@ class MessageCreate extends Event {
                 };
 
                 this.client.database.tags.set(`${cmd}_${message.guild.id}`, struct);
-            }).catch((e) => { console.error(e); });
+            });
         }
         if ((command.category === "Developer" || command.ownerOnly) && !message.author.dev) return;
 
@@ -90,12 +89,15 @@ class MessageCreate extends Event {
 
         const cooldown = cooldowns.get(`${command.help.name}_${message.author.id}`);
         if (cooldown && (command.cooldown) - (Date.now() - cooldown) > 0) {
+            if (cooldowns.get(`_${command.help.name}_${message.author.id}`)) return;
+            cooldowns.set(`_${command.help.name}_${message.author.id}`, true);
             message.react("⏳").catch(() => {});
-            return message.reply(`❌ | You can use this command again <t:${Math.round(((cooldown + command.cooldown)) / 1000)}:R>`)
+            return message.reply(`❌ | You can use this command again **<t:${Math.round(((cooldown + command.cooldown + 500)) / 1000)}:R>**`)
                 .then(m => {
                     setTimeout(function() {
                         m.delete().catch(() => {});
-                    }, Math.round(((command.cooldown) - (Date.now() - cooldown))));
+                        cooldowns.delete(`_${command.help.name}_${message.author.id}`);
+                    }, Math.round(((command.cooldown) - (Date.now() - cooldown)) + 500));
                 });
         }
         cooldowns.set(`${command.help.name}_${message.author.id}`, Date.now());
@@ -103,11 +105,10 @@ class MessageCreate extends Event {
         try {
             await command.run(message, args);
         } catch (e) {
-            await message.reply(`❌ | **Error!**\`\`\`js\n${e.toString()}\n\`\`\``).catch(() => {});
-            logger.error(`Command: ${command.help.name} - ${e.toString()}`);
+            await message.reply(`❌ | **Error!**\`\`\`js\n${e.toString()}\n\`\`\``);
+            this.client.logger.error(`Command: ${command.help.name} - ${e.toString()}`);
         }
     }
-
 }
 
 module.exports = MessageCreate;

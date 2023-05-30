@@ -30,7 +30,7 @@ class MessageUpdate extends Event {
             .setTimestamp()
             .setFooter({ text: `User ID: ${newMessage.author.id}` });
 
-        new WebhookClient({ url: process.env.WEBHOOK_URL }).send({ embeds: [Log] }).catch((err) => { console.error(err); });
+        new WebhookClient({ url: process.env.WEBHOOK_URL }).send({ embeds: [Log] }).catch((err) => { this.client.logger.error(err); });
     }
 }
 

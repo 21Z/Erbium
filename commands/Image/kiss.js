@@ -9,7 +9,6 @@ class Kiss extends Command {
 
         this.config({
             name: "kiss",
-            aliases: [],
             description: "Kiss your partner",
         });
     }

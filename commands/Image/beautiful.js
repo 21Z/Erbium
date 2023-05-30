@@ -8,7 +8,6 @@ class Beautiful extends Command {
 
         this.config({
             name: "beautiful",
-            aliases: [],
             description: "Oh this? This is beautiful!",
         });
     }

@@ -1,5 +1,4 @@
 const Event = require("../Base/Event.js");
-
 class InteractionCreate extends Event {
 
     constructor(client) {
@@ -15,7 +14,7 @@ class InteractionCreate extends Event {
         try {
             await command.execute(interaction);
         } catch (error) {
-            console.error(error);
+            this.client.logger.error(error);
             await interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
         }
 

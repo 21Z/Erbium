@@ -1,5 +1,4 @@
 const Event = require("../Base/Event.js");
-const logger = require("../utils/Logger.js");
 
 class Debug extends Event {
 
@@ -10,9 +9,8 @@ class Debug extends Event {
     run(message) {
         if (!this.client.config.DEV_MODE) return;
 
-        logger.info(`DEBUG :- ${message}`);
+        this.client.logger.info(`DEBUG :- ${message}`);
     }
-
 }
 
 module.exports = Debug;
