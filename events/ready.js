@@ -1,5 +1,4 @@
 const Event = require("../Base/Event.js");
-const logger = require("../utils/Logger.js");
 const { ActivityType } = require("discord.js");
 
 class Ready extends Event {
@@ -9,7 +8,7 @@ class Ready extends Event {
     }
 
     run() {
-        logger.success("Bot is online!");
+        this.client.logger.success("Bot is online!");
 
         this.client.user.setActivity("on Youtube", {
             type: ActivityType.Streaming,
@@ -26,12 +25,22 @@ class Ready extends Event {
                 )
                 .setFooter({ text: "This embed is updated every 20 seconds" })
                 .setColor(0x4d5e94);
-            this.client.channels.fetch(await this.client.database.tags.get("todo-channel")).then((c) => {
+            this.client.channels.fetch(await this.client.database.tags.get("todo-channel")).then(async (c) => {
                 c.messages.fetch(await this.client.database.tags.get("todo-message")).then((m) => {
                     m.edit({ embeds: [embed] });
                 });
             });
         }, 20000); */
+        process.on("unhandledRejection", error => {
+            if (error.toString().includes("DiscordAPIError")) {
+                this.client.channels.fetch("904052376317607936").then((c) => {
+                    c.send(`\`\`\`js\n${error}\n\`\`\``);
+                });
+                return this.client.logger.error(error);
+            } else {
+                process.exit(1);
+            }
+        });
     }
 }
 

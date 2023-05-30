@@ -8,7 +8,6 @@ class Trash extends Command {
 
         this.config({
             name: "trash",
-            aliases: [],
             description: "trash?!",
         });
     }

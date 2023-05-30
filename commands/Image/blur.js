@@ -8,7 +8,6 @@ class Blur extends Command {
 
         this.config({
             name: "blur",
-            aliases: [],
             description: "Blur image!",
         });
     }

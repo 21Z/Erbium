@@ -8,7 +8,6 @@ class Sepia extends Command {
 
         this.config({
             name: "sepia",
-            aliases: [],
             description: "Sepia wash",
         });
     }

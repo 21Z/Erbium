@@ -8,7 +8,6 @@ class Wanted extends Command {
 
         this.config({
             name: "wanted",
-            aliases: [],
             description: "Look who is wanted",
         });
     }

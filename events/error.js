@@ -1,5 +1,4 @@
 const Event = require("../Base/Event.js");
-const logger = require("../utils/Logger.js");
 
 class ErrorEvent extends Event {
 
@@ -8,9 +7,8 @@ class ErrorEvent extends Event {
     }
 
     run(e) {
-        logger.error(`ERROR :- ${e}`);
+        this.client.logger.error(`ERROR :- ${e}`);
     }
-
 }
 
 module.exports = ErrorEvent;

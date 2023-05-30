@@ -14,6 +14,7 @@ class Eval extends Command {
             description: "Evaluates Arbitrary JavaScript Code",
             ownerOnly: true,
             botPerms: ["EmbedLinks"],
+            cooldown: 0,
         });
     }
 
@@ -46,7 +47,7 @@ class Eval extends Command {
             const cleaned = this.client.utils.cleanText(evaled);
             const output = cleaned.length > 1024 ? `${await this.client.utils.hastebin(cleaned)}.js` : `\`\`\`js\n${cleaned}\n\`\`\``;
             embed.addFields([{ name: "Output", value: output }]);
-            message.channel.send({ embeds: [embed] }).catch(e => console.error("PROMISE_ERR:", e));
+            message.channel.send({ embeds: [embed] });
         } catch (e) {
             const cleaned = this.client.utils.cleanText(String(e));
             const error = `\`\`\`js\n${cleaned}\n\`\`\``;
@@ -54,7 +55,7 @@ class Eval extends Command {
                 const hastebin = await client.utils.hastebin(error);
                 embed.setColor("Red").addFields({ name: "Error", value: `${hastebin}.js` });
             } else { embed.setColor("Red").addFields({ name: "Error", value: error }); }
-            message.channel.send({ embeds: [embed] }).catch(err => console.error("PROMISE_ERR:", err));
+            message.channel.send({ embeds: [embed] });
         }
     }
 }

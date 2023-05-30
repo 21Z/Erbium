@@ -33,7 +33,7 @@ class Pokemon extends Command {
                 { name: "Base Experience", value: `${pokemon.baseExperience}`, inline: true },
                 { name: "Height", value: `${height}cm`, inline: true },
                 { name: "Weight", value: `${lbs}lbs (${kg}kg)`, inline: true },
-                { name: "Type", value: `${pokemon.types.map(m => `\`${capitalize(m.type.name)}\``).join(", ") || "None"}`, inline: false },
+                { name: "Type", value: `${pokemon.types.map(m => `\`${capitalize(m.type.name)}\``).join(", ") || "None"}` },
                 { name: "Abilities", value: `${pokemon.abilities.map(m => `\`${capitalize(m.ability.name)}\``).join(", ") || "None"}`, inline: true },
                 { name: "Stats", value: `${pokemon.stats.map(m => `**${capitalize(m.stat.name)}**: \`${m.base_stat}\``).join("\n") || "None"}` },
             )

@@ -8,7 +8,6 @@ class Affect extends Command {
 
         this.config({
             name: "affect",
-            aliases: [],
             description: "No, it doesn't affect my baby.",
         });
     }

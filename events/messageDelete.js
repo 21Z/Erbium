@@ -25,7 +25,7 @@ class MessageDelete extends Event {
                 .setImage(`${message.attachments.first().url}`);
         }
 
-        new WebhookClient({ url: process.env.WEBHOOK_URL }).send({ embeds: [Log] }).catch((err) => { console.error(err); });
+        new WebhookClient({ url: process.env.WEBHOOK_URL }).send({ embeds: [Log] }).catch(() => {});
     }
 }
 

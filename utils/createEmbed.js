@@ -4,8 +4,8 @@ const { EmbedBuilder } = require("discord.js");
 const hexColors = {
     error: "Red",
     info: EMBED_COLOR,
-    success: "Green",
-    warn: "Yellow",
+    success: 0x4bb543,
+    warn: 0xffcc00,
 };
 function createEmbed(type, message, emoji = false) {
     const embed = new EmbedBuilder().setColor(hexColors[type]);
