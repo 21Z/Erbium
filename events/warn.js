@@ -9,6 +9,7 @@ class Warn extends Event {
     run(message) {
         this.client.logger.warn(`WARN :- ${message}`);
     }
+
 }
 
 module.exports = Warn;

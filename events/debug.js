@@ -11,6 +11,7 @@ class Debug extends Event {
 
         this.client.logger.info(`DEBUG :- ${message}`);
     }
+
 }
 
 module.exports = Debug;

@@ -12,6 +12,7 @@ class MessageUpdate extends Event {
         if (!oldMessage.guild) return;
         if (!config.GUILD_ID.includes(oldMessage.guild.id)) return;
         if (!process.env.WEBHOOK_URL) return;
+        if (!process.env.WEBHOOK_URL.match("https://(canary\\.|ptb\\.|)discord(app)*\\.com/api/webhooks/\\d{18,19}/(\\w|-|_)*(/?)")) throw new Error("The provided webhook URL is not valid.");
         if (oldMessage.content === newMessage.content) return;
         if (oldMessage.author.bot || oldMessage.system) return;
 
@@ -30,8 +31,9 @@ class MessageUpdate extends Event {
             .setTimestamp()
             .setFooter({ text: `User ID: ${newMessage.author.id}` });
 
-        new WebhookClient({ url: process.env.WEBHOOK_URL }).send({ embeds: [Log] }).catch((err) => { this.client.logger.error(err); });
+        new WebhookClient({ url: process.env.WEBHOOK_URL }).send({ embeds: [Log] });
     }
+
 }
 
 module.exports = MessageUpdate;

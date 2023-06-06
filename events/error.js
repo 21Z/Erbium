@@ -9,6 +9,7 @@ class ErrorEvent extends Event {
     run(e) {
         this.client.logger.error(`ERROR :- ${e}`);
     }
+
 }
 
 module.exports = ErrorEvent;

@@ -48,6 +48,7 @@ class Ban extends Command {
             message.channel.send({ embeds: [embed] });
         });
     }
+
 }
 
 module.exports = Ban;

@@ -32,6 +32,7 @@ class UserInfo extends Command {
 
         return message.reply({ embeds: [embed] });
     }
+
 }
 
 module.exports = UserInfo;

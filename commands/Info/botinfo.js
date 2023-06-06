@@ -51,6 +51,7 @@ class BotInfo extends Command {
 
         return message.reply({ embeds: [embed] });
     }
+
 }
 
 module.exports = BotInfo;

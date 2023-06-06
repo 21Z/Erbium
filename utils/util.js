@@ -9,9 +9,7 @@ class Util {
     }
 
     static formatDuration(dur) {
-        const duration = moment.duration(dur).format("M [months], D [days], H [hours], m [minutes], s [seconds]")
-            .replace("1 months", "1 month").replace("1 days", "1 day").replace("1 hours", "1 hour").replace("1 minutes", "1 minute").replace("1 seconds", "1 second")
-            .replace(", 0 seconds", "").replace(", 0 minutes", "").replace(", 0 hours", "").replace(", 0 days", "").replace(", 0 months", "");
+        const duration = moment.duration(dur).format("M [months], D [days], H [hours], m [minutes], s [seconds]");
         return duration;
     }
 
@@ -64,6 +62,7 @@ class Util {
     static btoa(text) {
         return Buffer.from(text ?? "").toString("base64");
     }
+
 }
 
 module.exports = Util;

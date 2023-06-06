@@ -109,6 +109,7 @@ class MessageCreate extends Event {
             this.client.logger.error(`Command: ${command.help.name} - ${e.toString()}`);
         }
     }
+
 }
 
 module.exports = MessageCreate;

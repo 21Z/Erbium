@@ -6,8 +6,8 @@ class Logger {
         console.log(`[${chalk.whiteBright("LOG")}]`, m);
     }
 
-    static error(m) {
-        console.error(`[${chalk.redBright("ERROR")}]`, m);
+    static error(m, mm) {
+        console.error(`[${chalk.redBright("ERROR")}]`, m, mm ? mm : "");
     }
 
     static success(m) {

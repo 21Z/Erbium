@@ -29,6 +29,7 @@ class Reload extends Command {
         this.client.registerCommands();
         m.edit({ embeds: [createEmbed("success", "Succesfully reloaded all commands!")] });
     }
+
 }
 
 module.exports = Reload;

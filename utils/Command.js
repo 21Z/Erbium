@@ -15,7 +15,7 @@ class Command {
     }
 
     get size() {
-        return this.commands.size;
+        return this.commands.filter(m => !m.help.ownerOnly).size;
     }
 
     resolve(name) {
