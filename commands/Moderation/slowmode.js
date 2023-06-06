@@ -41,6 +41,7 @@ class SlowMode extends Command {
         });
         message.reply(`Slowmode set to \`${this.client.utils.formatDuration(time * 1000).replace(/,/g, "")}\``);
     }
+
 }
 
 module.exports = SlowMode;

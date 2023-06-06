@@ -24,6 +24,7 @@ class Colorfy extends Command {
 
         return message.reply({ files: [img] });
     }
+
 }
 
 module.exports = Colorfy;

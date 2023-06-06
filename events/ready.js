@@ -33,15 +33,14 @@ class Ready extends Event {
         }, 20000); */
         process.on("unhandledRejection", error => {
             if (error.toString().includes("DiscordAPIError")) {
-                this.client.channels.fetch("904052376317607936").then((c) => {
-                    c.send(`\`\`\`js\n${error}\n\`\`\``);
-                });
                 return this.client.logger.error(error);
             } else {
+                this.client.logger.error(error);
                 process.exit(1);
             }
         });
     }
+
 }
 
 module.exports = Ready;

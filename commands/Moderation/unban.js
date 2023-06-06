@@ -40,6 +40,7 @@ class UnBan extends Command {
             message.channel.send({ embeds: [embed] });
         });
     }
+
 }
 
 module.exports = UnBan;

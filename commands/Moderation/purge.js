@@ -24,15 +24,16 @@ class Purge extends Command {
         await message.delete();
 
         const amount = parseInt(query);
-        const messages = await message.channel.messages.fetch({ limit:amount });
+        const messages = await message.channel.messages.fetch({ limit: amount });
         await message.channel.bulkDelete(messages, true).catch(() => {}).then(
             message.channel.send({ embeds: [createEmbed("success").setTitle(`:broom: Successfully deleted ${amount} messages!`)] }).then(msg => {
                 setTimeout(() => {
-                    msg.delete();
-                }, 3000);
+                    msg.delete().catch(() => {});
+                }, 2000);
             }),
         );
     }
+
 }
 
 module.exports = Purge;

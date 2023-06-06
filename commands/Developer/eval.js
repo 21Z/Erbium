@@ -58,6 +58,7 @@ class Eval extends Command {
             message.channel.send({ embeds: [embed] });
         }
     }
+
 }
 
 module.exports = Eval;

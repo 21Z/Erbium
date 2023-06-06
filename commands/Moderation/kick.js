@@ -44,6 +44,7 @@ class Kick extends Command {
             message.channel.send({ embeds: [embed] });
         });
     }
+
 }
 
 module.exports = Kick;
