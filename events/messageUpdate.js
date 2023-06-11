@@ -1,4 +1,5 @@
-const { WebhookClient } = require("discord.js");
+const Event = require("../Base/Event.js");
+const { Events, WebhookClient } = require("discord.js");
 const createEmbed = require("../utils/createEmbed.js");
 const config = require("../config.js");
 
@@ -6,7 +7,12 @@ class MessageUpdate extends Event {
 
     constructor(client) {
         super(client);
+
+        this.config({
+            name: Events.MessageUpdate,
+        });
     }
+
     async run(oldMessage, newMessage) {
 
         if (!oldMessage.guild) return;

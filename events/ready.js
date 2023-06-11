@@ -1,10 +1,14 @@
 const Event = require("../Base/Event.js");
-const { ActivityType } = require("discord.js");
+const { Events, ActivityType } = require("discord.js");
 
 class Ready extends Event {
 
     constructor(client) {
         super(client);
+
+        this.config({
+            name: Events.Ready,
+        });
     }
 
     run() {

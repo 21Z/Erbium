@@ -1,9 +1,14 @@
 const Event = require("../Base/Event.js");
+const { Events } = require("discord.js");
 
-class ErrorEvent extends Event {
+class Error extends Event {
 
     constructor(client) {
         super(client);
+
+        this.config({
+            name: Events.ErrorEvent,
+        });
     }
 
     run(e) {
@@ -12,4 +17,4 @@ class ErrorEvent extends Event {
 
 }
 
-module.exports = ErrorEvent;
+module.exports = Error;
