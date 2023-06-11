@@ -1,9 +1,14 @@
 const Event = require("../Base/Event.js");
+const { Events } = require("discord.js");
 
 class Debug extends Event {
 
     constructor(client) {
         super(client);
+
+        this.config({
+            name: Events.Debug,
+        });
     }
 
     run(message) {

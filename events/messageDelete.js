@@ -1,4 +1,4 @@
-const { WebhookClient } = require("discord.js");
+const { Events, WebhookClient } = require("discord.js");
 const createEmbed = require("../utils/createEmbed.js");
 const config = require("../config.js");
 
@@ -6,6 +6,10 @@ class MessageDelete extends Event {
 
     constructor(client) {
         super(client);
+
+        this.config({
+            name: Events.MessageDelete,
+        });
     }
     async run(message) {
 
