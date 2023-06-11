@@ -111,7 +111,11 @@ class Erbium extends Client {
             const evn = new ev(this);
 
             this[evn.data.once ? "once" : "on"](evn.data.name, async (...args) => {
-                await evn.run(...args).catch((e) => { logger.error(`Event: ${event.replace(".js", "")} :-`, e); });
+                try {
+                    await evn.run(...args);
+                } catch (e) {
+                    logger.error(`Event: ${event.replace(".js", "")} :-`, e);
+                }
             });
 
             delete require.cache[require.resolve(`${eventsDir}/${event}`)];

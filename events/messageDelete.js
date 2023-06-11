@@ -1,3 +1,4 @@
+const Event = require("../Base/Event.js");
 const { Events, WebhookClient } = require("discord.js");
 const createEmbed = require("../utils/createEmbed.js");
 const config = require("../config.js");
