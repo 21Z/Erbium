@@ -1,5 +1,5 @@
-const Command = require("../../Base/Command");
-const createEmbed = require("../../utils/createEmbed");
+const Command = require("../../Base/Command.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class CreateTag extends Command {
 

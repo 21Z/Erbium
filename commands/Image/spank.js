@@ -1,6 +1,7 @@
 const Command = require("../../Base/Command.js");
-const createEmbed = require("../../utils/createEmbed.js");
 const { Canvas: Canvacord } = require("canvacord");
+const { AttachmentBuilder } = require("discord.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class Spank extends Command {
 
@@ -10,6 +11,7 @@ class Spank extends Command {
         this.config({
             name: "spank",
             description: "Spank someone",
+            botPerms: ["EmbedLinks"],
         });
     }
 
@@ -19,9 +21,10 @@ class Spank extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.spank(message.author.displayAvatarURL({ extension: "png", size: 2048 }), user.displayAvatarURL({ extension: "png", size: 2048 }));
-        await m.delete().catch(() => { });
+        const attachment = new AttachmentBuilder(img, { name: "blur.png" });
+        await m.delete().catch(() => {});
 
-        return message.reply({ files: [img] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://spank.png")], files: [attachment] });
     }
 
 }

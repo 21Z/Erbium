@@ -1,5 +1,5 @@
-const Command = require("../../Base/Command");
-const createEmbed = require("../../utils/createEmbed");
+const Command = require("../../Base/Command.js");
+const createEmbed = require("../../utils/createEmbed.js");
 const ms = require("ms");
 
 class SlowMode extends Command {
@@ -38,8 +38,9 @@ class SlowMode extends Command {
         if (time > 21600) return message.reply({ embeds: [createEmbed("error", "Time is too high, please set a slowmode less than 6 hours!", true)] });
         message.channel.setRateLimitPerUser(time).catch(e => {
             return message.reply({ embeds: [createEmbed("error", `Something went wrong!\n\`\`\`js\n${e}\`\`\``, true)] });
+        }).then(() => {
+            message.reply(`Slowmode set to \`${this.client.utils.formatDuration(time * 1000).replace(/,/g, "")}\``);
         });
-        message.reply(`Slowmode set to \`${this.client.utils.formatDuration(time * 1000).replace(/,/g, "")}\``);
     }
 
 }

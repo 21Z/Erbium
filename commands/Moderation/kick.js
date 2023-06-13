@@ -1,5 +1,5 @@
+const Command = require("../../Base/Command.js");
 const createEmbed = require("../../utils/createEmbed.js");
-const Command = require("../../Base/Command");
 
 class Kick extends Command {
 

@@ -1,5 +1,7 @@
 const Command = require("../../Base/Command.js");
 const { Canvas: Canvacord } = require("canvacord");
+const { AttachmentBuilder } = require("discord.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class Beautiful extends Command {
 
@@ -9,6 +11,7 @@ class Beautiful extends Command {
         this.config({
             name: "beautiful",
             description: "Oh this? This is beautiful!",
+            botPerms: ["EmbedLinks"],
         });
     }
 
@@ -17,9 +20,10 @@ class Beautiful extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.beautiful(user.displayAvatarURL({ extension: "png", size: 2048 }));
-        await m.delete().catch(() => { });
+        const attachment = new AttachmentBuilder(img, { name: "blur.png" });
+        await m.delete().catch(() => {});
 
-        return message.reply({ files: [img] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://beautiful.png")], files: [attachment] });
     }
 
 }

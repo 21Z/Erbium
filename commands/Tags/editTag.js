@@ -1,5 +1,5 @@
-const Command = require("../../Base/Command");
-const createEmbed = require("../../utils/createEmbed");
+const Command = require("../../Base/Command.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class EditTag extends Command {
 
@@ -10,7 +10,7 @@ class EditTag extends Command {
             name: "edittag",
             aliases: ["edit-tag", "updatetag", "tag-edit", "tagedit"],
             description: "Edit a tag",
-            permissions: ["MessageMessages"],
+            permissions: ["ManageMessages"],
         });
     }
 

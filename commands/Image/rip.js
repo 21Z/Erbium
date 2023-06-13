@@ -1,5 +1,7 @@
 const Command = require("../../Base/Command.js");
 const { Canvas: Canvacord } = require("canvacord");
+const { AttachmentBuilder } = require("discord.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class Rip extends Command {
 
@@ -10,6 +12,7 @@ class Rip extends Command {
             name: "rip",
             aliases: ["kill"],
             description: "R.I.P",
+            botPerms: ["EmbedLinks"],
         });
     }
 
@@ -18,9 +21,10 @@ class Rip extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.rip(user.displayAvatarURL({ extension: "png", size: 2048 }));
-        await m.delete().catch(() => { });
+        const attachment = new AttachmentBuilder(img, { name: "blur.png" });
+        await m.delete().catch(() => {});
 
-        return message.reply({ files: [img] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://rip.png")], files: [attachment] });
     }
 
 }

@@ -1,5 +1,7 @@
 const Command = require("../../Base/Command.js");
 const { Canvas: Canvacord } = require("canvacord");
+const { AttachmentBuilder } = require("discord.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class Affect extends Command {
 
@@ -9,6 +11,7 @@ class Affect extends Command {
         this.config({
             name: "affect",
             description: "No, it doesn't affect my baby.",
+            botPerms: ["EmbedLinks"],
         });
     }
 
@@ -17,9 +20,11 @@ class Affect extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.affect(user.displayAvatarURL({ extension: "png", size: 2048 }));
-        await m.delete().catch(() => { });
+        const file = new AttachmentBuilder(img, { name: "affect.png" });
 
-        return message.reply({ files: [img] });
+        await m.delete().catch(() => {});
+
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://affect.png")], files: [file] });
     }
 
 }
