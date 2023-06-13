@@ -1,5 +1,7 @@
 const Command = require("../../Base/Command.js");
 const { Canvas: Canvacord } = require("canvacord");
+const { AttachmentBuilder } = require("discord.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class Triggered extends Command {
 
@@ -10,6 +12,7 @@ class Triggered extends Command {
             name: "triggered",
             aliases: ["trigger"],
             description: "TRIGGERED",
+            botPerms: ["EmbedLinks"],
         });
     }
 
@@ -18,9 +21,10 @@ class Triggered extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.trigger(user.displayAvatarURL({ extension: "png", size: 2048 }));
+        const attachment = new AttachmentBuilder(img, { name: "blur.png" });
         await m.delete().catch(() => {});
 
-        return message.reply({ files: [img] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://trigger.png")], files: [attachment] });
     }
 
 }

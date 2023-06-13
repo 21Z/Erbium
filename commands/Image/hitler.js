@@ -1,7 +1,9 @@
 const Command = require("../../Base/Command.js");
 const { Canvas: Canvacord } = require("canvacord");
+const { AttachmentBuilder } = require("discord.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
-class Greyscale extends Command {
+class Hitler extends Command {
 
     constructor(client) {
         super(client);
@@ -9,6 +11,7 @@ class Greyscale extends Command {
         this.config({
             name: "hitler",
             description: "Worse than hitler",
+            botPerms: ["EmbedLinks"],
         });
     }
 
@@ -17,11 +20,12 @@ class Greyscale extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.hitler(user.displayAvatarURL({ extension: "png", size: 2048 }));
-        await m.delete().catch(() => { });
+        const attachment = new AttachmentBuilder(img, { name: "blur.png" });
+        await m.delete().catch(() => {});
 
-        return message.reply({ files: [img] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://hitler.png")], files: [attachment] });
     }
 
 }
 
-module.exports = Greyscale;
+module.exports = Hitler;

@@ -1,6 +1,6 @@
-const Command = require("../../Base/Command");
+const Command = require("../../Base/Command.js");
 const { escapeMarkdown } = require("discord.js");
-const createEmbed = require("../../utils/createEmbed");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class TagContent extends Command {
 

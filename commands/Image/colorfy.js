@@ -1,5 +1,7 @@
 const Command = require("../../Base/Command.js");
 const { Canvas: Canvacord } = require("canvacord");
+const { AttachmentBuilder } = require("discord.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class Colorfy extends Command {
 
@@ -10,6 +12,7 @@ class Colorfy extends Command {
             name: "colorfy",
             aliases: ["colourfy"],
             description: "Colorfy image!",
+            botPerms: ["EmbedLinks"],
         });
     }
 
@@ -20,9 +23,10 @@ class Colorfy extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.colorfy(user.displayAvatarURL({ extension: "png", size: 2048 }), `${color}`);
-        await m.delete().catch(() => { });
+        const attachment = new AttachmentBuilder(img, { name: "colorfy.png" });
+        await m.delete().catch(() => {});
 
-        return message.reply({ files: [img] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://colorfy.png")], files: [attachment] });
     }
 
 }

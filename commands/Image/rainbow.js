@@ -1,5 +1,7 @@
 const Command = require("../../Base/Command.js");
 const { Canvas: Canvacord } = require("canvacord");
+const { AttachmentBuilder } = require("discord.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
 class Rainbow extends Command {
 
@@ -10,6 +12,7 @@ class Rainbow extends Command {
             name: "rainbow",
             aliases: ["gay"],
             description: "Rainbow overlay",
+            botPerms: ["EmbedLinks"],
         });
     }
 
@@ -18,9 +21,10 @@ class Rainbow extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.rainbow(user.displayAvatarURL({ extension: "png", size: 2048 }));
-        await m.delete().catch(() => { });
+        const attachment = new AttachmentBuilder(img, { name: "blur.png" });
+        await m.delete().catch(() => {});
 
-        return message.reply({ files: [img] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://rainbow.png")], files: [attachment] });
     }
 
 }
