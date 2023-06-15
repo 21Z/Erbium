@@ -9,7 +9,6 @@ class Event {
 
     config(conf) {
         this.data = {
-            name: conf.name,
             once: conf.once ?? false,
         };
     }
