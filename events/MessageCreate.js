@@ -1,5 +1,5 @@
 const Event = require("../Base/Event.js");
-const { Events, PermissionsBitField } = require("discord.js");
+const { PermissionsBitField } = require("discord.js");
 const cooldowns = new (require("discord.js").Collection)();
 const { Configuration, OpenAIApi } = require("openai");
 const openai = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }));
@@ -8,10 +8,7 @@ class MessageCreate extends Event {
 
     constructor(client) {
         super(client);
-
-        this.config({
-            name: Events.MessageCreate,
-        });
+        this.config({});
     }
 
     async run(message) {

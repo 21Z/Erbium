@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Collection, REST, Routes } = require("discord.js");
+const { Client, Events, GatewayIntentBits, Collection, REST, Routes } = require("discord.js");
 const fs = require("fs");
 const config = require("../config.js");
 const Command = require("../utils/Command.js");
@@ -110,7 +110,7 @@ class Erbium extends Client {
             const ev = require(`${eventsDir}/${event}`);
             const evn = new ev(this);
 
-            this[evn.data.once ? "once" : "on"](evn.data.name, async (...args) => {
+            this[evn.data.once ? "once" : "on"](Events[event.replace(".js", "")], async (...args) => {
                 try {
                     await evn.run(...args);
                 } catch (e) {
@@ -120,7 +120,7 @@ class Erbium extends Client {
 
             delete require.cache[require.resolve(`${eventsDir}/${event}`)];
 
-            logger.success(`[${i + 1}/${event.length}] Loaded event ${event}`);
+            logger.success(`[${i + 1}/${EVENTS.length}] Loaded event ${event}`);
             i++;
         }
     }
