@@ -1,8 +1,8 @@
 const Event = require("../Base/Event.js");
 const { PermissionsBitField } = require("discord.js");
 const cooldowns = new (require("discord.js").Collection)();
-const { OpenAI } = require("openai");
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const { Configuration, OpenAIApi } = require("openai");
+const openai = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }));
 
 class MessageCreate extends Event {
 
@@ -45,25 +45,22 @@ class MessageCreate extends Event {
                     if (msg.author.id !== message.author.id) return;
 
                     conversationLog.push({
-                        "role": "user",
-                        "content": `${msg.content}`,
+                        role: "user",
+                        content: `${msg.content}`,
                     });
                 });
-                const completion = await openai.chat.completions.create({
+                const completion = await openai.createChatCompletion({
                         model: "gpt-3.5-turbo",
                         messages: conversationLog,
                     }),
-                    result = completion.choices[0];
+                    result = completion.data.choices[0];
                 if (result.message.content.length > 2000) {
                     const reply = await this.client.utils.hastebin(result.message.content.replace(/(?![^\n]{1,148}$)([^\n]{1,148})\s/g, "$1\n"));
                     return await message.reply(`! Output too long, Hastebin:\n${reply}`).catch(() => {});
                 }
                 message.reply(result.message.content).catch(() => {});
             } catch (e) {
-                if (error instanceof OpenAI.APIError) {
-                if (e.status === 429) return message.reply("The API is being ratelimited!" + `\`\`\`js\n${e.message}\n\`\`\``);
-                message.reply("Something went wrong!" + `\`\`\`js\n${e.message}\n\`\`\``).catch(() => {});
-            } else {
+                if (e.toString().includes("status code 429")) return message.reply("The API is being ratelimited!" + `\`\`\`js\n${e.toString()}\n\`\`\``);
                 message.reply("Something went wrong!" + `\`\`\`js\n${e.toString()}\n\`\`\``).catch(() => {});
             }
         }
