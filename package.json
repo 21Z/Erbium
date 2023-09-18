@@ -30,7 +30,7 @@
     "node-fetch": "2.7.0",
     "openai": "3.3.0",
     "pokecord": "1.0.1",
-    "quick.db": "9.1.6",
+    "quick.db": "9.1.7",
     "youtube-sr": "4.3.4"
   },
   "engines": {
