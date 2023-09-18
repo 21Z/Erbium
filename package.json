@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/21Z/Erbium#readme",
   "dependencies": {
-    "better-sqlite3": "8.3.0",
+    "better-sqlite3": "8.6.0",
     "canvacord": "5.4.10",
     "chalk": "4.1.2",
     "discord.js": "14.11.0",
