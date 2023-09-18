@@ -59,12 +59,13 @@ class MessageCreate extends Event {
                     return await message.reply(`! Output too long, Hastebin:\n${reply}`).catch(() => {});
                 }
                 message.reply(result.message.content).catch(() => {});
-            } catch (e) {
+            } catch (error) {
                 if (error instanceof OpenAI.APIError) {
-                if (e.status === 429) return message.reply("The API is being ratelimited!" + `\`\`\`js\n${e.message}\n\`\`\``);
-                message.reply("Something went wrong!" + `\`\`\`js\n${e.message}\n\`\`\``).catch(() => {});
-            } else {
-                message.reply("Something went wrong!" + `\`\`\`js\n${e.toString()}\n\`\`\``).catch(() => {});
+                    if (error.status === 429) return message.reply("The API is being ratelimited!" + `\`\`\`js\n${error.message}\n\`\`\``);
+                    message.reply("Something went wrong!" + `\`\`\`js\n${error.message}\n\`\`\``).catch(() => {});
+                } else {
+                    message.reply("Something went wrong!" + `\`\`\`js\n${error.toString()}\n\`\`\``).catch(() => {});
+                }
             }
         }
         // ignore non-prefix
