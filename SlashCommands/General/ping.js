@@ -1,12 +1,18 @@
-const { SlashCommandBuilder } = require("discord.js");
-const createEmbed = require("../utils/createEmbed");
+const Command = require("../../Base/Command.js");
+const createEmbed = require("../../utils/createEmbed.js");
 
-module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("ping")
-        .setDescription("Pong!"),
-    async execute(interaction) {
+class Ping extends Command {
 
+    constructor(client) {
+        super(client);
+
+        this.config({
+            name: "ping",
+            description: "Bot ping",
+        });
+    }
+
+    async run(interaction) {
         const before = Date.now();
         await interaction.deferReply();
         const latency = Date.now() - before;
@@ -15,7 +21,7 @@ module.exports = {
         const embed = createEmbed("info")
             .setAuthor({
                 name: "🏓 PONG",
-                iconURL: interaction.client.user.displayAvatarURL(),
+                iconURL: interaction.user.displayAvatarURL(),
             })
             .addFields(
                 {
@@ -31,10 +37,13 @@ module.exports = {
             )
             .setFooter({
                 text: `Requested by: ${interaction.user.tag}`,
-                iconURL: interaction.member.displayAvatarURL(),
+                iconURL: interaction.user.displayAvatarURL(),
             })
             .setTimestamp();
 
-        interaction.editReply({ embeds: [embed] });
-    },
-};
+        interaction.editReply({ embeds: [embed], content: "\u200b" });
+    }
+
+}
+
+module.exports = Ping;

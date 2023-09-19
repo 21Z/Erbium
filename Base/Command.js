@@ -1,3 +1,5 @@
+const { ApplicationCommandType } = require("discord.js");
+
 class Command {
 
     constructor(client) {
@@ -16,11 +18,14 @@ class Command {
             name: conf.name,
             aliases: conf.aliases ?? [],
             description: conf.description ?? "None",
+            type: conf.type ?? ApplicationCommandType.ChatInput,
             ownerOnly: !!conf.ownerOnly,
             botPerms: conf.botPerms ?? [],
             permissions: conf.permissions ?? [],
-            category: null,
+            options: conf.options ?? [],
+            subcommand: conf.subcommand ?? false,
             cooldown: conf.cooldown ?? 3000,
+            category: null,
         };
         this.path = null;
     }
