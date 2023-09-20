@@ -12,11 +12,6 @@ class Image extends Command {
         });
     }
 
-    async run(interaction) {
-        const Subcommand = interaction.options.getSubcommand();
-        require(`./${Subcommand}`).run(interaction);
-    }
-
 }
 
 module.exports = Image;
