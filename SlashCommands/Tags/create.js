@@ -30,7 +30,7 @@ class CreateTag extends Command {
     }
 
     async run(interaction) {
-        const tagname = interaction.options.getString("tag");
+        const tagname = interaction.options.getString("name");
         const content = interaction.options.getString("content");
 
         if (!tagname) return interaction.reply({ embeds: [createEmbed("warn", "Please include a tag name!")] });
