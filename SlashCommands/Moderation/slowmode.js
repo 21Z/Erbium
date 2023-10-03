@@ -35,9 +35,9 @@ class SlowMode extends Command {
         const currentSlowmode = interaction.channel.rateLimitPerUser;
         if (duration === "off") {
             if (currentSlowmode === 0) {
-                return interaction.reply({ embeds: [createEmbed("error", "Slowmode is already OFF!", true)] });
+                return interaction.reply({ embeds: [createEmbed("error", "Slowmode is already off!", true)] });
             }
-            interaction.reply({ embeds: [createEmbed("success", "Slowmode has been turned OFF!", true)] });
+            interaction.reply({ embeds: [createEmbed("success", "Slowmode has been turned off!", true)] });
             return channel.setRateLimitPerUser(0);
         }
         const lastletter = duration.slice(-1);

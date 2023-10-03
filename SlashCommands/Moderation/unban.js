@@ -31,7 +31,7 @@ class UnBan extends Command {
     async run(interaction) {
         await interaction.deferReply();
         const target = interaction.options.getUser("user");
-        const moderator = `by ${interaction.user.tag}, ID: ${interaction.user.id}`;
+        const moderator = `by ${interaction.user.tag} [ID: ${interaction.user.id}]`;
         const embedreason = interaction.options.getUser("user") ?? "None";
         let reason = interaction.options.getUser("user") ?? "Unbanned " + moderator;
         if (reason === interaction.options.getUser("user")) reason = reason + ", " + moderator;

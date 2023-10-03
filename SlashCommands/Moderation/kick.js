@@ -31,7 +31,7 @@ class Kick extends Command {
     async run(interaction) {
         await interaction.deferReply();
         const target = interaction.options.getUser("user");
-        const moderator = `by ${interaction.user.tag}, ID: ${interaction.user.id}`;
+        const moderator = `by ${interaction.user.tag} [ID: ${interaction.user.id}]`;
         const embedreason = interaction.options.getString("reason") ?? "None";
         let reason = interaction.options.getString("reason") ?? "Kicked" + moderator;
         if (reason === interaction.options.getString("reason")) reason = reason + ", " + moderator;
@@ -44,7 +44,7 @@ class Kick extends Command {
         }
         if (!target.kickable) return interaction.editReply({ embeds: [createEmbed("error", "I cannot kick this user!", true)] });
 
-        const embed = createEmbed("success")
+        const embed = createEmbed("error")
             .setTitle("Action: Kick")
             .setDescription(`Kicked ${target} (\`${target.user?.tag ?? target.tag ?? target}\`)\nReason: ${embedreason}`)
             .setThumbnail(target.displayAvatarURL())

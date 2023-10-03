@@ -18,7 +18,7 @@ class Ban extends Command {
     async run(message, args) {
         await message.guild.members.fetch(args[0]).catch(() => {});
         const target = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || await this.client.resolveUser(args[0]);
-        const moderator = `by ${message.author.tag}, ID: ${message.author.id}`;
+        const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
         const embedreason = args.slice(1).join(" ") || "None";
         let reason = args.slice(1).join(" ") || "Banned " + moderator;
         if (reason === args.slice(1).join(" ")) reason = reason + ", " + moderator;
@@ -35,7 +35,7 @@ class Ban extends Command {
         const bans = await message.guild.bans.fetch();
         if (bans.some((m) => m.user.id === target.id)) return message.reply({ embeds: [createEmbed("error", `${target} is already banned!`, true)] });
 
-        const embed = createEmbed("success")
+        const embed = createEmbed("error")
             .setTitle("Action: Ban")
             .setDescription(`Banned ${target} (\`${target.user?.tag ?? target.tag ?? target}\`)\nReason: ${embedreason}`)
             .setThumbnail(target.displayAvatarURL())

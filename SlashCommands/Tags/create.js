@@ -47,7 +47,7 @@ class CreateTag extends Command {
             uses: 0,
         };
 
-        interaction.client.database.tags.set(`${struct.name}_${interaction.guild.id}`, struct);
+        await interaction.client.database.tags.set(`${struct.name}_${interaction.guild.id}`, struct);
 
         return interaction.reply(`✅ | Created tag ${struct.name}!`);
     }

@@ -32,7 +32,7 @@ class CreateTag extends Command {
             uses: 0,
         };
 
-        this.client.database.tags.set(`${struct.name}_${message.guild.id}`, struct);
+        await this.client.database.tags.set(`${struct.name}_${message.guild.id}`, struct);
 
         return message.reply(`✅ | Created tag ${struct.name}!`);
     }

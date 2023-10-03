@@ -17,7 +17,7 @@ class UnBan extends Command {
 
     async run(message, args) {
         const target = message.mentions.members.first() || await this.client.resolveUser(args[0]);
-        const moderator = `by ${message.author.tag}, ID: ${message.author.id}`;
+        const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
         const embedreason = args.slice(1).join(" ") || "None";
         let reason = args.slice(1).join(" ") || "Unbanned " + moderator;
         if (reason === args.slice(1).join(" ")) reason = reason + ", " + moderator;
