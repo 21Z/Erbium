@@ -36,7 +36,7 @@ class UnBan extends Command {
                 iconURL: message.author.displayAvatarURL(),
             });
 
-        await message.guild.bans.remove(target.id, { reason: reason }).then(() => {
+        await message.guild.bans.remove(target.id, reason).then(() => {
             message.channel.send({ embeds: [embed] });
         });
     }

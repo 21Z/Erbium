@@ -54,7 +54,7 @@ class Kick extends Command {
             });
 
         await interaction.guild.members.kick(target.id, { reason: reason }).then(() => {
-            interaction.reply({ embeds: [embed] });
+            interaction.editReply({ embeds: [embed] });
         });
     }
 

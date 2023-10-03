@@ -32,9 +32,9 @@ class UnBan extends Command {
         await interaction.deferReply();
         const target = interaction.options.getUser("user");
         const moderator = `by ${interaction.user.tag} [ID: ${interaction.user.id}]`;
-        const embedreason = interaction.options.getUser("user") ?? "None";
-        let reason = interaction.options.getUser("user") ?? "Unbanned " + moderator;
-        if (reason === interaction.options.getUser("user")) reason = reason + ", " + moderator;
+        const embedreason = interaction.options.getString("reason") ?? "None";
+        let reason = interaction.options.getString("reason") ?? "Banned " + moderator;
+        if (reason === interaction.options.getString("reason")) reason = reason + ", " + moderator;
         if (!target) return interaction.reply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to unban!")] });
 
         // If the user is not banned
@@ -50,8 +50,8 @@ class UnBan extends Command {
                 iconURL: interaction.user.displayAvatarURL(),
             });
 
-        await interaction.guild.bans.remove(target.id, { reason: reason }).then(() => {
-            interaction.reply({ embeds: [embed] });
+        await interaction.guild.bans.remove(target.id, reason).then(() => {
+            interaction.editReply({ embeds: [embed] });
         });
     }
 

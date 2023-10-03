@@ -58,7 +58,7 @@ class Ban extends Command {
             });
 
         await interaction.guild.bans.create(target.id, { reason: reason }).then(() => {
-            interaction.reply({ embeds: [embed] });
+            interaction.editReply({ embeds: [embed] });
         });
     }
 
