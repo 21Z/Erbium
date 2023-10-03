@@ -1,5 +1,5 @@
-const { ApplicationCommandOptionType } = require("discord.js");
 const Command = require("../../Base/Command.js");
+const { ApplicationCommandOptionType } = require("discord.js");
 const createEmbed = require("../../utils/createEmbed.js");
 
 class TagInfo extends Command {

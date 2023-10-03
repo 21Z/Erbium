@@ -18,7 +18,7 @@ class Kick extends Command {
     async run(message, args) {
         await message.guild.members.fetch(args[0]).catch(() => {});
         const target = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-        const moderator = `by ${message.author.tag}, ID: ${message.author.id}`;
+        const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
         const embedreason = args.slice(1).join(" ") || "None";
         let reason = args.slice(1).join(" ") || "Kicked" + moderator;
         if (reason === args.slice(1).join(" ")) reason = reason + ", " + moderator;
@@ -31,7 +31,7 @@ class Kick extends Command {
         }
         if (!target.kickable) return message.reply({ embeds: [createEmbed("error", "I cannot kick this user!", true)] });
 
-        const embed = createEmbed("success")
+        const embed = createEmbed("error")
             .setTitle("Action: Kick")
             .setDescription(`Kicked ${target} (\`${target.user?.tag ?? target.tag ?? target}\`)\nReason: ${embedreason}`)
             .setThumbnail(target.displayAvatarURL())
