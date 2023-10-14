@@ -31,7 +31,7 @@ class Slap extends Command {
         const attachment = new AttachmentBuilder(img, { name: "slap.png" });
 
 
-        return interaction.reply({ embeds: [createEmbed("info").setImage("attachment://slap.png")], files: [attachment] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://slap.png")], files: [attachment] });
     }
 
 }

@@ -31,7 +31,7 @@ class Spank extends Command {
         const attachment = new AttachmentBuilder(img, { name: "spank.png" });
 
 
-        return interaction.reply({ embeds: [createEmbed("info").setImage("attachment://spank.png")], files: [attachment] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://spank.png")], files: [attachment] });
     }
 
 }

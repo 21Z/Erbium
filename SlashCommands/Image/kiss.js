@@ -32,7 +32,7 @@ class Kiss extends Command {
         const attachment = new AttachmentBuilder(img, { name: "kiss.png" });
 
 
-        return interaction.reply({ embeds: [createEmbed("info").setImage("attachment://kiss.png")], files: [attachment] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://kiss.png")], files: [attachment] });
     }
 
 }
