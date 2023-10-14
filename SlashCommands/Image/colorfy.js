@@ -36,7 +36,7 @@ class Colorfy extends Command {
         const img = await Canvacord.colorfy(user.displayAvatarURL({ extension: "png", size: 2048 }), `${color}`);
         const attachment = new AttachmentBuilder(img, { name: "colorfy.png" });
 
-        return interaction.reply({ embeds: [createEmbed("info").setImage("attachment://colorfy.png")], files: [attachment] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://colorfy.png")], files: [attachment] });
     }
 
 }

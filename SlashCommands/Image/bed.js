@@ -30,7 +30,7 @@ class Bed extends Command {
         const attachment = new AttachmentBuilder(img, { name: "bed.png" });
 
 
-        return interaction.reply({ embeds: [createEmbed("info").setImage("attachment://bed.png")], files: [attachment] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://bed.png")], files: [attachment] });
     }
 
 }
