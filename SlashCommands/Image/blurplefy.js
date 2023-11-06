@@ -27,9 +27,9 @@ class Blurpify extends Command {
 
         await interaction.deferReply();
         const img = await Canvacord.colorfy(user.displayAvatarURL({ extension: "png", size: 2048 }), "#4d5e94");
-        const attachment = new AttachmentBuilder(img, { name: "blurplefy.png" });
+        const file = new AttachmentBuilder(img, { name: "blurplefy.png" });
 
-        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://blurplefy.png")], files: [attachment] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://blurplefy.png")], files: [file] });
     }
 
 }

@@ -20,10 +20,10 @@ class Wasted extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.wasted(user.displayAvatarURL({ extension: "png", size: 2048 }));
-        const attachment = new AttachmentBuilder(img, { name: "blur.png" });
+        const file = new AttachmentBuilder(img, { name: "wasted.png" });
         await m.delete().catch(() => {});
 
-        return message.reply({ embeds: [createEmbed("info").setImage("attachment://wasted.png")], files: [attachment] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://wasted.png")], files: [file] });
     }
 
 }

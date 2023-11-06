@@ -29,10 +29,10 @@ class Kiss extends Command {
 
         await interaction.deferReply();
         const img = await Canvacord.kiss(interaction.user.displayAvatarURL({ extension: "png", size: 2048 }), user.displayAvatarURL({ extension: "png", size: 2048 }));
-        const attachment = new AttachmentBuilder(img, { name: "kiss.png" });
+        const file = new AttachmentBuilder(img, { name: "kiss.png" });
 
 
-        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://kiss.png")], files: [attachment] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://kiss.png")], files: [file] });
     }
 
 }

@@ -21,10 +21,10 @@ class Blurpify extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.colorfy(user.displayAvatarURL({ extension: "png", size: 2048 }), "#4d5e94");
-        const attachment = new AttachmentBuilder(img, { name: "blurplefy.png" });
+        const file = new AttachmentBuilder(img, { name: "blurplefy.png" });
         await m.delete().catch(() => {});
 
-        return message.reply({ embeds: [createEmbed("info").setImage("attachment://blurplefy.png")], files: [attachment] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://blurplefy.png")], files: [file] });
     }
 
 }

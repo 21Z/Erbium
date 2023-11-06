@@ -27,10 +27,10 @@ class Bed extends Command {
 
         await interaction.deferReply();
         const img = await Canvacord.bed(interaction.user.displayAvatarURL({ extension: "png", size: 2048 }), user.displayAvatarURL({ extension: "png", size: 2048 }));
-        const attachment = new AttachmentBuilder(img, { name: "bed.png" });
+        const file = new AttachmentBuilder(img, { name: "bed.png" });
 
 
-        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://bed.png")], files: [attachment] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://bed.png")], files: [file] });
     }
 
 }
