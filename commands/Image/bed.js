@@ -20,10 +20,10 @@ class Bed extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.bed(message.author.displayAvatarURL({ extension: "png", size: 2048 }), user.displayAvatarURL({ extension: "png", size: 2048 }));
-        const attachment = new AttachmentBuilder(img, { name: "blur.png" });
+        const file = new AttachmentBuilder(img, { name: "bed.png" });
         await m.delete().catch(() => {});
 
-        return message.reply({ embeds: [createEmbed("info").setImage("attachment://bed.png")], files: [attachment] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://bed.png")], files: [file] });
     }
 
 }

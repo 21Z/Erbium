@@ -23,10 +23,10 @@ class Colorfy extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.colorfy(user.displayAvatarURL({ extension: "png", size: 2048 }), `${color}`);
-        const attachment = new AttachmentBuilder(img, { name: "colorfy.png" });
+        const file = new AttachmentBuilder(img, { name: "colorfy.png" });
         await m.delete().catch(() => {});
 
-        return message.reply({ embeds: [createEmbed("info").setImage("attachment://colorfy.png")], files: [attachment] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://colorfy.png")], files: [file] });
     }
 
 }

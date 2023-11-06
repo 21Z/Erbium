@@ -21,10 +21,10 @@ class Greyscale extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.greyscale(user.displayAvatarURL({ extension: "png", size: 2048 }));
-        const attachment = new AttachmentBuilder(img, { name: "blur.png" });
+        const file = new AttachmentBuilder(img, { name: "greyscale.png" });
         await m.delete().catch(() => {});
 
-        return message.reply({ embeds: [createEmbed("info").setImage("attachment://greyscale.png")], files: [attachment] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://greyscale.png")], files: [file] });
     }
 
 }

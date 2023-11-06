@@ -28,10 +28,10 @@ class Spank extends Command {
 
         await interaction.deferReply();
         const img = await Canvacord.spank(interaction.user.displayAvatarURL({ extension: "png", size: 2048 }), user.displayAvatarURL({ extension: "png", size: 2048 }));
-        const attachment = new AttachmentBuilder(img, { name: "spank.png" });
+        const file = new AttachmentBuilder(img, { name: "spank.png" });
 
 
-        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://spank.png")], files: [attachment] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://spank.png")], files: [file] });
     }
 
 }

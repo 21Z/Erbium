@@ -28,10 +28,10 @@ class Slap extends Command {
 
         await interaction.deferReply();
         const img = await Canvacord.slap(interaction.user.displayAvatarURL({ extension: "png", size: 2048 }), user.displayAvatarURL({ extension: "png", size: 2048 }));
-        const attachment = new AttachmentBuilder(img, { name: "slap.png" });
+        const file = new AttachmentBuilder(img, { name: "slap.png" });
 
 
-        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://slap.png")], files: [attachment] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://slap.png")], files: [file] });
     }
 
 }

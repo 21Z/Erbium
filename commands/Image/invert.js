@@ -20,10 +20,10 @@ class Invert extends Command {
 
         const m = await message.reply("⏱ | Please wait...");
         const img = await Canvacord.invert(user.displayAvatarURL({ extension: "png", size: 2048 }));
-        const attachment = new AttachmentBuilder(img, { name: "blur.png" });
+        const file = new AttachmentBuilder(img, { name: "invert.png" });
         await m.delete().catch(() => {});
 
-        return message.reply({ embeds: [createEmbed("info").setImage("attachment://invert.png")], files: [attachment] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://invert.png")], files: [file] });
     }
 
 }
