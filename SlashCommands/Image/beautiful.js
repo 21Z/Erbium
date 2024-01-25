@@ -26,7 +26,7 @@ class Beautiful extends Command {
         const user = interaction.options.getUser("user") ?? interaction.user;
 
         await interaction.deferReply();
-        const img = await Canvacord.affect(user.displayAvatarURL({ extension: "png", size: 2048 }));
+        const img = await Canvacord.beautiful(user.displayAvatarURL({ extension: "png", size: 2048 }));
         const file = new AttachmentBuilder(img, { name: "beautiful.png" });
 
         return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://beautiful.png")], files: [file] });

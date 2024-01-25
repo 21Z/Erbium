@@ -26,7 +26,7 @@ class Trash extends Command {
         const user = interaction.options.getUser("user") ?? interaction.user;
 
         await interaction.deferReply();
-        const img = await Canvacord.affect(user.displayAvatarURL({ extension: "png", size: 2048 }));
+        const img = await Canvacord.trash(user.displayAvatarURL({ extension: "png", size: 2048 }));
         const file = new AttachmentBuilder(img, { name: "trash.png" });
 
         return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://trash.png")], files: [file] });

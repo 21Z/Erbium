@@ -26,7 +26,7 @@ class Jail extends Command {
         const user = interaction.options.getUser("user") ?? interaction.user;
 
         await interaction.deferReply();
-        const img = await Canvacord.affect(user.displayAvatarURL({ extension: "png", size: 2048 }));
+        const img = await Canvacord.jail(user.displayAvatarURL({ extension: "png", size: 2048 }));
         const file = new AttachmentBuilder(img, { name: "jail.png" });
 
         return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://jail.png")], files: [file] });

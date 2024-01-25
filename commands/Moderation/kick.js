@@ -16,11 +16,10 @@ class Kick extends Command {
     }
 
     async run(message, args) {
-        await message.guild.members.fetch(args[0]).catch(() => {});
-        const target = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+        const target = message.mentions.members.first() || await message.guild.members.fetch(args[0]).catch(() => {});
         const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
         const embedreason = args.slice(1).join(" ") || "None";
-        let reason = args.slice(1).join(" ") || "Kicked" + moderator;
+        let reason = args.slice(1).join(" ") || "Kicked " + moderator;
         if (reason === args.slice(1).join(" ")) reason = reason + ", " + moderator;
         if (!target) return message.reply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to kick!")] });
 

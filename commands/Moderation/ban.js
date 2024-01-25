@@ -16,8 +16,7 @@ class Ban extends Command {
     }
 
     async run(message, args) {
-        await message.guild.members.fetch(args[0]).catch(() => {});
-        const target = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || await this.client.resolveUser(args[0]);
+        const target = message.mentions.members.first() || await message.guild.members.fetch(args[0]).catch(() => {});
         const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
         const embedreason = args.slice(1).join(" ") || "None";
         let reason = args.slice(1).join(" ") || "Banned " + moderator;
@@ -29,7 +28,7 @@ class Ban extends Command {
         if (message.guild.members.cache.has(target.id) && target.roles.highest.position > message.member.roles.highest.position) {
             return message.reply({ embeds: [createEmbed("error", "You cannot ban someone with a higher role than yours!", true)] });
         }
-        if (message.guild.members.cache.has(target.id) && !target.bannable) return message.reply({ embeds: [createEmbed("error", "I cannot ban this user!", true)] });
+        if (!target.bannable) return message.reply({ embeds: [createEmbed("error", "I cannot ban this user!", true)] });
 
         // If the user is already banned
         const bans = await message.guild.bans.fetch();

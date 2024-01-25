@@ -20,11 +20,11 @@ class Triggered extends Command {
         const user = message.mentions.users.first() || await this.client.resolveUser(args.join(" ")) || message.author;
 
         const m = await message.reply("⏱ | Please wait...");
-        const img = await Canvacord.trigger(user.displayAvatarURL({ extension: "png", size: 2048 }));
-        const file = new AttachmentBuilder(img, { name: "trigger.png" });
+        const img = await Canvacord.triggered(user.displayAvatarURL({ extension: "png", size: 2048 }));
+        const file = new AttachmentBuilder(img, { name: "triggered.gif" });
         await m.delete().catch(() => {});
 
-        return message.reply({ embeds: [createEmbed("info").setImage("attachment://trigger.png")], files: [file] });
+        return message.reply({ embeds: [createEmbed("info").setImage("attachment://triggered.gif")], files: [file] });
     }
 
 }

@@ -26,10 +26,10 @@ class Triggered extends Command {
         const user = interaction.options.getUser("user") ?? interaction.user;
 
         await interaction.deferReply();
-        const img = await Canvacord.affect(user.displayAvatarURL({ extension: "png", size: 2048 }));
-        const file = new AttachmentBuilder(img, { name: "trigger.png" });
+        const img = await Canvacord.triggered(user.displayAvatarURL({ extension: "png", size: 2048 }));
+        const file = new AttachmentBuilder(img, { name: "triggered.gif" });
 
-        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://trigger.png")], files: [file] });
+        return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://triggered.gif")], files: [file] });
     }
 
 }
