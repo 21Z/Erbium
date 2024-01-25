@@ -26,7 +26,7 @@ class Hitler extends Command {
         const user = interaction.options.getUser("user") ?? interaction.user;
 
         await interaction.deferReply();
-        const img = await Canvacord.affect(user.displayAvatarURL({ extension: "png", size: 2048 }));
+        const img = await Canvacord.hitler(user.displayAvatarURL({ extension: "png", size: 2048 }));
         const file = new AttachmentBuilder(img, { name: "hitler.png" });
 
         return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://hitler.png")], files: [file] });
