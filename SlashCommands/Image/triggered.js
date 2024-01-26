@@ -1,5 +1,5 @@
 const Command = require("../../Base/Command.js");
-const { Canvas: Canvacord } = require("canvacord");
+const { canvacord } = require("canvacord");
 const { ApplicationCommandOptionType, AttachmentBuilder } = require("discord.js");
 const createEmbed = require("../../utils/createEmbed.js");
 
@@ -26,7 +26,7 @@ class Triggered extends Command {
         const user = interaction.options.getUser("user") ?? interaction.user;
 
         await interaction.deferReply();
-        const img = await Canvacord.triggered(user.displayAvatarURL({ extension: "png", size: 2048 }));
+        const img = await canvacord.triggered(user.displayAvatarURL({ extension: "png", size: 2048 }));
         const file = new AttachmentBuilder(img, { name: "triggered.gif" });
 
         return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://triggered.gif")], files: [file] });
