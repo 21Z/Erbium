@@ -1,5 +1,5 @@
 const Command = require("../../Base/Command.js");
-const { Canvas: Canvacord } = require("canvacord");
+const { canvacord } = require("canvacord");
 const { AttachmentBuilder } = require("discord.js");
 const createEmbed = require("../../utils/createEmbed.js");
 
@@ -19,7 +19,7 @@ class Color extends Command {
     async run(message, args) {
         const color = args[0].replace(/^(#|0x)?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, "#$2") ?? "#FFFFFF";
 
-        const img = Canvacord.color(color, false, 160, 200);
+        const img = canvacord.color(color, false, 160, 200);
         const file = new AttachmentBuilder(img, { name: "color.png" });
 
         return message.reply({ embeds: [createEmbed("info").setImage("attachment://color.png")], files: [file] });
