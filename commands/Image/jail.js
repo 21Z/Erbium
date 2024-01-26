@@ -1,5 +1,5 @@
 const Command = require("../../Base/Command.js");
-const { Canvas: Canvacord } = require("canvacord");
+const { canvacord } = require("canvacord");
 const { AttachmentBuilder } = require("discord.js");
 const createEmbed = require("../../utils/createEmbed.js");
 
@@ -19,7 +19,7 @@ class Jail extends Command {
         const user = message.mentions.users.first() || await this.client.resolveUser(args.join(" ")) || message.author;
 
         const m = await message.reply("⏱ | Please wait...");
-        const img = await Canvacord.jail(user.displayAvatarURL({ extension: "png", size: 2048 }));
+        const img = await canvacord.jail(user.displayAvatarURL({ extension: "png", size: 2048 }));
         const file = new AttachmentBuilder(img, { name: "jail.png" });
         await m.delete().catch(() => {});
 

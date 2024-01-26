@@ -1,5 +1,5 @@
 const Command = require("../../Base/Command.js");
-const { Canvas: Canvacord } = require("canvacord");
+const { canvacord } = require("canvacord");
 const { AttachmentBuilder } = require("discord.js");
 const createEmbed = require("../../utils/createEmbed.js");
 
@@ -19,7 +19,7 @@ class Wasted extends Command {
         const user = message.mentions.users.first() || await this.client.resolveUser(args.join(" ")) || message.author;
 
         const m = await message.reply("⏱ | Please wait...");
-        const img = await Canvacord.wasted(user.displayAvatarURL({ extension: "png", size: 2048 }));
+        const img = await canvacord.wasted(user.displayAvatarURL({ extension: "png", size: 2048 }));
         const file = new AttachmentBuilder(img, { name: "wasted.png" });
         await m.delete().catch(() => {});
 
