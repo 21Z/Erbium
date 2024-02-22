@@ -146,19 +146,30 @@ class Erbium extends Client {
         }
     }
 
-    async resolveUser(usernameOrUserResolvable, multiple = false) {
-        if (usernameOrUserResolvable && typeof usernameOrUserResolvable === "string" && !parseInt(usernameOrUserResolvable)) {
-            const name = usernameOrUserResolvable.toUpperCase();
-            const arr = [];
-            this.users.cache.forEach(user => {
-                if (user.username.toUpperCase().indexOf(name) < 0) return;
-                return arr.push(user);
-            });
-            return multiple ? arr : arr[0];
-        } else {
-            await this.users.fetch(usernameOrUserResolvable).catch(() => {});
-            return usernameOrUserResolvable ? (multiple ? [this.users.resolve(usernameOrUserResolvable)] : this.users.resolve(usernameOrUserResolvable)) : null;
+    async resolveUser(userResolvable, multiple = false) {
+        if (!userResolvable) return null;
+        const userResolvables = userResolvable.split(",").map(resolvable => resolvable.trim());
+        const resolvedUsers = [];
+
+        for (const resolvable of userResolvables) {
+            if (resolvedUsers.length > 0 && !multiple) break;
+            if (/<@!?(.*?)>/g.test(resolvable)) {
+                const userId = resolvable.match(/<@!?(.*?)>/g)[0].replace(/[<@!>]/g, "");
+                resolvedUsers.push(this.users.resolve(userId));
+            } else if (resolvable && typeof resolvable === "string" && !/^\d{17,19}$/.test(resolvable) && !/<@!?(.*?)>/g.test(resolvable)) {
+                const name = resolvable.toUpperCase();
+                this.users.cache.forEach(user => {
+                    if (user.username.toUpperCase().indexOf(name) >= 0) {
+                        resolvedUsers.push(user);
+                    }
+                });
+            } else {
+                await this.users.fetch(resolvable).catch(() => {});
+                const resolvedUser = this.users.resolve(resolvable);
+                if (resolvedUser) resolvedUsers.push(resolvedUser);
+            }
         }
+        return multiple ? resolvedUsers : resolvedUsers[0];
     }
 
     async login() {
