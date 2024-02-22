@@ -42,15 +42,18 @@ class SlowMode extends Command {
         }
         const lastletter = duration.slice(-1);
         let time = ms(duration) / 1000;
-        if (lastletter !== "s" && lastletter !== "m" && lastletter !== "h") time = duration;
+        if (!["ms", "s", "m", "h", "d", "y"].includes(lastletter)) time = duration;
 
         if (!time) {
-            return interaction.reply({ embeds: [createEmbed("error", "You must enter a valid time! Available units: `s`, `m`, or `h`", true)] });
+            return interaction.reply({ embeds: [createEmbed("error", "You must enter a valid time! Available units: `s`, `m`, or `h`", true)
+                .setFooter({ text: `Usage:  ${this.client.config.PREFIX}slowmode <time>` })] });
         }
         if (isNaN(time)) {
-            return interaction.reply({ embeds: [createEmbed("error", `**${time}** is not a valid number! \nUsage: \`.slowmode <time>\``, true)] });
+            return interaction.reply({ embeds: [createEmbed("error", `**${time}** is not a valid number!`, true)
+                .setFooter({ text: `Usage:  ${this.client.config.PREFIX}slowmode <time>` })] });
         }
         if (time > 21600) return interaction.reply({ embeds: [createEmbed("error", "Time is too high, please set a slowmode less than 6 hours!", true)] });
+
         await channel.setRateLimitPerUser(time).catch(e => {
             return interaction.reply({ embeds: [createEmbed("error", `Something went wrong!\n\`\`\`js\n${e}\`\`\``, true)] });
         }).then(() => {
