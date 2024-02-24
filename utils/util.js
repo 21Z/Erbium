@@ -9,7 +9,7 @@ class Util {
     }
 
     static formatDuration(dur) {
-        const duration = moment.duration(dur).format("M [months], D [days], H [hours], m [minutes], s [seconds]");
+        const duration = moment.duration(dur).format("M [months], D [days], H [hours], m [minutes], s [seconds]", { trim: "both mid" });
         return duration;
     }
 
