@@ -16,7 +16,7 @@ class Ping extends Command {
         const before = Date.now();
         await interaction.deferReply();
         const latency = Date.now() - before;
-        const wsLatency = interaction.client.ws.ping.toFixed(0);
+        const wsLatency = this.client.ws.ping.toFixed(0);
 
         const embed = createEmbed("info")
             .setAuthor({

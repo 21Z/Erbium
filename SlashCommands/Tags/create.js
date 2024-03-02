@@ -35,8 +35,8 @@ class CreateTag extends Command {
 
         if (!tagname) return interaction.reply({ embeds: [createEmbed("warn", "Please include a tag name!")] });
 
-        if (await interaction.client.database.tags.has(`${tagname.toLowerCase()}_${interaction.guild.id}`)) return interaction.reply({ embeds: [createEmbed("error", `Tag ${tagname.toLowerCase()} already exists!`, true)] });
-        if (interaction.client.commands.has(tagname.toLowerCase())) return interaction.reply({ embeds: [createEmbed("error", `Tag name ${tagname.toLowerCase()} is not available!`, true)] });
+        if (await this.client.database.tags.has(`${tagname.toLowerCase()}_${interaction.guild.id}`)) return interaction.reply({ embeds: [createEmbed("error", `Tag ${tagname.toLowerCase()} already exists!`, true)] });
+        if (this.client.commands.has(tagname.toLowerCase())) return interaction.reply({ embeds: [createEmbed("error", `Tag name ${tagname.toLowerCase()} is not available!`, true)] });
         if (!content) return interaction.reply({ embeds: [createEmbed("warn", "Please include tag content!")] });
 
         const struct = {
@@ -47,7 +47,7 @@ class CreateTag extends Command {
             uses: 0,
         };
 
-        await interaction.client.database.tags.set(`${struct.name}_${interaction.guild.id}`, struct);
+        await this.client.database.tags.set(`${struct.name}_${interaction.guild.id}`, struct);
 
         return interaction.reply(`✅ | Created tag ${struct.name}!`);
     }

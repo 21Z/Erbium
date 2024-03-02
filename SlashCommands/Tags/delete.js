@@ -28,9 +28,9 @@ class DeleteTag extends Command {
 
         if (!tagname.toLowerCase()) return interaction.reply({ embeds: [createEmbed("warn", "Please include a tag name!")] });
 
-        if (!await interaction.client.database.tags.has(`${tagname.toLowerCase()}_${interaction.guild.id}`)) return interaction.reply({ embeds: [createEmbed("error", `Tag ${tagname.toLowerCase()} is not available!`, true)] });
+        if (!await this.client.database.tags.has(`${tagname.toLowerCase()}_${interaction.guild.id}`)) return interaction.reply({ embeds: [createEmbed("error", `Tag ${tagname.toLowerCase()} is not available!`, true)] });
 
-        await interaction.client.database.tags.delete(`${tagname.toLowerCase()}_${interaction.guild.id}`);
+        await this.client.database.tags.delete(`${tagname.toLowerCase()}_${interaction.guild.id}`);
 
         return interaction.reply(`✅ | Removed tag ${tagname.toLowerCase()}!`);
     }

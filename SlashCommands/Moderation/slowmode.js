@@ -57,7 +57,7 @@ class SlowMode extends Command {
         await channel.setRateLimitPerUser(time).catch(e => {
             return interaction.reply({ embeds: [createEmbed("error", `Something went wrong!\n\`\`\`js\n${e}\`\`\``, true)] });
         }).then(() => {
-            interaction.reply(`Slowmode set to \`${interaction.client.utils.formatDuration(time * 1000).replace(/,/g, "")}\``);
+            interaction.reply(`Slowmode set to \`${this.client.utils.formatDuration(time * 1000).replace(/,/g, "")}\``);
         });
     }
 

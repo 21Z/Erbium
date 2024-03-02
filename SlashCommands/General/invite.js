@@ -15,7 +15,7 @@ class Invite extends Command {
     async run(interaction) {
         const embed = createEmbed("info")
             .setTitle("Bot Invite")
-            .setDescription(`**[Click Here](${interaction.client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: "277028916423" }) })** to invite me`)
+            .setDescription(`**[Click Here](${this.client.generateInvite({ scopes: ["bot", "applications.commands"], permissions: "277028916423" }) })** to invite me`)
             .setFooter({ text: `Requested by: ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
 
