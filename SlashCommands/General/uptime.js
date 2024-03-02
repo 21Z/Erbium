@@ -15,7 +15,7 @@ class Uptime extends Command {
     async run(interaction) {
         const embed = createEmbed("info")
             .setTitle("Bot Uptime")
-            .setDescription(interaction.client.utils.formatDuration(interaction.client.uptime))
+            .setDescription(this.client.utils.formatDuration(this.client.uptime))
             .setFooter({ text: `Requested by: ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
 

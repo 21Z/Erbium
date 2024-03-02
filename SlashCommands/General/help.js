@@ -21,18 +21,18 @@ class Help extends Command {
 
     async run(interaction) {
         await interaction.deferReply();
-        const category = [...new Set(interaction.client.Slashcommands.commands.filter(m => m.help.subcommand !== "main" && !m.help.ownerOnly).map(m => m.help.category))];
+        const category = [...new Set(this.client.Slashcommands.commands.filter(m => m.help.subcommand !== "main" && !m.help.ownerOnly).map(m => m.help.category))];
         const query = interaction.options.getString("command");
 
         if (!query) {
             const embed = createEmbed("info")
-                .setTitle(`Commands - Total: ${interaction.client.Slashcommands.size}`)
+                .setTitle(`Commands - Total: ${this.client.Slashcommands.size}`)
                 .setFooter({ text: `Requested by: ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
                 .setTimestamp();
             let x = 1;
 
             for (const i of category) {
-                const cmd = interaction.client.Slashcommands.commands.filter(c => c.help.subcommand !== "main" && c.help.category === i).map(m => `\`${m.help.name}\``);
+                const cmd = this.client.Slashcommands.commands.filter(c => c.help.subcommand !== "main" && c.help.category === i).map(m => `\`${m.help.name}\``);
                 embed.addFields({ name: `${x}. ${i}`, value: cmd.join(", ") });
                 x++;
             }
@@ -48,13 +48,13 @@ class Help extends Command {
                 .setFooter({ text: `Requested by: ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
                 .setTimestamp();
 
-            const cmd = interaction.client.Slashcommands.commands.filter(command => command.help.category === ctg).map(m => `\`${m.help.name}\``);
+            const cmd = this.client.Slashcommands.commands.filter(command => command.help.category === ctg).map(m => `\`${m.help.name}\``);
             embed.setDescription(cmd.join(", "));
 
             return interaction.editReply({ embeds: [embed] });
         }
 
-        const command = interaction.client.Slashcommands.resolve(query.toLowerCase());
+        const command = this.client.Slashcommands.resolve(query.toLowerCase());
         if (!command) return interaction.editReply({ embeds: [createEmbed("error", "Command not found!", true)] });
 
         const embed = createEmbed("info")

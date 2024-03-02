@@ -15,12 +15,12 @@ class Reload extends Command {
 
     async run(interaction) {
         await interaction.reply({ embeds: [createEmbed("info", "Reloading all commands...")] });
-        const commands = interaction.client.commands.commands;
-        const Slashcommands = interaction.client.Slashcommands.commands;
+        const commands = this.client.commands.commands;
+        const Slashcommands = this.client.Slashcommands.commands;
 
         commands.forEach(command => {
             command.help.aliases.forEach(alias => {
-                interaction.client.commands.aliases.delete(alias);
+                this.client.commands.aliases.delete(alias);
             });
             commands.delete(command.help.name);
         });
@@ -28,8 +28,8 @@ class Reload extends Command {
             Slashcommands.delete(command.help.name);
         });
 
-        interaction.client.registerCommands();
-        interaction.client.registerSlashCommands();
+        this.client.registerCommands();
+        this.client.registerSlashCommands();
         interaction.editReply({ embeds: [createEmbed("success", "Succesfully reloaded all commands!")] });
     }
 

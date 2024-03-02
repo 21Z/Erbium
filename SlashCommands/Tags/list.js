@@ -23,7 +23,7 @@ class Tags extends Command {
 
     async run(interaction) {
         const user = interaction.options.getUser("user");
-        const data = (await interaction.client.database.tags.all()).filter(x => x.id.endsWith(`_${interaction.guild.id}`));
+        const data = (await this.client.database.tags.all()).filter(x => x.id.endsWith(`_${interaction.guild.id}`));
         const filtered = user ? data.filter(d => d.value.author === user.id) : data;
 
         if (!filtered.length) return interaction.reply({ embeds: [createEmbed("error", "No tags found!", true)] });
