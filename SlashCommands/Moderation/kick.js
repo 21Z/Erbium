@@ -10,7 +10,7 @@ class Kick extends Command {
         this.config({
             name: "kick",
             description: "Kick a user from the server",
-            botPerms: ["KickMembers", "EmbedLinks"],
+            botPerms: ["KickMembers"],
             permissions: ["KickMembers"],
             options: [
                 {

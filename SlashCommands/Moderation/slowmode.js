@@ -11,7 +11,7 @@ class SlowMode extends Command {
         this.config({
             name: "slowmode",
             description: "Set slowmode for the current channel",
-            botPerms: ["ManageChannels", "EmbedLinks"],
+            botPerms: ["ManageChannels"],
             permissions: ["ManageChannels"],
             options: [
                 {

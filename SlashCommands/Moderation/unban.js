@@ -10,7 +10,7 @@ class UnBan extends Command {
         this.config({
             name: "unban",
             description: "Unban a user from the server!",
-            botPerms: ["BanMembers", "EmbedLinks"],
+            botPerms: ["BanMembers"],
             permissions: ["BanMembers"],
             options: [
                 {

@@ -10,7 +10,7 @@ class Ban extends Command {
         this.config({
             name: "ban",
             description: "Ban a user from the server",
-            botPerms: ["BanMembers", "EmbedLinks"],
+            botPerms: ["BanMembers"],
             permissions: ["BanMembers"],
             options: [
                 {
