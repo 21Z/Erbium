@@ -97,7 +97,7 @@ class MessageCreate extends Event {
         }
         if (command.ownerOnly && !message.author.dev) return;
 
-        if (!message.member.permissions.has(PermissionsBitField.Flags[command.help.permissions] ?? [])) return message.reply(`❌ | You don't have enough permissions to use this command!\nPermissions Required: ${command.help.permissions.map(m => `\`${m.replace(/([A-Z])/g, " $1").trim()}\``).join(", ")}`);
+        if (!message.member.permissionsIn(message.channel).has(PermissionsBitField.Flags[command.help.permissions] ?? [])) return message.reply(`❌ | You don't have enough permissions to use this command!\nPermissions Required: ${command.help.permissions.map(m => `\`${m.replace(/([A-Z])/g, " $1").trim()}\``).join(", ")}`);
         if (!message.guild.members.me.permissionsIn(message.channel).has(PermissionsBitField.Flags[command.help.botPerms] ?? [])) return message.reply(`❌ | I do not have enough permissions to use this command!\nPermissions Required: ${command.help.botPerms.map(m => `\`${m.replace(/([A-Z])/g, " $1").trim()}\``).join(", ")}`);
 
         const cooldown = cooldowns.get(`${command.help.name}_${message.author.id}`);
