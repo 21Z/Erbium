@@ -46,7 +46,6 @@ class TagInfo extends Command {
             .setFooter({ text: `Requested by: ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
 
-
         return interaction.reply({ embeds: [embed] });
     }
 

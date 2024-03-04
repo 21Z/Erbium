@@ -31,7 +31,6 @@ class Kiss extends Command {
         const img = await canvacord.kiss(interaction.user.displayAvatarURL({ extension: "png", size: 2048 }), user.displayAvatarURL({ extension: "png", size: 2048 }));
         const file = new AttachmentBuilder(img, { name: "kiss.png" });
 
-
         return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://kiss.png")], files: [file] });
     }
 
