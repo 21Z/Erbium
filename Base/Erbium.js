@@ -90,7 +90,6 @@ class Erbium extends Client {
         }
     }
 
-
     async registerCommands() {
         const CommandsDir = config.COMMANDS_DIR;
         const CATS = fs.readdirSync(CommandsDir);
@@ -146,7 +145,7 @@ class Erbium extends Client {
         }
     }
 
-    async resolveUser(userResolvable, multiple = false) {
+    async resolveUser(userResolvable, guild, multiple = false) {
         if (!userResolvable) return null;
         const userResolvables = userResolvable.split(",").map(resolvable => resolvable.trim());
         const resolvedUsers = [];
@@ -155,17 +154,17 @@ class Erbium extends Client {
             if (resolvedUsers.length > 0 && !multiple) break;
             if (/<@!?(.*?)>/g.test(resolvable)) {
                 const userId = resolvable.match(/<@!?(.*?)>/g)[0].replace(/[<@!>]/g, "");
-                resolvedUsers.push(this.users.resolve(userId));
+                resolvedUsers.push(guild ? guild.members.resolve(userId) : this.users.resolve(userId));
             } else if (resolvable && typeof resolvable === "string" && !/^\d{17,19}$/.test(resolvable) && !/<@!?(.*?)>/g.test(resolvable)) {
                 const name = resolvable.toUpperCase();
                 this.users.cache.forEach(user => {
                     if (user.username.toUpperCase().indexOf(name) >= 0) {
-                        resolvedUsers.push(user);
+                        resolvedUsers.push(guild ? guild.members.resolve(user) : user);
                     }
                 });
             } else {
                 await this.users.fetch(resolvable).catch(() => {});
-                const resolvedUser = this.users.resolve(resolvable);
+                const resolvedUser = guild ? guild.members.resolve(resolvable) : this.users.resolve(resolvable);
                 if (resolvedUser) resolvedUsers.push(resolvedUser);
             }
         }

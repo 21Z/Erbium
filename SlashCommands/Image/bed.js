@@ -29,7 +29,6 @@ class Bed extends Command {
         const img = await canvacord.bed(interaction.user.displayAvatarURL({ extension: "png", size: 2048 }), user.displayAvatarURL({ extension: "png", size: 2048 }));
         const file = new AttachmentBuilder(img, { name: "bed.png" });
 
-
         return interaction.editReply({ embeds: [createEmbed("info").setImage("attachment://bed.png")], files: [file] });
     }
 

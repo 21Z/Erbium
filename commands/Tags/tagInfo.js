@@ -38,7 +38,6 @@ class TagInfo extends Command {
             .setFooter({ text: `Requested by: ${message.author.tag}`, iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
 
-
         return message.reply({ embeds: [embed] });
     }
 
