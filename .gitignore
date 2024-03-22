@@ -17,10 +17,6 @@ replit.nix
 # Modules
 node_modules/
 
-# Lockfiles
-package-lock.json
-yarn.lock
-
 # Logs
 *.log
 npm-debug.log*
