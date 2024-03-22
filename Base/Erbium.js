@@ -2,8 +2,8 @@ const { ApplicationCommandOptionType, Client, Events, GatewayIntentBits, REST, R
 const fs = require("fs");
 const config = require("../config.js");
 const Command = require("../utils/Command.js");
-const logger = require("../utils/Logger.js")
-const Database = require("./Database")
+const logger = require("../utils/Logger.js");
+const Database = require("./Database");
 
 class Erbium extends Client {
 
