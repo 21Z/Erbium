@@ -16,11 +16,11 @@ class UnBan extends Command {
     }
 
     async run(message, args) {
-        const target = message.mentions.members.first() || await this.client.resolveUser(args[0]);
+        const target = await this.client.resolveUser(args[0]) || message.mentions.members.first();
+        const intialreason = target === message.mentions.members.first() ? args.slice(0).join(" ") : args.slice(1).join(" ");
         const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
-        const embedreason = args.slice(1).join(" ") || "None";
-        let reason = args.slice(1).join(" ") || "Unbanned " + moderator;
-        if (reason === args.slice(1).join(" ")) reason = reason + ", " + moderator;
+        const reason = intialreason ? intialreason + ", " + moderator : "Unbanned " + moderator;
+        const embedreason = intialreason || "None";
         if (!target) return message.reply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to unban!")] });
 
         // If the user is not banned
@@ -37,7 +37,7 @@ class UnBan extends Command {
             });
 
         await message.guild.bans.remove(target.id, reason).then(() => {
-            message.channel.send({ embeds: [embed] });
+            message.reply({ embeds: [embed] });
         });
     }
 
