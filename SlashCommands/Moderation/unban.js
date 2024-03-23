@@ -31,10 +31,10 @@ class UnBan extends Command {
     async run(interaction) {
         await interaction.deferReply();
         const target = interaction.options.getUser("user");
-        const moderator = `by ${interaction.user.tag} [ID: ${interaction.user.id}]`;
-        const embedreason = interaction.options.getString("reason") ?? "None";
-        let reason = interaction.options.getString("reason") ?? "Banned " + moderator;
-        if (reason === interaction.options.getString("reason")) reason = reason + ", " + moderator;
+        const intialreason = interaction.options.getString("reason");
+        const moderator = `by ${interaction.member.tag} [ID: ${interaction.member.id}]`;
+        const reason = intialreason ? intialreason + ", " + moderator : "Unbanned " + moderator;
+        const embedreason = intialreason || "None";
         if (!target) return interaction.reply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to unban!")] });
 
         // If the user is not banned

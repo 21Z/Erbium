@@ -16,11 +16,11 @@ class Ban extends Command {
     }
 
     async run(message, args) {
-        const target = message.mentions.members.first() || await message.guild.members.fetch(args[0]).catch(() => {});
+        const target = await this.client.resolveUser(args[0]) || message.mentions.members.first();
+        const intialreason = target === message.mentions.members.first() ? args.slice(0).join(" ") : args.slice(1).join(" ");
         const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
-        const embedreason = args.slice(1).join(" ") || "None";
-        let reason = args.slice(1).join(" ") || "Banned " + moderator;
-        if (reason === args.slice(1).join(" ")) reason = reason + ", " + moderator;
+        const reason = intialreason ? intialreason + ", " + moderator : "Banned " + moderator;
+        const embedreason = intialreason || "None";
         if (!target) return message.reply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to ban!")] });
 
         if (target.id === message.author.id) return message.reply({ embeds: [createEmbed("error", "You can not ban yourself!", true)] });
@@ -28,7 +28,7 @@ class Ban extends Command {
         if (message.guild.members.cache.has(target.id) && target.roles.highest.position > message.member.roles.highest.position) {
             return message.reply({ embeds: [createEmbed("error", "You cannot ban someone with a higher role than yours!", true)] });
         }
-        if (!target.bannable) return message.reply({ embeds: [createEmbed("error", "I cannot ban this user!", true)] });
+        if (message.guild.members.cache.has(target.id) && !target.bannable) return message.reply({ embeds: [createEmbed("error", "I cannot ban this user!", true)] });
 
         // If the user is already banned
         const bans = await message.guild.bans.fetch();
@@ -44,7 +44,7 @@ class Ban extends Command {
             });
 
         await message.guild.bans.create(target.id, { reason: reason }).then(() => {
-            message.channel.send({ embeds: [embed] });
+            message.reply({ embeds: [embed] });
         });
     }
 

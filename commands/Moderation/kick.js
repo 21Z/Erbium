@@ -16,16 +16,16 @@ class Kick extends Command {
     }
 
     async run(message, args) {
-        const target = message.mentions.members.first() || await message.guild.members.fetch(args[0]).catch(() => {});
+        const target = await this.client.resolveUser(args[0], message.guild) || message.mentions.members.first();
+        const intialreason = target === message.mentions.members.first() ? args.slice(0).join(" ") : args.slice(1).join(" ");
         const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
-        const embedreason = args.slice(1).join(" ") || "None";
-        let reason = args.slice(1).join(" ") || "Kicked " + moderator;
-        if (reason === args.slice(1).join(" ")) reason = reason + ", " + moderator;
+        const reason = intialreason ? intialreason + ", " + moderator : "Kicked " + moderator;
+        const embedreason = intialreason || "None";
         if (!target) return message.reply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to kick!")] });
 
         if (target.id === message.author.id) return message.reply({ embeds: [createEmbed("error", "You can not kick yourself!", true)] });
         if (target.id === message.guild.ownerId) return message.reply({ embeds: [createEmbed("error", "You can not kick the server owner!", true)] });
-        if (message.guild.members.cache.has(target.id) && target.roles.highest.position > message.member.roles.highest.position) {
+        if (target.roles.highest.position > message.member.roles.highest.position) {
             return message.reply({ embeds: [createEmbed("error", "You cannot kick someone with a higher role than yours!", true)] });
         }
         if (!target.kickable) return message.reply({ embeds: [createEmbed("error", "I cannot kick this user!", true)] });
@@ -40,7 +40,7 @@ class Kick extends Command {
             });
 
         await message.guild.members.kick(target.id, { reason: reason }).then(() => {
-            message.channel.send({ embeds: [embed] });
+            message.reply({ embeds: [embed] });
         });
     }
 

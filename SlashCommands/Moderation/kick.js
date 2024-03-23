@@ -30,16 +30,16 @@ class Kick extends Command {
 
     async run(interaction) {
         await interaction.deferReply();
-        const target = interaction.options.getUser("user");
-        const moderator = `by ${interaction.user.tag} [ID: ${interaction.user.id}]`;
-        const embedreason = interaction.options.getString("reason") ?? "None";
-        let reason = interaction.options.getString("reason") ?? "Kicked" + moderator;
-        if (reason === interaction.options.getString("reason")) reason = reason + ", " + moderator;
+        const target = interaction.options.getMember("user");
+        const intialreason = interaction.options.getString("reason");
+        const moderator = `by ${interaction.member.tag} [ID: ${interaction.member.id}]`;
+        const reason = intialreason ? intialreason + ", " + moderator : "Kicked " + moderator;
+        const embedreason = intialreason || "None";
         if (!target) return interaction.editReply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to kick!")] });
 
         if (target.id === interaction.user.id) return interaction.editReply({ embeds: [createEmbed("error", "You can not kick yourself!", true)] });
         if (target.id === interaction.guild.ownerId) return interaction.editReply({ embeds: [createEmbed("error", "You can not kick the server owner!", true)] });
-        if (interaction.guild.members.cache.has(target.id) && target.roles.highest.position > interaction.member.roles.highest.position) {
+        if (target.roles.highest.position > interaction.member.roles.highest.position) {
             return interaction.editReply({ embeds: [createEmbed("error", "You cannot kick someone with a higher role than yours!", true)] });
         }
         if (!target.kickable) return interaction.editReply({ embeds: [createEmbed("error", "I cannot kick this user!", true)] });
