@@ -23,7 +23,7 @@ class MessageCreate extends Event {
         if (new RegExp(`^<@!?${this.client.user.id}>( |)$`).test(message.content)) return message.reply(`My prefix is **"\`${prefix}\`"**!`);
 
         // chatbot
-        if (this.client.config.CHANNEL_ID.includes(message.channel.id)) {
+        if (this.client.config.CHANNEL_ID && this.client.config.CHANNEL_ID.includes(message.channel.id)) {
             if (message.content.startsWith("!")) return;
             try {
                 await message.channel.sendTyping();
@@ -37,7 +37,7 @@ class MessageCreate extends Event {
                 const conversationLog = [
                     {
                         role: "system",
-                        content: "You are Erbium, a Discord ChatBot that gives funny and useful responses" },
+                        content: "You are Erbium, a Discord ChatBot created by that gives funny, sarcastic and useful responses" },
                 ];
                 prevMessages.forEach((msg) => {
                     if (msg.content.startsWith("!") || msg.content.length > 2000) return;
