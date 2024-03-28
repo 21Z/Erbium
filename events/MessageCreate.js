@@ -95,7 +95,7 @@ class MessageCreate extends Event {
                 this.client.database.tags.set(`${cmd}_${message.guild.id}`, struct);
             });
         }
-        if (command.ownerOnly && !message.author.dev) return;
+        if (command.help.ownerOnly && !message.author.dev) return;
 
         if (!message.member.permissionsIn(message.channel).has(PermissionsBitField.Flags[command.help.permissions] ?? [])) return message.reply(`❌ | You don't have enough permissions to use this command!\nPermissions Required: ${command.help.permissions.map(m => `\`${m.replace(/([A-Z])/g, " $1").trim()}\``).join(", ")}`);
         if (!message.guild.members.me.permissionsIn(message.channel).has(PermissionsBitField.Flags[command.help.botPerms] ?? [])) return message.reply(`❌ | I do not have enough permissions to use this command!\nPermissions Required: ${command.help.botPerms.map(m => `\`${m.replace(/([A-Z])/g, " $1").trim()}\``).join(", ")}`);
