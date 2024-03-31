@@ -42,8 +42,13 @@ class MessageCreate extends Event {
                 prevMessages.forEach((msg) => {
                     if (msg.content.startsWith("!") || msg.content.length > 2000) return;
                     if (msg.author.id !== this.client.user.id && message.author.bot) return;
+                    if (msg.author.id !== message.author.id && msg.author.id !== this.client.user.id) return;
 
                     if (msg.author.id === this.client.user.id) {
+                        if (msg.reference) {
+                            const referenceMessage = message.channel.messages.cache.get(msg.reference.messageId);
+                            if (referenceMessage.author.id !== message.author.id) return;
+                        }
                         conversationLog.push({
                             "role": "assistant",
                             "content": `${msg.content}`,
@@ -51,7 +56,7 @@ class MessageCreate extends Event {
                     } else {
                         conversationLog.push({
                             "role": "user",
-                            "content": `<@${msg.author.id}>: ${msg.content}`,
+                            "content": `${msg.content}`,
                         });
                     }
                 });
