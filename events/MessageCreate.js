@@ -37,7 +37,7 @@ class MessageCreate extends Event {
                 const conversationLog = [
                     {
                         role: "system",
-                        content: "You are Erbium, a Discord ChatBot created by that gives funny, sarcastic and useful responses" },
+                        content: "You are Erbium, a Discord ChatBot created by 21Z, that gives funny, sarcastic and useful responses" },
                 ];
                 prevMessages.forEach((msg) => {
                     if (msg.content.startsWith("!") || msg.content.length > 2000) return;
