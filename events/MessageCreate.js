@@ -37,12 +37,11 @@ class MessageCreate extends Event {
                 const conversationLog = [
                     {
                         role: "system",
-                        content: "You are Erbium, a Discord ChatBot created by 21Z, that gives funny, sarcastic and useful responses" },
+                        content: "You are Erbium, a Discord ChatBot created by 21Z, that gives funny, sarcastic and useful responses." },
                 ];
                 prevMessages.forEach((msg) => {
                     if (msg.content.startsWith("!") || msg.content.length > 2000) return;
                     if (msg.author.id !== this.client.user.id && message.author.bot) return;
-                    if (msg.author.id !== message.author.id && msg.author.id !== this.client.user.id) return;
 
                     if (msg.author.id === this.client.user.id) {
                         conversationLog.push({
@@ -52,7 +51,7 @@ class MessageCreate extends Event {
                     } else {
                         conversationLog.push({
                             "role": "user",
-                            "content": `${msg.content}`,
+                            "content": `<@${msg.author.id}>: ${msg.content}`,
                         });
                     }
                 });
