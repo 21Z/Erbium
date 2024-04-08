@@ -17,6 +17,7 @@ class Purge extends Command {
                     name: "amount",
                     description: "The amount of messages to delete",
                     type: ApplicationCommandOptionType.String,
+                    required: true,
                 },
             ],
         });
@@ -24,16 +25,15 @@ class Purge extends Command {
 
     async run(interaction) {
         const query = interaction.options.getString("amount");
-        if (parseInt(query) === 1) return interaction.reply({ embeds: [createEmbed("warn", "If you want to purge one message, please do it manually.")] });
         if (!query || isNaN(query) || parseInt(query) < 1) {
             return interaction.reply({ embeds: [createEmbed("warn", "Please specify a valid amount of messages to delete!")], ephemeral: true });
         }
 
-        await interaction.deferReply();
+        await interaction.deferReply({ ephemeral: true });
         const amount = parseInt(query);
         const messages = await interaction.channel.messages.fetch({ limit: amount });
         await interaction.channel.bulkDelete(messages, true).catch(() => {}).then(() => {
-            interaction.editReply({ embeds: [createEmbed("success").setTitle(`:broom: Successfully deleted ${amount} messages!`)], ephemeral: true });
+            interaction.editReply({ embeds: [createEmbed("success").setTitle(`:broom: Successfully deleted ${amount} messages!`)] });
         });
     }
 
