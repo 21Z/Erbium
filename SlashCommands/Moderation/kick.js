@@ -32,7 +32,7 @@ class Kick extends Command {
         await interaction.deferReply();
         const target = interaction.options.getMember("user");
         const intialreason = interaction.options.getString("reason");
-        const moderator = `by ${interaction.member.tag} [ID: ${interaction.member.id}]`;
+        const moderator = `by ${interaction.user.tag} [ID: ${interaction.user.id}]`;
         const reason = intialreason ? intialreason + ", " + moderator : "Kicked " + moderator;
         const embedreason = intialreason || "None";
         if (!target) return interaction.editReply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to kick!")] });
