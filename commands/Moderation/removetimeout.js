@@ -8,7 +8,7 @@ class RemoveTimeOut extends Command {
 
         this.config({
             name: "removetimeout",
-            aliases: ["remtm", "deltimeout", "deltm", "removetm", "unmute", "unm"],
+            aliases: ["remtm", "deltimeout", "deltm", "removetm", "unmute", "untm", "unm"],
             description: "Remove Timeout from a user.",
             usage: "{command} <member> [reason]",
             botPerms: ["ModerateMembers", "EmbedLinks"],
