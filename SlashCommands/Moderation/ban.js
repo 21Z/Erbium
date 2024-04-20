@@ -30,19 +30,20 @@ class Ban extends Command {
 
     async run(interaction) {
         await interaction.deferReply();
-        const target = interaction.options.getUser("user");
+        const target = interaction.options.getMember("user") || interaction.options.getUser("user");
         const intialreason = interaction.options.getString("reason");
         const moderator = `by ${interaction.user.tag} [ID: ${interaction.user.id}]`;
         const reason = intialreason ? intialreason + ", " + moderator : "Banned " + moderator;
         const embedreason = intialreason || "None";
-        if (!target) return interaction.editReply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to ban!")] });
 
         if (target.id === interaction.user.id) return interaction.editReply({ embeds: [createEmbed("error", "You can not ban yourself!", true)] });
         if (target.id === interaction.guild.ownerId) return interaction.editReply({ embeds: [createEmbed("error", "You can not ban the server owner!", true)] });
-        if (interaction.guild.members.cache.has(target.id) && target.roles.highest.position > interaction.member.roles.highest.position) {
-            return interaction.editReply({ embeds: [createEmbed("error", "You cannot ban someone with a higher role than yours!", true)] });
+        if (interaction.options.getMember("user")) {
+            if (target.roles.highest.position > interaction.member.roles.highest.position) {
+                return interaction.editReply({ embeds: [createEmbed("error", "You cannot ban someone with a higher role than yours!", true)] });
+            }
+            if (!target.bannable) return interaction.editReply({ embeds: [createEmbed("error", "I cannot ban this user!", true)] });
         }
-        if (interaction.guild.members.cache.has(target.id) && !target.bannable) return interaction.editReply({ embeds: [createEmbed("error", "I cannot ban this user!", true)] });
 
         // If the user is already banned
         const bans = await interaction.guild.bans.fetch();
