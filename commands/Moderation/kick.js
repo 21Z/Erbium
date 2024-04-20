@@ -16,8 +16,8 @@ class Kick extends Command {
     }
 
     async run(message, args) {
-        const target = await this.client.resolveUser(args[0], message.guild) || message.mentions.members.first();
-        const intialreason = target === message.mentions.members.first() ? args.slice(0).join(" ") : args.slice(1).join(" ");
+        const target = await this.client.resolveUser(args[0], message.guild);
+        const intialreason = args.slice(1).join(" ");
         const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
         const reason = intialreason ? intialreason + ", " + moderator : "Kicked " + moderator;
         const embedreason = intialreason || "None";
