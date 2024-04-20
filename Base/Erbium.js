@@ -163,7 +163,7 @@ class Erbium extends Client {
                     }
                 });
             } else {
-                await guild ? guild.members.fetch(resolvable).catch(() => {}) : this.users.fetch(resolvable).catch(() => {});
+                guild ? await guild.members.fetch(resolvable).catch(() => {}) : await this.users.fetch(resolvable).catch(() => {});
                 const resolvedUser = guild ? guild.members.resolve(resolvable) : this.users.resolve(resolvable);
                 if (resolvedUser) resolvedUsers.push(resolvedUser);
             }
