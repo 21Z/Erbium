@@ -18,26 +18,25 @@ class TimeOut extends Command {
     }
 
     async run(message, args) {
-        let user = args[0];
-        if (/<@!?(.*?)>/g.test(user)) user = user.match(/<@!?(.*?)>/g)[0].replace(/[<@!>]/g, "");
-        const target = await message.guild.members.fetch(user).catch(() => {});
+        const target = await this.client.resolveUser(args[0], message.guild);
+        const duration = args[1];
+        const intialreason = args.slice(2).join(" ");
         const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
-        const embedreason = args.slice(2).join(" ") || "None";
-        let reason = args.slice(2).join(" ") || "Timed Out " + moderator;
-        if (reason === args.slice(2).join(" ")) reason = reason + ", " + moderator;
+        const reason = intialreason ? intialreason + ", " + moderator : "Timed Out " + moderator;
+        const embedreason = intialreason || "None";
         if (!target) return message.reply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to timeout!")] });
 
         if (target.id === message.author.id) return message.reply({ embeds: [createEmbed("error", "You can not timeout yourself!", true)] });
         if (target.id === message.guild.ownerId) return message.reply({ embeds: [createEmbed("error", "You can not timeout the server owner!", true)] });
-        if (message.guild.members.cache.has(target.id) && target.roles.highest.position > message.member.roles.highest.position) {
+        if (target.roles.highest.position > message.member.roles.highest.position) {
             return message.reply({ embeds: [createEmbed("error", "You cannot timeout someone with a higher role than yours!", true)] });
         }
+        if (!target.moderatable) return message.editReply({ embeds: [createEmbed("error", "I cannot timeout this user!")] });
 
-        if (!args[1]) return message.reply({ embeds: [createEmbed("error", "You must specify a duration!", true).setFooter({ text: `Usage: ${this.client.config.PREFIX}timeout <member> <duration> [reason]` })] });
-        const lastletter = args[1].slice(-1);
-        let time = ms(args[1]) / 1000;
-        if (!["ms", "s", "m", "h", "d", "y"].includes(lastletter)) time = args[1];
-
+        if (!duration) return message.reply({ embeds: [createEmbed("error", "You must specify a duration!", true).setFooter({ text: `Usage: ${this.client.config.PREFIX}timeout <member> <duration> [reason]` })] });
+        const lastletter = duration.slice(-1);
+        let time = ms(duration) / 1000;
+        if (!["ms", "s", "m", "h", "d", "y"].includes(lastletter)) time = duration;
         if (isNaN(time)) {
             return message.reply({ embeds: [createEmbed("error", `**${time}** is not a valid number!`, true)
                 .setFooter({ text: `Usage: ${this.client.config.PREFIX}timeout <member> <duration> [reason]` })] });
@@ -61,7 +60,7 @@ class TimeOut extends Command {
             });
 
         await target.timeout(time * 1000, reason).then(() => {
-            message.channel.send({ embeds: [embed] });
+            message.reply({ embeds: [embed] });
         });
     }
 
