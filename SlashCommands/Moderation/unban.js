@@ -15,13 +15,13 @@ class UnBan extends Command {
             options: [
                 {
                     name: "user",
-                    description: "The user to ban",
+                    description: "The id of the user to unban (ex. 1038115435855486996)",
                     required: true,
                     type: ApplicationCommandOptionType.User,
                 },
                 {
                     name: "reason",
-                    description: "The reason for banning the user",
+                    description: "The reason for unbanning the user",
                     type: ApplicationCommandOptionType.String,
                 },
             ],
@@ -35,11 +35,11 @@ class UnBan extends Command {
         const moderator = `by ${interaction.user.tag} [ID: ${interaction.user.id}]`;
         const reason = intialreason ? intialreason + ", " + moderator : "Unbanned " + moderator;
         const embedreason = intialreason || "None";
-        if (!target) return interaction.reply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to unban!")] });
+        if (!target) return interaction.editReply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to unban!")] });
 
         // If the user is not banned
         const bans = await interaction.guild.bans.fetch();
-        if (!bans.some((m) => m.user.id === target.id)) return interaction.reply({ embeds: [createEmbed("error", "The user you specified is not banned!", true)] });
+        if (!bans.some((m) => m.user.id === target.id)) return interaction.editReply({ embeds: [createEmbed("error", "The user you specified is not banned!", true)] });
 
         const embed = createEmbed("success")
             .setTitle("Action: Unban")
