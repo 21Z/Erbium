@@ -31,7 +31,7 @@ class Ready extends Event {
                         m.edit({ embeds: [embed] });
                     });
                 });
-            }, 20000);
+            }, 60000);
         }
         process.on("unhandledRejection", error => {
             if (error.toString().includes("DiscordAPIError")) {
