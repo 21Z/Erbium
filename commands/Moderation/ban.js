@@ -16,8 +16,8 @@ class Ban extends Command {
     }
 
     async run(message, args) {
-        const target = await this.client.resolveUser(args[0]) || message.mentions.members.first();
-        const intialreason = target === message.mentions.members.first() ? args.slice(0).join(" ") : args.slice(1).join(" ");
+        let target = await this.client.resolveUser(args[0]);
+        const intialreason = args.slice(1).join(" ");
         const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
         const reason = intialreason ? intialreason + ", " + moderator : "Banned " + moderator;
         const embedreason = intialreason || "None";
@@ -25,10 +25,13 @@ class Ban extends Command {
 
         if (target.id === message.author.id) return message.reply({ embeds: [createEmbed("error", "You can not ban yourself!", true)] });
         if (target.id === message.guild.ownerId) return message.reply({ embeds: [createEmbed("error", "You can not ban the server owner!", true)] });
-        if (message.guild.members.cache.has(target.id) && target.roles.highest.position > message.member.roles.highest.position) {
-            return message.reply({ embeds: [createEmbed("error", "You cannot ban someone with a higher role than yours!", true)] });
+        if (await message.guild.members.fetch(target.id).catch(() => {})) {
+            target = await message.guild.members.fetch(target.id);
+            if (target.roles.highest.position > message.member.roles.highest.position) {
+                return message.reply({ embeds: [createEmbed("error", "You cannot ban someone with a higher role than yours!", true)] });
+            }
+            if (!target.bannable) return message.reply({ embeds: [createEmbed("error", "I cannot ban this user!", true)] });
         }
-        if (message.guild.members.cache.has(target.id) && !target.bannable) return message.reply({ embeds: [createEmbed("error", "I cannot ban this user!", true)] });
 
         // If the user is already banned
         const bans = await message.guild.bans.fetch();
