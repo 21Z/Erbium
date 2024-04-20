@@ -1,7 +1,7 @@
 const Command = require("../../Base/Command.js");
 const createEmbed = require("../../utils/createEmbed.js");
 
-class RemoveTimeOut extends Command {
+class RemoveTimeout extends Command {
 
     constructor(client) {
         super(client);
@@ -9,7 +9,7 @@ class RemoveTimeOut extends Command {
         this.config({
             name: "removetimeout",
             aliases: ["remtm", "deltimeout", "deltm", "removetm", "unmute", "untm", "unm"],
-            description: "Remove Timeout from a user.",
+            description: "Remove timeout from a user.",
             usage: "{command} <member> [reason]",
             botPerms: ["ModerateMembers", "EmbedLinks"],
             permissions: ["ModerateMembers"],
@@ -17,19 +17,18 @@ class RemoveTimeOut extends Command {
     }
 
     async run(message, args) {
-        let user = args[0];
-        if (/<@!?(.*?)>/g.test(user)) user = user.match(/<@!?(.*?)>/g)[0].replace(/[<@!>]/g, "");
-        const target = await message.guild.members.fetch(user).catch(() => {});
+        const target = await this.client.resolveUser(args[0], message.guild);
+        const intialreason = args.slice(1).join(" ");
         const moderator = `by ${message.author.tag} [ID: ${message.author.id}]`;
-        const embedreason = args.slice(1).join(" ") || "None";
-        let reason = args.slice(1).join(" ") || "Timed Out " + moderator;
-        if (reason === args.slice(1).join(" ")) reason = reason + ", " + moderator;
+        const reason = intialreason ? intialreason + ", " + moderator : "Timeout removed " + moderator;
+        const embedreason = intialreason || "None";
         if (!target) return message.reply({ embeds: [createEmbed("warn", "Please specify a valid user who you want to remove timeout from!")] });
 
-        if (target.id === message.guild.ownerId) return message.reply({ embeds: [createEmbed("error", "You can not timeout the server owner!", true)] });
-        if (message.guild.members.cache.has(target.id) && target.roles.highest.position > message.member.roles.highest.position) {
+        if (!target.isCommunicationDisabled()) return message.reply({ embeds: [createEmbed("error", "The user is not timed out!", true)] });
+        if (target.roles.highest.position > message.member.roles.highest.position) {
             return message.reply({ embeds: [createEmbed("error", "You cannot remove timeout from someone with a higher role than yours!", true)] });
         }
+        if (!target.moderatable) return message.editReply({ embeds: [createEmbed("error", "I cannot remove timeout from this user!")] });
 
         const embed = createEmbed("error")
             .setTitle("Action: Remove Timeout")
@@ -42,10 +41,10 @@ class RemoveTimeOut extends Command {
             });
 
         await target.timeout(null, reason).then(() => {
-            message.channel.send({ embeds: [embed] });
+            message.reply({ embeds: [embed] });
         });
     }
 
 }
 
-module.exports = RemoveTimeOut;
+module.exports = RemoveTimeout;
