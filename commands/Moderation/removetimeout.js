@@ -28,7 +28,7 @@ class RemoveTimeout extends Command {
         if (target.roles.highest.position > message.member.roles.highest.position) {
             return message.reply({ embeds: [createEmbed("error", "You cannot remove timeout from someone with a higher role than yours!", true)] });
         }
-        if (!target.moderatable) return interaction.editReply({ embeds: [createEmbed("error", "I cannot remove timeout from this user!")] });
+        if (!target.moderatable) return message.reply({ embeds: [createEmbed("error", "I cannot remove timeout from this user!")] });
 
         const embed = createEmbed("error")
             .setTitle("Action: Remove Timeout")
