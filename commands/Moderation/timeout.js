@@ -31,7 +31,7 @@ class TimeOut extends Command {
         if (target.roles.highest.position > message.member.roles.highest.position) {
             return message.reply({ embeds: [createEmbed("error", "You cannot timeout someone with a higher role than yours!", true)] });
         }
-        if (!target.moderatable) return message.editReply({ embeds: [createEmbed("error", "I cannot timeout this user!")] });
+        if (!target.moderatable) return interaction.editReply({ embeds: [createEmbed("error", "I cannot timeout this user!")] });
 
         if (!duration) return message.reply({ embeds: [createEmbed("error", "You must specify a duration!", true).setFooter({ text: `Usage: ${this.client.config.PREFIX}timeout <member> <duration> [reason]` })] });
         const lastletter = duration.slice(-1);
