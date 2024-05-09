@@ -41,7 +41,7 @@ class MessageCreate extends Event {
                 ];
                 prevMessages.forEach((msg) => {
                     if (msg.content.startsWith("!") || msg.content.length > 2000) return;
-                    if (msg.author.id !== this.client.user.id && message.author.bot) return;
+                    if (msg.author.id !== this.client.user.id && msg.author.bot) return;
                     if (msg.author.id !== message.author.id && msg.author.id !== this.client.user.id) return;
 
                     if (msg.author.id === this.client.user.id) {
