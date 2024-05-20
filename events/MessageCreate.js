@@ -47,7 +47,7 @@ class MessageCreate extends Event {
                     if (msg.author.id === this.client.user.id) {
                         if (msg.reference) {
                             const referenceMessage = message.channel.messages.cache.get(msg.reference.messageId);
-                            if (referenceMessage.author.id !== message.author.id) return;
+                            if (!referenceMessage || referenceMessage.author.id !== message.author.id) return;
                         }
                         conversationLog.push({
                             "role": "assistant",
