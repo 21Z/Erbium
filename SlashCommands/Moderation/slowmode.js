@@ -55,6 +55,7 @@ class SlowMode extends Command {
         if (time > 21600) return interaction.reply({ embeds: [createEmbed("error", "Time is too high, please set a slowmode less than 6 hours!", true)] });
 
         await channel.setRateLimitPerUser(time).catch(e => {
+            console.error(e);
             return interaction.reply({ embeds: [createEmbed("error", `Something went wrong!\n\`\`\`js\n${e}\`\`\``, true)] });
         }).then(() => {
             interaction.reply(`Slowmode set to \`${this.client.utils.formatDuration(time * 1000).replace(/,/g, "")}\``);

@@ -71,6 +71,7 @@ class MessageCreate extends Event {
                 }
                 message.reply(result.message.content).catch(() => {});
             } catch (error) {
+                console.error(error);
                 if (error instanceof OpenAI.APIError) {
                     if (error.status === 429) return message.reply("The API is being ratelimited!" + `\`\`\`js\n${error.message}\n\`\`\``);
                     message.reply("Something went wrong!" + `\`\`\`js\n${error.message}\n\`\`\``).catch(() => {});
