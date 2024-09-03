@@ -1,8 +1,6 @@
 const Event = require("../Base/Event.js");
 const { PermissionsBitField } = require("discord.js");
 const cooldowns = new (require("discord.js").Collection)();
-const { OpenAI } = require("openai");
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 class MessageCreate extends Event {
 
@@ -22,64 +20,6 @@ class MessageCreate extends Event {
         const prefix = this.client.config.PREFIX;
         if (new RegExp(`^<@!?${this.client.user.id}>( |)$`).test(message.content)) return message.reply(`My prefix is **"\`${prefix}\`"**!`);
 
-        // chatbot
-        if (this.client.config.CHANNEL_ID && this.client.config.CHANNEL_ID.includes(message.channel.id)) {
-            if (message.content.startsWith("!")) return;
-            try {
-                await message.channel.sendTyping();
-                if (message.content.length > 2000 || !message.content || message.content === "") {
-                    message.reply("Sorry, I can't get that, please send a valid query and try again.");
-                    return;
-                }
-                let prevMessages = await message.channel.messages.fetch({ limit: 75 });
-                prevMessages = prevMessages.sort((a, b) => a - b);
-
-                const conversationLog = [
-                    {
-                        role: "system",
-                        content: "You are Erbium, a Discord ChatBot created by 21Z, that gives funny, sarcastic and useful responses." },
-                ];
-                prevMessages.forEach((msg) => {
-                    if (msg.content.startsWith("!") || msg.content.length > 2000) return;
-                    if (msg.author.id !== this.client.user.id && msg.author.bot) return;
-                    if (msg.author.id !== message.author.id && msg.author.id !== this.client.user.id) return;
-
-                    if (msg.author.id === this.client.user.id) {
-                        if (msg.reference) {
-                            const referenceMessage = message.channel.messages.cache.get(msg.reference.messageId);
-                            if (!referenceMessage || referenceMessage.author.id !== message.author.id) return;
-                        }
-                        conversationLog.push({
-                            "role": "assistant",
-                            "content": `${msg.content}`,
-                        });
-                    } else {
-                        conversationLog.push({
-                            "role": "user",
-                            "content": `${msg.content}`,
-                        });
-                    }
-                });
-                const completion = await openai.chat.completions.create({
-                        model: "gpt-3.5-turbo",
-                        messages: conversationLog,
-                    }),
-                    result = completion.choices[0];
-                if (result.message.content.length > 2000) {
-                    const reply = await this.client.utils.hastebin(result.message.content.replace(/(?![^\n]{1,148}$)([^\n]{1,148})\s/g, "$1\n"));
-                    return await message.reply(`! Output too long, Hastebin:\n${reply}`).catch(() => {});
-                }
-                message.reply(result.message.content).catch(() => {});
-            } catch (error) {
-                console.error(error);
-                if (error instanceof OpenAI.APIError) {
-                    if (error.status === 429) return message.reply("The API is being ratelimited!" + `\`\`\`js\n${error.message}\n\`\`\``);
-                    message.reply("Something went wrong!" + `\`\`\`js\n${error.message}\n\`\`\``).catch(() => {});
-                } else {
-                    message.reply("Something went wrong!" + `\`\`\`js\n${error.toString()}\n\`\`\``).catch(() => {});
-                }
-            }
-        }
         // ignore non-prefix
         if (message.content.toLowerCase().indexOf(prefix.toLowerCase()) !== 0) return;
 
