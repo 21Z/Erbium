@@ -36,8 +36,8 @@
     "node": ">=v16.x"
   },
   "devDependencies": {
-    "@eslint/js": "9.26.0",
-    "eslint": "9.26.0",
+    "@eslint/js": "9.27.0",
+    "eslint": "9.27.0",
     "globals": "15.15.0"
   }
 }
