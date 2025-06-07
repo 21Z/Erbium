@@ -55,7 +55,7 @@ class TimeOut extends Command {
 
         const lastletter = duration.slice(-1);
         let time = ms(duration) / 1000;
-        if (!["ms", "s", "m", "h", "d", "y"].includes(lastletter)) time = duration;
+        if(time < 1) time = duration;
 
         if (isNaN(time)) {
             return interaction.editReply({ embeds: [createEmbed("error", `**${time}** is not a valid number!`, true)

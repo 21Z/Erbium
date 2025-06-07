@@ -27,7 +27,7 @@ class SlowMode extends Command {
         }
         const lastletter = args[0].slice(-1);
         let time = ms(args[0]) / 1000;
-        if (!["ms", "s", "m", "h", "d", "y"].includes(lastletter)) time = args[0];
+        if(time < 1) time = duration;
 
         if (!time) {
             return message.reply({ embeds: [createEmbed("error", "You must enter a valid time! Available units: `s`, `m`, or `h`", true)
