@@ -34,9 +34,8 @@ class TimeOut extends Command {
         if (!target.moderatable) return message.reply({ embeds: [createEmbed("error", "I cannot timeout this user!")] });
 
         if (!duration) return message.reply({ embeds: [createEmbed("error", "You must specify a duration!", true).setFooter({ text: `Usage: ${this.client.config.PREFIX}timeout <member> <duration> [reason]` })] });
-        const lastletter = duration.slice(-1);
         let time = ms(duration) / 1000;
-        if(time < 1) time = duration;
+        if (time < 1) time = duration;
         if (isNaN(time)) {
             return message.reply({ embeds: [createEmbed("error", `**${time}** is not a valid number!`, true)
                 .setFooter({ text: `Usage: ${this.client.config.PREFIX}timeout <member> <duration> [reason]` })] });

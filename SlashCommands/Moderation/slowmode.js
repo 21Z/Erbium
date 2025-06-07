@@ -40,9 +40,8 @@ class SlowMode extends Command {
             interaction.reply({ embeds: [createEmbed("success", "Slowmode has been turned off!", true)] });
             return channel.setRateLimitPerUser(0);
         }
-        const lastletter = duration.slice(-1);
         let time = ms(duration) / 1000;
-        if(time < 1) time = duration;
+        if (time < 1) time = duration;
 
         if (!time) {
             return interaction.reply({ embeds: [createEmbed("error", "You must enter a valid time! Available units: `s`, `m`, or `h`", true)

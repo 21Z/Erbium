@@ -25,9 +25,8 @@ class SlowMode extends Command {
             message.reply({ embeds: [createEmbed("success", "Slowmode has been turned off!", true)] });
             return message.channel.setRateLimitPerUser(0);
         }
-        const lastletter = args[0].slice(-1);
         let time = ms(args[0]) / 1000;
-        if(time < 1) time = duration;
+        if (time < 1) time = args[0];
 
         if (!time) {
             return message.reply({ embeds: [createEmbed("error", "You must enter a valid time! Available units: `s`, `m`, or `h`", true)
