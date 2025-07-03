@@ -30,7 +30,7 @@
     "node-fetch": "2.7.0",
     "pokecord": "21Z/pokecord",
     "quick.db": "9.1.7",
-    "youtube-sr": "4.3.11"
+    "youtube-sr": "4.3.12"
   },
   "engines": {
     "node": ">=v16.x"
